@@ -583,7 +583,10 @@
             }
           },
           "400": {
-            "description": "Error occurred when reading client request. Request is invalid."
+            "description": "Error occurred when reading client request. Request is invalid.",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
           },
           "500": {
             "description": "Error occurred on server side."
@@ -1054,6 +1057,26 @@
         "job_id": {
           "type": "string",
           "description": "unique id for your job/request with which you can fetch your solution"
+        }
+      }
+    },
+    "BadRequest": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "short error message"
+        },
+        "hints": {
+          "type": "array",
+          "description": "Define one or more vehicles that can be employed to deliver items.",
+          "items": {
+            "$ref": "#/definitions/JobId"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status"
         }
       }
     },
