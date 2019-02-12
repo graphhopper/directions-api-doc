@@ -924,6 +924,7 @@ definitions:
           - scooter
           - truck
           - small_truck
+        default: car
       capacity:
         type: array
         description: array of capacity dimensions

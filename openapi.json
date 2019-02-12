@@ -1303,7 +1303,8 @@
             "scooter",
             "truck",
             "small_truck"
-          ]
+          ],
+          "default": "car"
         },
         "capacity": {
           "type": "array",
