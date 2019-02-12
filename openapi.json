@@ -1799,7 +1799,7 @@
         },
         "ids": {
           "type": "array",
-          "description": "Specifies an array of shipment and/or service ids that are in relation. If you deal with services then you need to use the id of your services in ids. To also consider sequences of the pickups and deliveries of your shipments, you need to use a special ID, i.e. use your shipment id plus the keyword _pickup or _delivery. If you want to place a service or shipment activity at the beginning of your route, use the special ID start. In turn, use `end` to place it at the end of the route.",
+          "description": "Specifies an array of shipment and/or service ids that are in relation. If you deal with services then you need to use the id of your services in ids. To also consider sequences of the pickups and deliveries of your shipments, you need to use a special ID, i.e. use your shipment id plus the keyword `_pickup` or `_delivery`. If you want to place a service or shipment activity at the beginning of your route, use the special ID `start`. In turn, use `end` to place it at the end of the route.",
           "items": {
             "type": "string"
           }
