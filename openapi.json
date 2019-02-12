@@ -1071,12 +1071,25 @@
           "type": "array",
           "description": "Define one or more vehicles that can be employed to deliver items.",
           "items": {
-            "$ref": "#/definitions/JobId"
+            "$ref": "#/definitions/ErrorMessage"
           }
         },
         "status": {
           "type": "string",
           "description": "status"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "short error message"
+        },
+        "details": {
+          "type": "string",
+          "description": "Details"
         }
       }
     },
