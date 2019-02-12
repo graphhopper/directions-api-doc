@@ -930,14 +930,18 @@ definitions:
         items:
           type: integer
           format: int32
+        default:
+          - 0
       speed_factor:
         format: double
         type: number
         description: speed_factor of vehicle type
+        default: 1
       service_time_factor:
         format: double
         type: number
         description: service time factor of vehicle type
+        default: 1
       cost_per_meter:
         format: double
         type: number
@@ -953,12 +957,14 @@ definitions:
       consider_traffic:
         type: boolean
         description: indicates whether historical traffic information should be considered
+        default: false
       network_data_provider:
         type: string
         description: specifies the data provider
         enum:
           - openstreetmap
           - tomtom
+        default: openstreetmap
     required:
       - type_id
   Service:
