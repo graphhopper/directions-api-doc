@@ -1304,13 +1304,13 @@ definitions:
     properties:
       type:
         type: string
-        description: identifier of relation
+        description: 'Specifies the type of relation. It must be either of type in_same_route, in_sequence or in_direct_sequence.'
       ids:
         type: array
         description: An array of ids that should be related
         items:
           type: string
-          description: id of services or special ids of shipments
+          description: 'Specifies an array of shipment and/or service ids that are in relation. If you deal with services then you need to use the id of your services in ids. To also consider sequences of the pickups and deliveries of your shipments, you need to use a special ID, i.e. use your shipment id plus the keyword _pickup or _delivery. If you want to place a service or shipment activity at the beginning of your route, use the special ID start. In turn, use `end` to place it at the end of the route.'
       groups:
         type: array
         description: An array of groups that should be related
@@ -1319,7 +1319,7 @@ definitions:
           description: group of services or shipments
       vehicle_id:
         type: string
-        description: vehicle id
+        description: 'Id of pre-assigned vehicle, i.e. the vehicle id that is determined to conduct the services and shipments in this relation.'
   Response:
     type: object
     properties:
