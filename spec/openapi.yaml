@@ -4,6 +4,12 @@
         "title": "GraphHopper Directions API",
         "description": "You use the GraphHopper Directions API to add route planning, navigation and route optimization to your software. E.g. the Routing API has turn instructions and elevation data and the Route Optimization API solves your logistic problems and supports various constraints like time window and capacity restrictions. Also it is possible to get all distances between all locations with our fast Matrix API.",
         "version": "1.0.0",
+        "termsOfService": "https://www.graphhopper.com/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "support@graphhopper.com"
+            "url": "https://github.com/graphhopper/directions-api-doc"
+        },
         "x-logo": {
             "url": "https://www.graphhopper.com/wp-content/uploads/2015/11/header.png"
         }
