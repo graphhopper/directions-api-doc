@@ -1199,26 +1199,6 @@
                             "type": "min",
                             "value": "completion_time"
                         }
-                      ],
-                      "min-vehicles": [
-                        {
-                            "type": "min",
-                            "value": "vehicles"
-                        },
-                        {
-                            "type": "min",
-                            "value": "completion_time"
-                        }
-                      ],
-                      "balance load": [
-                        {
-                            "type": "min-max",
-                            "value": "completion_time"
-                        },
-                        {
-                            "type": "min-max",
-                            "value": "activities"
-                        }
                       ]
                     }
                 },
