@@ -1398,7 +1398,7 @@
                 "profile": {
                     "type": "string",
                     "description": "Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.",
-                    "example": "car",
+                    "example": "truck",
                     "enum": [
                         "car",
                         "bike",
@@ -1410,8 +1410,7 @@
                         "truck",
                         "small_truck"
                     ],
-                    "default": "car",
-                    "example": "truck"
+                    "default": "car"
                 },
                 "capacity": {
                     "type": "array",
