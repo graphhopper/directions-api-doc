@@ -1193,7 +1193,14 @@
                     "items": {
                         "$ref": "#/definitions/Objective"
                     },
-                    "example": [
+                    "examples": [
+                      [
+                        {
+                            "type": "min",
+                            "value": "completion_time"
+                        }
+                      ],
+                      [
                         {
                             "type": "min",
                             "value": "vehicles"
@@ -1202,6 +1209,17 @@
                             "type": "min",
                             "value": "completion_time"
                         }
+                      ],
+                      [
+                        {
+                            "type": "min-max",
+                            "value": "completion_time"
+                        },
+                        {
+                            "type": "min-max",
+                            "value": "activities"
+                        }
+                      ]
                     ]
                 },
                 "cost_matrices": {
