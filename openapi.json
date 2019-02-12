@@ -35,6 +35,10 @@
     {
       "name": "Geocoding API",
       "description": "Everything about geocoding"
+    },
+    {
+      "name": "Isochrone API",
+      "description": "Everything about geocoding"
     }
   ],
   "produces": [
@@ -299,7 +303,7 @@
           }
         ],
         "tags": [
-          "Isochrone"
+          "Isochrone API"
         ],
         "responses": {
           "200": {
@@ -527,7 +531,7 @@
           }
         ],
         "tags": [
-          "Geocoding"
+          "Geocoding API"
         ],
         "responses": {
           "200": {

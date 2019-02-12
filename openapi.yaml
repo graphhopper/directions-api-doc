@@ -23,6 +23,8 @@ tags:
     description: Everything about matrix
   - name: Geocoding API
     description: Everything about geocoding
+  - name: Isochrone API
+    description: Everything about geocoding
 produces:
   - application/json
 securityDefinitions:
@@ -211,7 +213,7 @@ paths:
           required: true
           type: string
       tags:
-        - Isochrone
+        - Isochrone API
       responses:
         '200':
           description: Isochrone Result
@@ -373,7 +375,7 @@ paths:
           required: true
           type: string
       tags:
-        - Geocoding
+        - Geocoding API
       responses:
         '200':
           description: An array found locations
