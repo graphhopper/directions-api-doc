@@ -837,7 +837,10 @@ definitions:
         items:
           $ref: '#/definitions/Objective'
         example:
-          '[object Object],[object Object]': null
+          - type: min
+            value: vehicles
+          - type: min
+            value: completion_time
       cost_matrices:
         type: array
         description: Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.
@@ -856,6 +859,7 @@ definitions:
         type: string
         description: The type_id refers to specified vehicle type (see vehicle types). If it is omitted a default type will be used.
         default: default-type
+        example: my-own-type
       start_address:
         $ref: '#/definitions/Address'
       end_address:
@@ -883,22 +887,29 @@ definitions:
         items:
           type: string
         description: 'Array of skills, i.e. array of string (not case sensitive).'
+        example:
+          - drilling_maschine
+          - screw_driver
       max_distance:
         type: integer
         format: int64
         description: Specifies the maximum distance a vehicle can go.
+        example: 400000
       max_driving_time:
         type: integer
         format: int64
         description: 'Specifies the maximum drive time a vehicle/driver can go, i.e. the maximum time on the road (service and waiting times are not included here)'
+        example: 28800
       max_jobs:
         type: integer
         format: int32
         description: Specifies the maximum number of jobs a vehicle can load.
+        example: 12
       max_activities:
         type: integer
         format: int32
         description: Specifies the maximum number of activities a vehicle can conduct.
+        example: 24
       move_to_end_address:
         type: boolean
         description: Indicates whether a vehicle should be moved even though it has not been assigned any jobs.
@@ -981,10 +992,11 @@ definitions:
       type_id:
         type: string
         description: 'Specifies the id of the vehicle type. If a vehicle needs to be of this type, it should refer to this with its type_id attribute.'
+        example: my-own-type
       profile:
         type: string
         description: 'Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.'
-        example: car
+        example: truck
         enum:
           - car
           - bike
@@ -1004,6 +1016,9 @@ definitions:
           format: int32
         default:
           - 0
+        example:
+          - 100
+          - 500
       speed_factor:
         format: double
         type: number
