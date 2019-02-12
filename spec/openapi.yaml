@@ -1184,8 +1184,7 @@
                     }
                 },
                 "algorithm": {
-                    "$ref": "#/definitions/Algorithm",
-                    "deprecated": true
+                    "$ref": "#/definitions/Algorithm"
                 },
                 "objectives": {
                     "type": "array",
@@ -1301,7 +1300,8 @@
                         "completion_time"
                     ]
                 }
-            }
+            },
+            "deprecated": true
         },
         "Address": {
             "type": "object",
