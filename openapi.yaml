@@ -959,6 +959,8 @@ definitions:
         enum:
           - openstreetmap
           - tomtom
+    required:
+      - type_id
   Service:
     type: object
     properties:
