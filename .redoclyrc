@@ -1,0 +1,8 @@
+specFileName: /Users/schroeder/IdeaProjects/directions-api-doc/swagger.json
+apiTitle: GraphHopper Directions API
+splitSpec: false
+codeSamples: false
+swaggerUI: true
+travis: true
+repo: graphhopper/directions-api-doc
+oasVersion: '2.0'
