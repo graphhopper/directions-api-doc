@@ -1,4 +1,4 @@
 # Dir for API portal deploy
 web_deploy
 node_modules
-.idea
+.idea/
