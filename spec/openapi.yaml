@@ -7,7 +7,7 @@
         "termsOfService": "https://www.graphhopper.com/terms/",
         "contact": {
             "name": "API Support",
-            "email": "support@graphhopper.com"
+            "email": "support@graphhopper.com",
             "url": "https://github.com/graphhopper/directions-api-doc"
         },
         "x-logo": {
