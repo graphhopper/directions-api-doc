@@ -1109,7 +1109,8 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "status"
+                    "description": "status",
+                    "default": "finished"
                 }
             }
         },
