@@ -1161,7 +1161,7 @@
         },
         "algorithm": {
           "$ref": "#/definitions/Algorithm",
-          "deprecated": true
+          "description": "Do NOT use this field anymore. It is deprecated. Use `objectives` instead."
         },
         "objectives": {
           "type": "array",
