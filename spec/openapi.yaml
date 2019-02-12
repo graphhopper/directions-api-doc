@@ -1199,7 +1199,6 @@
             "minItems":1
         },
         "Algorithm": {
-            "deprecated": true,
             "type": "object",
             "properties": {
                 "problem_type": {
