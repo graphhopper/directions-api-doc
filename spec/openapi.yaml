@@ -547,7 +547,7 @@
         },
         "/vrp/optimize": {
             "post": {
-                "summary": "Solves vehicle routing and traveling salesman problems",
+                "summary": "Solve new vehicle routing problem",
                 "description": "This is the endpoint for solving vehicle routing or traveling salesman problems.",
                 "operationId": "postVrp",
                 "externalDocs": {
@@ -605,7 +605,7 @@
         },
         "/vrp/solution/{jobId}": {
             "get": {
-                "summary": "Return the solution associated to the jobId",
+                "summary": "Retrieve solution associated to jobId",
                 "description": "This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.\n",
                 "operationId": "getSolution",
                 "consumes": [
