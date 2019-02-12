@@ -1121,35 +1121,35 @@
             "properties": {
                 "vehicles": {
                     "type": "array",
-                    "description": "Define one or more vehicles that can be employed to deliver items.",
+                    "description": "Specifies the available vehicles.",
                     "items": {
                         "$ref": "#/definitions/Vehicle"
                     }
                 },
                 "vehicle_types": {
                     "type": "array",
-                    "description": "An array of vehicle types",
+                    "description": "Specifies the available vehicle types that are referred to by the specified vehicles.",
                     "items": {
                         "$ref": "#/definitions/VehicleType"
                     }
                 },
                 "services": {
                     "type": "array",
-                    "description": "An array of services",
+                    "description": "Specifies the available services, i.e. pickup, delivery or any other points to be visited by vehicles. Each service only involves exactly one location.",
                     "items": {
                         "$ref": "#/definitions/Service"
                     }
                 },
                 "shipments": {
                     "type": "array",
-                    "description": "An array of shipments",
+                    "description": "Specifies the available shipments, i.e. pickup AND delivery points to be visited by vehicles subsequently. Each shipment involves exactly two locations, a pickup and a delivery location.",
                     "items": {
                         "$ref": "#/definitions/Shipment"
                     }
                 },
                 "relations": {
                     "type": "array",
-                    "description": "An array of relations",
+                    "description": "Specifies an arbitrary number of additional relations between and among services and shipments.",
                     "items": {
                         "$ref": "#/definitions/Relation"
                     }
@@ -1159,20 +1159,21 @@
                 },
                 "objectives": {
                     "type": "array",
-                    "description": "An array of objectives",
+                    "description": "Specifies an array of objective functions. This tells the algorithm the objective of the optimization.",
                     "items": {
                         "$ref": "#/definitions/Objective"
                     }
                 },
                 "cost_matrices": {
                     "type": "array",
-                    "description": "An array of cost matrices",
+                    "description": "Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.",
                     "items": {
                         "$ref": "#/definitions/CostMatrix"
                     }
                 },
                 "configuration": {
-                    "$ref": "#/definitions/Configuration"
+                    "$ref": "#/definitions/Configuration",
+                    "description": "Specifies general configurations."
                 }
             }
         },
@@ -1344,11 +1345,11 @@
             "properties": {
                 "type_id": {
                     "type": "string",
-                    "description": "Unique identifier for the vehicle type"
+                    "description": "Specifies the id of the vehicle type. If a vehicle needs to be of this type, it should refer to this with its type_id attribute."
                 },
                 "profile": {
                     "type": "string",
-                    "description": "Profile of vehicle type",
+                    "description": "Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.",
                     "example": "car",
                     "enum": [
                         "car",
@@ -1365,7 +1366,7 @@
                 },
                 "capacity": {
                     "type": "array",
-                    "description": "array of capacity dimensions",
+                    "description": "Specifies an array of capacity dimension values which need to be int values. For example, if there are two dimensions such as volume and weight then it needs to be defined as [ 1000, 300 ] assuming a maximum volume of 1000 and a maximum weight of 300.",
                     "items": {
                         "type": "integer",
                         "format": "int32"
@@ -1375,13 +1376,13 @@
                 "speed_factor": {
                     "format": "double",
                     "type": "number",
-                    "description": "speed_factor of vehicle type",
+                    "description": "Specifies a speed factor for this vehicle type. If the vehicle that uses this type needs to be only half as fast as what is actually calculated with our routing engine then set the speed factor to 0.5.",
                     "default": 1.0
                 },
                 "service_time_factor": {
                     "format": "double",
                     "type": "number",
-                    "description": "service time factor of vehicle type",
+                    "description": "Specifies a service time factor for this vehicle type. If the vehicle/driver that uses this type is able to conduct the service as double as fast as it is determined in the corresponding service or shipment then set it to 0.5.",
                     "default": 1.0
                 },
                 "cost_per_meter": {
@@ -1401,12 +1402,12 @@
                 },
                 "consider_traffic": {
                     "type": "boolean",
-                    "description": "indicates whether historical traffic information should be considered",
+                    "description": "Specifies whether traffic should be considered. if \"tomtom\" is used and this is false, free flow travel times from \"tomtom\" are calculated. If this is true, historical traffic info are used. We do not yet have traffic data for \"openstreetmap\", thus, setting this true has no effect at all.",
                     "default": false
                 },
                 "network_data_provider": {
                     "type": "string",
-                    "description": "specifies the data provider",
+                    "description": "Specifies network data provider. Either use \"openstreetmap\" or \"tomtom\".",
                     "enum": [
                         "openstreetmap",
                         "tomtom"
