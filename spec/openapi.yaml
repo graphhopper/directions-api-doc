@@ -1332,7 +1332,7 @@
                 "name": {
                     "type": "string",
                     "description": "Name of location.",
-                    "example": "Goethestraße 20"
+                    "example": "Queens Victoria Street 70, Second Floor, Flat 245"
                 },
                 "lon": {
                     "format": "double",
