@@ -1131,8 +1131,7 @@
             "properties": {
                  "code": {
                     "type": "integer",
-                    "format": "int32",
-                    "default": 500
+                    "format": "int32"
                  },
                  "message": {
                     "type": "string",
