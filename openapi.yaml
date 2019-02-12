@@ -830,7 +830,7 @@ definitions:
           $ref: '#/definitions/Relation'
       algorithm:
         $ref: '#/definitions/Algorithm'
-        description: Do NOT use this field anymore. It is deprecated. Use `objectives` instead.
+        description: Do **NOT** use this field anymore. It is **deprecated**. Use `objectives` instead.
       objectives:
         type: array
         description: Specifies an array of objective functions. This tells the algorithm the objective of the optimization.
