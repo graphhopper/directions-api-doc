@@ -1139,8 +1139,6 @@
                  }
             }
         },
-
-        ,
         "Request": {
             "type": "object",
             "properties": {
