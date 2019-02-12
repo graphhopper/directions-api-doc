@@ -1222,7 +1222,8 @@
             "properties": {
                 "vehicle_id": {
                     "type": "string",
-                    "description": "Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown."
+                    "description": "Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown.",
+                    "example": "vehicle-1"
                 },
                 "type_id": {
                     "type": "string",
