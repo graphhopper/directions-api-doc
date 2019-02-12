@@ -1544,7 +1544,7 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this shipment needs to be conducted by a technician having a \"drilling_machine\" and a \"screw_driver\" then specify the array as follows: [\"drilling_machine\",\"screw_driver\"]. This means that the service can only be done by a vehicle (technician) that has the skills \"drilling_machine\" AND \"screw_driver\" in its skill array. Otherwise it remains unassigned."
+                    "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this shipment needs to be conducted by a technician having a \"drilling_machine\" and a \"screw_driver\" then specify the array as follows: [\"drilling_machine\",\"screw_driver\"]. This means that the service can only be done by a vehicle (technician) that has the skills \"drilling_machine\" AND \"screw_driver\" in its skill array. Otherwise it remains unassigned.",
                     "default":[]
                 },
                 "allowed_vehicles": {
