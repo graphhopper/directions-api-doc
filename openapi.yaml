@@ -815,11 +815,6 @@ definitions:
         items:
           type: string
         description: array of skills
-        examples:
-          skills:
-            summary: A foo example
-            value:
-              foo: bar
       max_distance:
         type: integer
         format: int64
@@ -844,7 +839,6 @@ definitions:
       - start_address
     minItems: 1
   Algorithm:
-    deprecated: true
     type: object
     properties:
       problem_type:

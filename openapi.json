@@ -1160,15 +1160,7 @@
           "items": {
             "type": "string"
           },
-          "description": "array of skills",
-          "examples": {
-            "skills": {
-              "summary": "A foo example",
-              "value": {
-                "foo": "bar"
-              }
-            }
-          }
+          "description": "array of skills"
         },
         "max_distance": {
           "type": "integer",
@@ -1202,7 +1194,6 @@
       "minItems": 1
     },
     "Algorithm": {
-      "deprecated": true,
       "type": "object",
       "properties": {
         "problem_type": {
