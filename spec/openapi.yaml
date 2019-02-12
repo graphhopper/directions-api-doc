@@ -1198,7 +1198,6 @@
                     "items": {
                         "$ref": "#/definitions/Objective"
                     }
-
                 },
                 "cost_matrices": {
                     "type": "array",
@@ -1739,8 +1738,8 @@
                 }
             },
             "example": {
-                "type": "min",
-                "value": "vehicles"
+                    "type": "min",
+                    "value": "vehicles"
             }
         },
         "CostMatrix": {
