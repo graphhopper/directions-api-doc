@@ -1194,12 +1194,12 @@
                         "$ref": "#/definitions/Objective"
                     },
                     "examples": {
-                      "simple": [
-                        {
+                        "simple": [
+                          {
                             "type": "min",
                             "value": "completion_time"
-                        }
-                      ]
+                          }
+                        ]
                     }
                 },
                 "cost_matrices": {
