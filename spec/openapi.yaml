@@ -669,12 +669,17 @@
                         }
                     },
                     "400": {
-                        "description": "Error occurred on client side such as invalid input."
+                        "description": "Error occurred when reading client request. Request is invalid.",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequest"
+                        }
                     },
                     "500": {
-                        "description": "Error occurred on server side."
+                        "description": "Error occurred on server side.",
+                        "schema": {
+                            "$ref": "#/definitions/InternalErrorMessage"
+                        }
                     }
-                }
             }
         }
     },
@@ -1193,6 +1198,7 @@
                     "items": {
                         "$ref": "#/definitions/Objective"
                     }
+
                 },
                 "cost_matrices": {
                     "type": "array",
@@ -1730,8 +1736,13 @@
                         "vehicles",
                         "activities"
                     ]
-                }
+                },
+            "example": {
+                "type": "min",
+                "value": "vehicles"
             }
+            }
+            
         },
         "CostMatrix": {
             "type": "object",
