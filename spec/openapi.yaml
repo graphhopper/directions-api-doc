@@ -1345,7 +1345,8 @@
                         "tomtom"
                     ]
                 }
-            }
+            },
+            "required":["type_id"]
         },
         "Service": {
             "type": "object",
