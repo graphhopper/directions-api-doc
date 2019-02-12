@@ -1169,16 +1169,9 @@
           "items": {
             "$ref": "#/definitions/Objective"
           },
-          "example": [
-            {
-              "type": "min",
-              "value": "vehicles"
-            },
-            {
-              "type": "min",
-              "value": "completion_time"
-            }
-          ]
+          "example": {
+            "[object Object],[object Object]": null
+          }
         },
         "cost_matrices": {
           "type": "array",

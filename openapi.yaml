@@ -837,10 +837,7 @@ definitions:
         items:
           $ref: '#/definitions/Objective'
         example:
-          - type: min
-            value: vehicles
-          - type: min
-            value: completion_time
+          '[object Object],[object Object]': null
       cost_matrices:
         type: array
         description: Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.
