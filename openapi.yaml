@@ -938,20 +938,25 @@ definitions:
       location_id:
         type: string
         description: Specifies the id of the location.
+        example: 550e8400-e29b-11d4-a716-446655440000
       name:
         type: string
         description: Name of location.
+        example: Goethestraße 20
       lon:
         format: double
         type: number
         description: Longitude of location.
+        example: -0.092869
       lat:
         format: double
         type: number
         description: Latitude of location.
+        example: 51.512665
       street_hint:
         type: string
         description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
+        example: Queens Victoria Street 70
     required:
       - location_id
       - lon
