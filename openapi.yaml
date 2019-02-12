@@ -906,6 +906,7 @@ definitions:
     minItems: 1
   Algorithm:
     type: object
+    description: Do NOT use this field anymore. It is deprecated. Use `objectives` instead.
     properties:
       problem_type:
         type: string
