@@ -1193,8 +1193,12 @@
                     "items": {
                         "$ref": "#/definitions/Objective"
                     },
-                    "examples": {
-                        "simple": [
+                    "example": {
+                        [
+                          {
+                            "type": "min",
+                            "value": "vehicles"
+                          },
                           {
                             "type": "min",
                             "value": "completion_time"
