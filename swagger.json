@@ -1199,8 +1199,23 @@
             "minItems":1
         },
         "Algorithm": {
-            "deprecated": true,
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "problem_type": {
+                    "type": "string",
+                    "enum": [
+                        "min",
+                        "min-max"
+                    ]
+                },
+                "objective": {
+                    "type": "string",
+                    "enum": [
+                        "transport_time",
+                        "completion_time"
+                    ]
+                }
+            }
         },
         "Address": {
             "type": "object",
