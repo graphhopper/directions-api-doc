@@ -554,20 +554,18 @@
                 "
                 ### Introduction\n
 
-                                ![Route Editor Overview](./img/route-editor-overview.png)
+                 The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
+                 of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
+                 efficiently service its customers given a variety of requirements: customer requirements like time windows,
+                 the product's transport requirements e.g. that refrigerated, must be picked up first, driver skills, vehicles/capacities available
+                 and more.\n
 
-                                The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
-                                of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
-                                efficiently service its customers given a variety of requirements: customer requirements like time windows,
-                                the product's transport requirements e.g. that refrigerated, must be picked up first, driver skills, vehicles/capacities available
-                                and more.
+                 Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
+                 You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
+                 your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.\n
 
-                                Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
-                                You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
-                                 your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.
-
-                                This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
-                                our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.
+                 This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
+                 our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.\n
 
 
                 ### Endpoint\n
@@ -577,9 +575,9 @@
                 The Route Optimization API works in two steps
 
                  1. Post your problem json:
-                    `curl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/vrp/optimize?key=[YOUR_KEY]\" --data @your-vrp-problem.json`
+                    `curl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/vrp/optimize?key=[YOUR_KEY]\" --data @your-vrp-problem.json`\n
                  2. Poll every 500ms until a solution is available:
-                    `curl -X GET \"https://graphhopper.com/api/1/vrp/solution/[RETURNED_JOB_ID]?key=[YOUR_KEY]\"`
+                    `curl -X GET \"https://graphhopper.com/api/1/vrp/solution/[RETURNED_JOB_ID]?key=[YOUR_KEY]\"`\n
 
                 For more details also about the format of the `your-vrp-problem.json` file you can use one of [the examples](https://github.com/graphhopper/directions-api-js-client/tree/master/route-optimization-examples).\n
 
@@ -588,13 +586,13 @@
                 Our Route Optimization API can be used for pre-planning stage, on-demand or
                 next day delivery in the following areas:
 
-                 * goods delivery: parcels, moving boxes, furniture, pharmacy, flowers, ...
-                 * food delivery: bakery, pizza, meal, ..
-                 * waste management
-                 * ride sharing
-                 * field services or house calls
+                 * goods delivery: parcels, moving boxes, furniture, pharmacy, flowers, ...\n
+                 * food delivery: bakery, pizza, meal, ...\n
+                 * waste management\n
+                 * ride sharing\n
+                 * field services or house calls\n
 
-                # API Clients and Examples\n
+                ### API Clients and Examples\n
 
                 See the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization).
 
