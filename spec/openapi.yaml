@@ -1736,13 +1736,12 @@
                         "vehicles",
                         "activities"
                     ]
-                },
+                }
+            },
             "example": {
                 "type": "min",
                 "value": "vehicles"
             }
-            }
-            
         },
         "CostMatrix": {
             "type": "object",
