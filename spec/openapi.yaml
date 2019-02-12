@@ -595,7 +595,10 @@
                         }
                     },
                     "500": {
-                        "description": "Error occurred on server side."
+                        "description": "Error occurred on server side.",
+                        "schema": {
+                            "$ref": "#/definitions/InternalErrorMessage"
+                        }
                     }
                 }
             }
@@ -1098,7 +1101,17 @@
                             "description": "Details"
                  }
             }
-        }
+        },
+        "InternalErrorMessage": {
+            "type": "object",
+            "properties": {
+                  "code": 500,
+                  "message": {
+                      "type": "string",
+                      "description": "Details"
+                         }
+                    }
+                }
         ,
         "Request": {
             "type": "object",
