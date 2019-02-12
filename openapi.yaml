@@ -778,6 +778,7 @@ definitions:
       status:
         type: string
         description: status
+        default: finished
   ErrorMessage:
     type: object
     properties:
