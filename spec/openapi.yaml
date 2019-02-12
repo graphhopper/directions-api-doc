@@ -1193,14 +1193,14 @@
                     "items": {
                         "$ref": "#/definitions/Objective"
                     },
-                    "examples": [
-                      [
+                    "examples": {
+                      "simple": [
                         {
                             "type": "min",
                             "value": "completion_time"
                         }
                       ],
-                      [
+                      "min-vehicles": [
                         {
                             "type": "min",
                             "value": "vehicles"
@@ -1210,7 +1210,7 @@
                             "value": "completion_time"
                         }
                       ],
-                      [
+                      "balance load": [
                         {
                             "type": "min-max",
                             "value": "completion_time"
@@ -1220,7 +1220,7 @@
                             "value": "activities"
                         }
                       ]
-                    ]
+                    }
                 },
                 "cost_matrices": {
                     "type": "array",
