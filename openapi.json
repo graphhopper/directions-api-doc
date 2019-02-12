@@ -1107,7 +1107,8 @@
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "default": 500
         },
         "message": {
           "type": "string",
@@ -1794,7 +1795,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Specifies the type of relation. It must be either of type in_same_route, in_sequence or in_direct_sequence."
+          "description": "Specifies the type of relation. It must be either of type `in_same_route`, `in_sequence` or `in_direct_sequence`."
         },
         "ids": {
           "type": "array",
