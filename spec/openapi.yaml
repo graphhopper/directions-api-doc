@@ -669,17 +669,12 @@
                         }
                     },
                     "400": {
-                        "description": "Error occurred when reading client request. Request is invalid.",
-                        "schema": {
-                            "$ref": "#/definitions/BadRequest"
-                        }
+                        "description": "Error occurred on client side such as invalid input."
                     },
                     "500": {
-                        "description": "Error occurred on server side.",
-                        "schema": {
-                            "$ref": "#/definitions/InternalErrorMessage"
-                        }
+                        "description": "Error occurred on server side."
                     }
+                }
             }
         }
     },
@@ -1190,7 +1185,7 @@
                 },
                 "algorithm": {
                     "$ref": "#/definitions/Algorithm",
-                    "description": "Do **NOT** use this field anymore. It is **deprecated**. Use `objectives` instead."
+                    "description": "Do NOT use this field anymore. It is deprecated. Use `objectives` instead."
                 },
                 "objectives": {
                     "type": "array",
