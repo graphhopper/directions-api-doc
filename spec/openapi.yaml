@@ -1184,7 +1184,8 @@
                     }
                 },
                 "algorithm": {
-                    "$ref": "#/definitions/Algorithm"
+                    "$ref": "#/definitions/Algorithm",
+                    "deprecated": true
                 },
                 "objectives": {
                     "type": "array",
