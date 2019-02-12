@@ -548,7 +548,15 @@
         "/vrp/optimize": {
             "post": {
                 "summary": "Solve new vehicle routing problem",
-                "description": "This is the endpoint for solving vehicle routing or traveling salesman problems.",
+                "description": |
+
+                "#headline
+                
+                This is the endpoint for solving vehicle routing or traveling salesman problems.",
+
+
+
+
                 "operationId": "postVrp",
                 "externalDocs": {
                     "description": "Find more info here",
