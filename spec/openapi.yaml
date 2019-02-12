@@ -1129,16 +1129,18 @@
         "InternalErrorMessage": {
             "type": "object",
             "properties": {
-                  "code": {
-                      "type": "integer",
-                      "format": "int32"
-                  },
-                  "message": {
-                      "type": "string",
-                      "description": "Details"
-                         }
-                    }
-                }
+                 "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "default": 500
+                 },
+                 "message": {
+                    "type": "string",
+                    "description": "Details"
+                 }
+            }
+        },
+
         ,
         "Request": {
             "type": "object",
