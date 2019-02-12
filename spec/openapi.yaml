@@ -1415,11 +1415,11 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Unique identifier of service"
+                    "description": "Specifies the id of the service. Ids need to be unique so there must not be two services/shipments with the same id."
                 },
                 "type": {
                     "type": "string",
-                    "description": "type of service",
+                    "description": "Specifies whether a service is a general 'service', a pickup or a delivery. This makes a difference if items are loaded or unloaded, i.e. if one of the size dimensions > 0. If it is specified as service or pickup, items are loaded and will stay in the vehicle for the rest of the route (and thus consumes capacity for the rest of the route). If it is a delivery, items are implicitly loaded at the beginning of the route and will stay in the route until delivery (and thus releases capacity for the rest of the route).",
                     "enum": [
                         "service",
                         "pickup",
@@ -1493,7 +1493,8 @@
                     "type": "string",
                     "description": "Group this service belongs to"
                 }
-            }
+            },
+            "required":["id","address"]
         },
         "Shipment": {
             "type": "object",
