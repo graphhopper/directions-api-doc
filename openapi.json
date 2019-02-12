@@ -1180,21 +1180,23 @@
       "properties": {
         "vehicle_id": {
           "type": "string",
-          "description": "Unique identifier of vehicle"
+          "description": "Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown."
         },
         "type_id": {
           "type": "string",
-          "description": "Unique identifier referring to the available vehicle types",
+          "description": "The type_id refers to specified vehicle type (see vehicle types). If it is omitted a default type will be used.",
           "default": "default-type"
         },
         "start_address": {
           "$ref": "#/definitions/Address"
         },
         "end_address": {
-          "$ref": "#/definitions/Address"
+          "$ref": "#/definitions/Address",
+          "description": "If this is omitted AND return_to_depot is true then the vehicle needs to return to its start_address."
         },
         "break": {
-          "$ref": "#/definitions/Break"
+          "$ref": "#/definitions/Break",
+          "decription": "Specifies the driver break."
         },
         "return_to_depot": {
           "type": "boolean",
@@ -1204,13 +1206,13 @@
         "earliest_start": {
           "type": "integer",
           "format": "int64",
-          "description": "earliest start of vehicle at its start location",
+          "description": "Earliest start of vehicle in seconds. It is recommended to use the unix timestamp.",
           "default": 0
         },
         "latest_end": {
           "type": "integer",
           "format": "int64",
-          "description": "latest end of vehicle at its end location",
+          "description": "Latest end of vehicle in seconds, i.e. the time the vehicle needs to be at its end location at latest.",
           "default": 9223372036854776000
         },
         "skills": {
@@ -1218,27 +1220,27 @@
           "items": {
             "type": "string"
           },
-          "description": "array of skills"
+          "description": "Array of skills, i.e. array of string (not case sensitive)."
         },
         "max_distance": {
           "type": "integer",
           "format": "int64",
-          "description": "max distance of vehicle"
+          "description": "Specifies the maximum distance a vehicle can go."
         },
         "max_driving_time": {
           "type": "integer",
           "format": "int64",
-          "description": "max drive time of vehicle"
+          "description": "Specifies the maximum drive time a vehicle/driver can go, i.e. the maximum time on the road (service and waiting times are not included here)"
         },
         "max_jobs": {
           "type": "integer",
           "format": "int32",
-          "description": "max number of jobs the vehicle can load"
+          "description": "Specifies the maximum number of jobs a vehicle can load."
         },
         "max_activities": {
           "type": "integer",
           "format": "int32",
-          "description": "max number of activities the vehicle can conduct"
+          "description": "Specifies the maximum number of activities a vehicle can conduct."
         },
         "move_to_end_address": {
           "type": "boolean",
@@ -1275,21 +1277,21 @@
       "properties": {
         "location_id": {
           "type": "string",
-          "description": "Unique identifier of location"
+          "description": "Specifies the id of the location."
         },
         "name": {
           "type": "string",
-          "description": "name of location, e.g. street name plus house number"
+          "description": "Name of location."
         },
         "lon": {
           "format": "double",
           "type": "number",
-          "description": "longitude"
+          "description": "Longitude of location."
         },
         "lat": {
           "format": "double",
           "type": "number",
-          "description": "latitude"
+          "description": "Latitude of location."
         },
         "street_hint": {
           "type": "string",
@@ -1308,27 +1310,27 @@
         "earliest": {
           "type": "integer",
           "format": "int64",
-          "description": "earliest start of break"
+          "description": "Specifies the earliest start time of the break in seconds."
         },
         "latest": {
           "type": "integer",
           "format": "int64",
-          "description": "latest start of break"
+          "description": "Specifies the latest start time of break in seconds."
         },
         "duration": {
           "type": "integer",
           "format": "int64",
-          "description": "duration of break"
+          "description": "Specifies the duration of the break in seconds."
         },
         "max_driving_time": {
           "type": "integer",
           "format": "int64",
-          "description": "max driving time without break"
+          "description": "Specifies the max driving time (in a row) without break in seconds."
         },
         "initial_driving_time": {
           "type": "integer",
           "format": "int64",
-          "description": "initial driving time, i.e. the time your driver has already spent for driving"
+          "description": "Specifies the initial (current) driving time of a driver to allow dynamic adaptations in seconds."
         },
         "possible_split": {
           "type": "array",
@@ -1336,9 +1338,12 @@
             "type": "integer",
             "format": "int64"
           },
-          "description": "array of splits"
+          "description": "Array specifying how a break duration (in seconds) can be split into several smaller breaks"
         }
-      }
+      },
+      "required": [
+        "duration"
+      ]
     },
     "VehicleType": {
       "type": "object",
