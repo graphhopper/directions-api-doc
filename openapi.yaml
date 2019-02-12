@@ -855,6 +855,7 @@ definitions:
       vehicle_id:
         type: string
         description: 'Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown.'
+        example: vehicle-1
       type_id:
         type: string
         description: The type_id refers to specified vehicle type (see vehicle types). If it is omitted a default type will be used.
