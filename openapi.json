@@ -1479,27 +1479,30 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Specifies the id of the service. Ids need to be unique so there must not be two services/shipments with the same id."
+          "description": "Specifies the id of the service. Ids need to be unique so there must not be two services/shipments with the same id.",
+          "example": "7fe77504-7df8-4497-843c-02d70b6490ce"
         },
         "type": {
           "type": "string",
-          "description": "Specifies type of service. This makes a difference if items are loaded or unloaded, i.e. if one of the size dimensions > 0. If it is specified as \"service\" or \"pickup\", items are loaded and will stay in the vehicle for the rest of the route (and thus consumes capacity for the rest of the route). If it is a \"delivery\", items are implicitly loaded at the beginning of the route and will stay in the route until delivery (and thus releases capacity for the rest of the route).",
+          "description": "Specifies type of service. This makes a difference if items are loaded or unloaded, i.e. if one of the size dimensions > 0. If it is specified as `service` or `pickup`, items are loaded and will stay in the vehicle for the rest of the route (and thus consumes capacity for the rest of the route). If it is a `delivery`, items are implicitly loaded at the beginning of the route and will stay in the route until delivery (and thus releases capacity for the rest of the route).",
           "enum": [
             "service",
             "pickup",
             "delivery"
           ],
-          "default": "service"
+          "default": "service",
+          "example": "delivery"
         },
         "priority": {
           "type": "integer",
           "format": "int32",
           "description": "Specifies the priority. Can be 1 = high priority to 10 = low priority. Often there are more services/shipments than the available vehicle fleet can handle. Then you could assign priorities to differentiate high priority tasks from those that can be served later or omitted at all.",
-          "default": 2
+          "default": 2,
+          "example": 1
         },
         "name": {
           "type": "string",
-          "description": "Meaningful name for service, e.g. \"deliver pizza\"."
+          "description": "Meaningful name for service, e.g. `\"deliver pizza\"`."
         },
         "address": {
           "$ref": "#/definitions/Address"
@@ -1532,6 +1535,11 @@
           },
           "default": [
             0
+          ],
+          "example": [
+            30,
+            5,
+            1
           ]
         },
         "required_skills": {
@@ -1539,31 +1547,45 @@
           "items": {
             "type": "string"
           },
-          "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this service needs to be conducted by a technician having a \"drilling_machine\" and a \"screw_driver\" then specify the array as follows: [\"drilling_machine\",\"screw_driver\"]. This means that the service can only be done by a vehicle (technician) that has the skills \"drilling_machine\" AND \"screw_driver\" in its skill array. Otherwise it remains unassigned."
+          "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this service needs to be conducted by a technician having a `drilling_machine` and a `screw_driver` then specify the array as follows: `[\"drilling_machine\",\"screw_driver\"]`. This means that the service can only be done by a vehicle (technician) that has the skills `drilling_machine` AND `screw_driver` in its skill array. Otherwise it remains unassigned.",
+          "example": [
+            "drilling_machine",
+            "screw_driver"
+          ]
         },
         "allowed_vehicles": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids. For example, if this service can only be conducted EITHER by \"technician_peter\" OR \"technician_stefan\" specify this as follows: [\"technician_peter\",\"technician_stefan\"]."
+          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids. For example, if this service can only be conducted EITHER by `technician_peter` OR `technician_stefan` specify this as follows: `[\"technician_peter\",\"technician_stefan\"]`.",
+          "example": [
+            "technician_peter",
+            "technician_stefan"
+          ]
         },
         "disallowed_vehicles": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids."
+          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids.",
+          "example": [
+            "driver-A",
+            "driver-B"
+          ]
         },
         "max_time_in_vehicle": {
           "type": "integer",
           "format": "int64",
           "description": "Specifies the maximum time in seconds a delivery can stay in the vehicle. Currently, it only works with services of \"type\":\"delivery\".",
-          "default": 9223372036854776000
+          "default": 9223372036854776000,
+          "example": 900
         },
         "group": {
           "type": "string",
-          "description": "Group this service belongs to."
+          "description": "Group this service belongs to.",
+          "example": "group-A"
         }
       },
       "required": [
