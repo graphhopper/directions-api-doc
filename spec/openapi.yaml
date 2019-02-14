@@ -1449,17 +1449,17 @@
                 "cost_per_meter": {
                     "format": "double",
                     "type": "number",
-                    "description": "**_BETA feature_!** Cost parameter per distance unit, here meter is used"
+                    "description": "**_BETA feature_**! Cost parameter per distance unit, here meter is used"
                 },
                 "cost_per_second": {
                     "format": "double",
                     "type": "number",
-                    "description": "**_BETA feature_!** cost parameter per time unit, here second is used"
+                    "description": "**_BETA feature_**! Cost parameter per time unit, here second is used"
                 },
                 "cost_per_activation": {
                     "format": "double",
                     "type": "number",
-                    "description": "**_BETA feature_!** cost parameter vehicle activation, i.e. fixed costs per vehicle"
+                    "description": "**_BETA feature_**! Cost parameter vehicle activation, i.e. fixed costs per vehicle"
                 },
                 "consider_traffic": {
                     "type": "boolean",
@@ -1506,7 +1506,8 @@
                 },
                 "name": {
                     "type": "string",
-                    "description": "Meaningful name for service, e.g. `\"deliver pizza\"`."
+                    "description": "Meaningful name for service, e.g. `\"deliver pizza\"`.",
+                    "example": "delivery pizza"
                 },
                 "address": {
                     "$ref": "#/definitions/Address"
@@ -1515,20 +1516,23 @@
                     "type": "integer",
                     "format": "int64",
                     "description": "Specifies the duration of the service in seconds, i.e. how long it takes at the customer site.",
-                    "default": 0
+                    "default": 0,
+                    "example": 1800
                 },
                 "preparation_time": {
                     "type": "integer",
                     "format": "int64",
                     "description": "Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.",
-                    "default": 0
+                    "default": 0,
+                    "example": 300
                 },
                 "time_windows": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/TimeWindow"
                     },
-                    "description": "Specifies an array of time window objects (see time_window object below). Specify the time either with the recommended Unix time stamp (the number of seconds since 1970-01-01) or you can also count the seconds relative to Monday morning 00:00 and define the whole week in seconds. For example, Monday 9am is then represented by 9hour * 3600sec/hour = 32400. In turn, Wednesday 1pm corresponds to 2day * 24hour/day * 3600sec/hour + 1day * 13hour/day * 3600sec/hour = 219600. See this tutorial for more information."
+                    "description": "Specifies an array of time window objects (see time_window object below). Specify the time either with the recommended Unix time stamp (the number of seconds since 1970-01-01) or you can also count the seconds relative to Monday morning 00:00 and define the whole week in seconds. For example, Monday 9am is then represented by 9hour * 3600sec/hour = 32400. In turn, Wednesday 1pm corresponds to 2day * 24hour/day * 3600sec/hour + 1day * 13hour/day * 3600sec/hour = 219600. See this tutorial for more information.",
+                    "example": [ { "earliest": 32400, "latest": 36000 }, { "earliest": 50400, "latest": 54000 }]
                 },
                 "size": {
                     "type": "array",
