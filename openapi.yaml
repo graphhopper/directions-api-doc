@@ -802,9 +802,11 @@ definitions:
         type: integer
         format: int32
         default: 500
+        example: 500
       message:
         type: string
         description: Details
+        example: There has been an internal server error.
   Request:
     type: object
     properties:
