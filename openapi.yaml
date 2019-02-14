@@ -1046,15 +1046,15 @@ definitions:
       cost_per_meter:
         format: double
         type: number
-        description: 'cost parameter per distance unit, here meter is used'
+        description: '**_BETA feature_!** Cost parameter per distance unit, here meter is used'
       cost_per_second:
         format: double
         type: number
-        description: 'cost parameter per time unit, here second is used'
+        description: '**_BETA feature_!** cost parameter per time unit, here second is used'
       cost_per_activation:
         format: double
         type: number
-        description: 'cost parameter vehicle activation, i.e. fixed costs per vehicle'
+        description: '**_BETA feature_!** cost parameter vehicle activation, i.e. fixed costs per vehicle'
       consider_traffic:
         type: boolean
         description: 'Specifies whether traffic should be considered. if "tomtom" is used and this is false, free flow travel times from "tomtom" are calculated. If this is true, historical traffic info are used. We do not yet have traffic data for "openstreetmap", thus, setting this true has no effect at all.'
