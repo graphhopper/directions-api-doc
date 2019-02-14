@@ -1344,27 +1344,32 @@
         "earliest": {
           "type": "integer",
           "format": "int64",
-          "description": "Specifies the earliest start time of the break in seconds."
+          "description": "Specifies the earliest start time of the break in seconds.",
+          "example": 1550136467
         },
         "latest": {
           "type": "integer",
           "format": "int64",
-          "description": "Specifies the latest start time of break in seconds."
+          "description": "Specifies the latest start time of break in seconds.",
+          "example": 1550148467
         },
         "duration": {
           "type": "integer",
           "format": "int64",
-          "description": "Specifies the duration of the break in seconds."
+          "description": "Specifies the duration of the break in seconds.",
+          "example": 2700
         },
         "max_driving_time": {
           "type": "integer",
           "format": "int64",
-          "description": "Specifies the max driving time (in a row) without break in seconds."
+          "description": "Specifies the max driving time (in a row) without break in seconds.",
+          "example": 14400
         },
         "initial_driving_time": {
           "type": "integer",
           "format": "int64",
-          "description": "Specifies the initial (current) driving time of a driver to allow dynamic adaptations in seconds."
+          "description": "Specifies the initial (current) driving time of a driver to allow dynamic adaptations in seconds.",
+          "example": 3600
         },
         "possible_split": {
           "type": "array",
@@ -1372,7 +1377,11 @@
             "type": "integer",
             "format": "int64"
           },
-          "description": "Array specifying how a break duration (in seconds) can be split into several smaller breaks"
+          "description": "Array specifying how a break duration (in seconds) can be split into several smaller breaks",
+          "example": [
+            900,
+            1800
+          ]
         }
       },
       "required": [
