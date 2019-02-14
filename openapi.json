@@ -1069,7 +1069,8 @@
       "properties": {
         "job_id": {
           "type": "string",
-          "description": "unique id for your job/request with which you can fetch your solution"
+          "description": "UUID. Unique id for your job/request with which you can fetch your solution",
+          "example": "44886560-b584-4da5-b245-768151dacd8f"
         }
       }
     },
@@ -1078,7 +1079,8 @@
       "properties": {
         "message": {
           "type": "string",
-          "description": "short error message"
+          "description": "short error message",
+          "example": "Bad Request"
         },
         "hints": {
           "type": "array",
@@ -1090,7 +1092,8 @@
         "status": {
           "type": "string",
           "description": "status",
-          "default": "finished"
+          "default": "finished",
+          "example": "finished"
         }
       }
     },
@@ -1099,11 +1102,13 @@
       "properties": {
         "message": {
           "type": "string",
-          "description": "short error message"
+          "description": "error message",
+          "example": "unsupported json property [vehiles]. allowed properties: [vehicles, vehicle_types, services, shipments, relations, algorithm, objectives, cost_matrices, configuration]"
         },
         "details": {
           "type": "string",
-          "description": "Details"
+          "description": "Details",
+          "example": "class java.lang.IllegalArgumentException"
         }
       }
     },
@@ -1951,12 +1956,17 @@
           "type": "array",
           "items": {
             "type": "string",
-            "description": "attribution"
-          }
+            "description": "Attribution"
+          },
+          "example": [
+            "GraphHopper",
+            "OpenStreetMap contributors"
+          ]
         },
         "job_id": {
           "type": "string",
-          "description": "unique identify of job - which you get when posting your request to the large problem solver"
+          "description": "UUID. Unique identifier of job - which you get when posting your request to the large problem solver",
+          "example": "8a78c515-3b87-4e2f-b0b3-3fef8f42a183"
         },
         "status": {
           "type": "string",
@@ -1965,17 +1975,20 @@
             "processing",
             "finished"
           ],
-          "description": "indicates the current status of the job"
+          "description": "Indicates the current status of the job",
+          "example": "finished"
         },
         "waiting_time_in_queue": {
           "type": "integer",
           "format": "int64",
-          "description": "waiting time in ms"
+          "description": "Waiting time in ms",
+          "example": 300000
         },
         "processing_time": {
           "type": "integer",
           "format": "int64",
-          "description": "processing time in ms. if job is still waiting in queue, processing_time is 0"
+          "description": "Processing time in ms. if job is still waiting in queue, processing_time is 0",
+          "example": 900000
         },
         "solution": {
           "$ref": "#/definitions/Solution",
