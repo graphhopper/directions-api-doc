@@ -1173,14 +1173,17 @@ definitions:
       id:
         type: string
         description: Specifies the id of the shipment. Ids need to be unique so there must not be two services/shipments with the same id.
+        example: 7fe77504-7df8-4497-843c-02d70b6490ce
       name:
         type: string
         description: 'Meaningful name for shipment, e.g. "pickup and deliver pizza to Peter".'
+        example: pickup and deliver pizza to Peter
       priority:
         type: integer
         format: int32
         description: Specifies the priority. Can be 1 = high priority to 10 = low priority. Often there are more services/shipments than the available vehicle fleet can handle. Then you could assign priorities to differentiate high priority tasks from those that can be served later or omitted at all.
         default: 2
+        example: 1
       pickup:
         $ref: '#/definitions/Stop'
         description: Specifies pickup.
@@ -1195,29 +1198,38 @@ definitions:
           format: int32
         default:
           - 0
+        example:
+          - 3
       required_skills:
         type: array
         items:
           type: string
-        description: 'Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this shipment needs to be conducted by a technician having a "drilling_machine" and a "screw_driver" then specify the array as follows: ["drilling_machine","screw_driver"]. This means that the service can only be done by a vehicle (technician) that has the skills "drilling_machine" AND "screw_driver" in its skill array. Otherwise it remains unassigned.'
-        default: []
+        description: 'Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this shipment needs to be conducted by a technician having a `drilling_machine` and a `screw_driver` then specify the array as follows: `["drilling_machine","screw_driver"]`. This means that the service can only be done by a vehicle (technician) that has the skills `drilling_machine` AND `screw_driver` in its skill array. Otherwise it remains unassigned.'
+        example:
+          - drilling_machine
+          - screw_driver
       allowed_vehicles:
         type: array
         items:
           type: string
         description: 'Specifies an array of allowed vehicles, i.e. array of vehicle ids. For example, if this shipment can only be conducted EITHER by "technician_peter" OR "technician_stefan" specify this as follows: ["technician_peter","technician_stefan"].'
-        default: []
+        example:
+          - technician_peter
+          - technician_stefan
       disallowed_vehicles:
         type: array
         items:
           type: string
         description: 'Specifies an array of disallowed vehicles, i.e. array of vehicle ids.'
-        default: []
+        example:
+          - driver-A
+          - driver-B
       max_time_in_vehicle:
         type: integer
         format: int64
         description: Specifies the maximum time in seconds a shipment can stay in the vehicle.
         default: 9223372036854776000
+        example: 1800
     required:
       - id
       - pickup
@@ -1233,19 +1245,27 @@ definitions:
         format: int64
         description: 'Specifies the duration of the pickup or delivery in seconds, e.g. how long it takes unload items at the customer site.'
         default: 0
+        example: 1800
       preparation_time:
         type: integer
         format: int64
         description: 'Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.'
         default: 0
+        example: 300
       time_windows:
         type: array
         items:
           $ref: '#/definitions/TimeWindow'
         description: 'Specifies an array of time window objects (see time window object below). For example, if an item needs to be delivered between 7am and 10am then specify the array as follows: [ { "earliest": 25200, "latest" : 32400 } ] (starting the day from 0 in seconds).'
+        example:
+          - earliest: 32400
+            latest: 36000
+          - earliest: 50400
+            latest: 54000
       group:
         type: string
         description: Group this stop belongs to
+        example: ASAP
   TimeWindow:
     type: object
     properties:
