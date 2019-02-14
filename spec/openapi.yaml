@@ -1872,9 +1872,9 @@
                         "type": "string"
                     },
                     "examples": {
-                        "simple": [ "pickup-1", "pickup-2" ],
-                        "pickup-after-start": [ "start", "pickup-1" ],
-                        "pickup-before-end": [ "pickup-1", "end" ]
+                        [ "pickup-1", "pickup-2" ],
+                        [ "start", "pickup-1" ],
+                        [ "pickup-1", "end" ]
                     }
                 },
                 "groups": {
