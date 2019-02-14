@@ -1871,11 +1871,7 @@
                     "items": {
                         "type": "string"
                     },
-                    "examples": {
-                        [ "pickup-1", "pickup-2" ],
-                        [ "start", "pickup-1" ],
-                        [ "pickup-1", "end" ]
-                    }
+                    "example": [ "pickup-1", "pickup-2" ]
                 },
                 "groups": {
                     "type": "array",
@@ -1883,11 +1879,13 @@
                     "items": {
                         "type": "string",
                         "description": "group of services or shipments"
-                    }
+                    },
+                    "example": [ "group-A", "group-B"]
                 },
                 "vehicle_id": {
                     "type": "string",
-                    "description": "Id of pre-assigned vehicle, i.e. the vehicle id that is determined to conduct the services and shipments in this relation."
+                    "description": "Id of pre-assigned vehicle, i.e. the vehicle id that is determined to conduct the services and shipments in this relation.",
+                    "example": "driver-Peter"
                 }
             }
         },
