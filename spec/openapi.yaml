@@ -1148,7 +1148,7 @@
                  "message": {
                     "type": "string",
                     "description": "Details",
-                    "error": "There has been an internal server error."
+                    "example": "There has been an internal server error."
                  }
             }
         },
