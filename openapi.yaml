@@ -1418,8 +1418,8 @@ definitions:
 
           `in_sequence`: This relation type enforces n jobs to be in sequence. It can be specified as
 
-          ` { "type": "in_sequence", "ids": ["service_i_id","service_j_id"] } 
-          `
+          ` { "type": "in_sequence", "ids": ["service_i_id","service_j_id"] } `
+
           which means that service j need to be in the same route as service i AND it needs to occur somewhere after service i. As described above if a specific vehicle needs to conduct this, just add `vehicle_id`.
 
 
@@ -1430,7 +1430,7 @@ definitions:
           yielding service j to occur directly after service i, and service k to occur directly after service j i.e. in strong order. Again, a vehicle can be assigned a priority by adding a `vehicle_id` to the relation.
 
 
-          Special IDs:
+          *Special IDs*:
           If you look at the previous example and you want service i to be the first in the route, use the special ID `start` as follows:
 
           ` { "type": "in_direct_sequence", "ids": ["start","service_i_id","service_j_id","service_k_id"] } `
