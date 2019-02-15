@@ -97,7 +97,10 @@
                         "in": "query",
                         "description": "IMPORTANT- TODO - currently you have to pass false for the swagger client - Have not found a way to force add a parameter. If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point. If `true` the coordinates will be encoded as string leading to less bandwith usage. You'll need a special handling for the decoding of this string on the client-side. We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/java/com/graphhopper/http/WebHelper.java#L43) and [JavaScript](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/webapp/js/ghrequest.js#L139). It is especially important to use no 3rd party client if you set `elevation=true`!",
                         "type": "boolean",
-                        "required": true
+                        "required": true,
+                        "enum": [
+                            true
+                        ]
                     },
                     {
                         "name": "calc_points",
@@ -118,7 +121,7 @@
                     {
                         "name": "ch.disable",
                         "in": "query",
-                        "description": "Use this parameter in combination with one or more parameters of this table",
+                        "description": "Use this parameter in combination with one or more parameters of this table ``!Dieser Parameter sollte weg. Wir muessen wissen, wann CH eine erlaubte Beschleunigung ist um das zu machen, was der User will, und wann nicht.``",
                         "type": "boolean"
                     },
                     {
@@ -130,13 +133,13 @@
                     {
                         "name": "edge_traversal",
                         "in": "query",
-                        "description": "Use `true` if you want to consider turn restrictions for bike and motor vehicles. Keep in mind that the response time is roughly 2 times slower.",
+                        "description": "Use `true` if you want to consider turn restrictions for bike and motor vehicles. Keep in mind that the response time is roughly 2 times slower. `!Rename to use_turn_restrictions? The user does not want to know what edge traversal is, they just want turn restrictions to be used.`",
                         "type": "boolean"
                     },
                     {
                         "name": "algorithm",
                         "in": "query",
-                        "description": "The algorithm to calculate the route. Other options are `dijkstra`, `astar`, `astarbi`, `alternative_route` and `round_trip`",
+                        "description": "The algorithm to calculate the route. Other options are `dijkstra`, `astar`, `astarbi`, `alternative_route` and `round_trip` `Das scheint mir zwei total unterschiedliche Dimensionen im Code zu mischen, nämlich tatsächlich den Algorithmus einerseits, und das Template andererseits. Kann die Auswahl von dijkstra vs astar vs astarbi nicht weg? Ich denke doch, wir müssen wissen, welcher  Algorithmus wann der beste ist und nicht der User. Umgekehrt ist die Auswahl zwischen alternative_route, round_trip und default (via) so wichtig, dass man sich fast fragen könnte, ob es nicht eine eigene Operation sein sollte -- schliesslich haben sie jeweils ihre eigenen Parameter, und das Ergebnis hat auch eine total andere Semantik (hat nichts gemeinsam, ausser dass es eine Liste von PathWrappern ist.)`",
                         "type": "string"
                     },
                     {
@@ -211,7 +214,7 @@
                     {
                         "name": "avoid",
                         "in": "query",
-                        "description": "comma separate list to avoid certain roads. You can avoid motorway, ferry, tunnel or track",
+                        "description": "comma separate list to avoid certain roads. You can avoid motorway, ferry, tunnel or track `Bisschen schade, dass hier nicht der gleiche collection-typ genommen wird wie bei points`",
                         "type": "string"
                     }
                 ],
