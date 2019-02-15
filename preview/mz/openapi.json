@@ -1,0 +1,2232 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "GraphHopper Directions API",
+    "description": "You use the GraphHopper Directions API to add route planning, navigation and route optimization to your software. E.g. the Routing API has turn instructions and elevation data and the Route Optimization API solves your logistic problems and supports various constraints like time window and capacity restrictions. Also it is possible to get all distances between all locations with our fast Matrix API.",
+    "version": "1.0.0",
+    "termsOfService": "https://www.graphhopper.com/terms/",
+    "contact": {
+      "name": "API Support",
+      "email": "support@graphhopper.com",
+      "url": "https://github.com/graphhopper/directions-api-doc"
+    },
+    "x-logo": {
+      "url": "https://www.graphhopper.com/wp-content/uploads/2018/03/graphhopper-logo-small.png"
+    }
+  },
+  "host": "graphhopper.com",
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/api/1",
+  "tags": [
+    {
+      "name": "Route Optimization API",
+      "description": "Everything about route optimization"
+    },
+    {
+      "name": "Routing API",
+      "description": "Everything about routing"
+    },
+    {
+      "name": "Matrix API",
+      "description": "Everything about matrix"
+    },
+    {
+      "name": "Geocoding API",
+      "description": "Everything about geocoding"
+    },
+    {
+      "name": "Isochrone API",
+      "description": "Everything about geocoding"
+    }
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "key",
+      "in": "query"
+    }
+  },
+  "paths": {
+    "/route": {
+      "get": {
+        "summary": "Routing Request",
+        "description": "The GraphHopper Routing API allows to calculate route and implement navigation via the turn instructions",
+        "parameters": [
+          {
+            "name": "point",
+            "in": "query",
+            "description": "Specify multiple points for which the route should be calculated. The order is important. Specify at least two points.",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "description": "The locale of the resulting turn instructions. E.g. `pt_PT` for Portuguese or `de` for German",
+            "type": "string"
+          },
+          {
+            "name": "instructions",
+            "in": "query",
+            "description": "If instruction should be calculated and returned",
+            "type": "boolean"
+          },
+          {
+            "name": "vehicle",
+            "in": "query",
+            "description": "The vehicle for which the route should be calculated. Other vehicles are foot, small_truck, ...",
+            "type": "string"
+          },
+          {
+            "name": "elevation",
+            "in": "query",
+            "description": "If `true` a third dimension - the elevation - is included in the polyline or in the GeoJson. If enabled you have to use a modified version of the decoding method or set points_encoded to `false`. See the points_encoded attribute for more details. Additionally a request can fail if the vehicle does not support elevation. See the features object for every vehicle.",
+            "type": "boolean"
+          },
+          {
+            "name": "points_encoded",
+            "in": "query",
+            "description": "IMPORTANT- TODO - currently you have to pass false for the swagger client - Have not found a way to force add a parameter. If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point. If `true` the coordinates will be encoded as string leading to less bandwith usage. You'll need a special handling for the decoding of this string on the client-side. We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/java/com/graphhopper/http/WebHelper.java#L43) and [JavaScript](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/webapp/js/ghrequest.js#L139). It is especially important to use no 3rd party client if you set `elevation=true`!",
+            "type": "boolean",
+            "required": true
+          },
+          {
+            "name": "calc_points",
+            "in": "query",
+            "description": "If the points for the route should be calculated at all printing out only distance and time.",
+            "type": "boolean"
+          },
+          {
+            "name": "point_hint",
+            "in": "query",
+            "description": "Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "ch.disable",
+            "in": "query",
+            "description": "Use this parameter in combination with one or more parameters of this table",
+            "type": "boolean"
+          },
+          {
+            "name": "weighting",
+            "in": "query",
+            "description": "Which kind of 'best' route calculation you need. Other option is `shortest` (e.g. for `vehicle=foot` or `bike`), `short_fastest` if time and distance is expensive e.g. for `vehicle=truck`",
+            "type": "string"
+          },
+          {
+            "name": "edge_traversal",
+            "in": "query",
+            "description": "Use `true` if you want to consider turn restrictions for bike and motor vehicles. Keep in mind that the response time is roughly 2 times slower.",
+            "type": "boolean"
+          },
+          {
+            "name": "algorithm",
+            "in": "query",
+            "description": "The algorithm to calculate the route. Other options are `dijkstra`, `astar`, `astarbi`, `alternative_route` and `round_trip`",
+            "type": "string"
+          },
+          {
+            "name": "heading",
+            "in": "query",
+            "description": "Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points. In this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree. This parameter also influences the tour generated with `algorithm=round_trip` and force the initial direction.",
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "heading_penalty",
+            "in": "query",
+            "description": "Penalty for omitting a specified heading. The penalty corresponds to the accepted time delay in seconds in comparison to the route without a heading.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pass_through",
+            "in": "query",
+            "description": "If `true` u-turns are avoided at via-points with regard to the `heading_penalty`.",
+            "type": "boolean"
+          },
+          {
+            "name": "details",
+            "in": "query",
+            "description": "List of additional trip attributes to be returned. Try some of the following: `average_speed`, `street_name`, `edge_id`, `time`, `distance`.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "round_trip.distance",
+            "in": "query",
+            "description": "If `algorithm=round_trip` this parameter configures approximative length of the resulting round trip",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "round_trip.seed",
+            "in": "query",
+            "description": "If `algorithm=round_trip` this parameter introduces randomness if e.g. the first try wasn't good.",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "alternative_route.max_paths",
+            "in": "query",
+            "description": "If `algorithm=alternative_route` this parameter sets the number of maximum paths which should be calculated. Increasing can lead to worse alternatives.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "alternative_route.max_weight_factor",
+            "in": "query",
+            "description": "If `algorithm=alternative_route` this parameter sets the factor by which the alternatives routes can be longer than the optimal route. Increasing can lead to worse alternatives.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "alternative_route.max_share_factor",
+            "in": "query",
+            "description": "If `algorithm=alternative_route` this parameter specifies how much alternatives routes can have maximum in common with the optimal route. Increasing can lead to worse alternatives.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "avoid",
+            "in": "query",
+            "description": "comma separate list to avoid certain roads. You can avoid motorway, ferry, tunnel or track",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Routing API"
+        ],
+        "responses": {
+          "200": {
+            "description": "Routing Result",
+            "schema": {
+              "$ref": "#/definitions/RouteResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      }
+    },
+    "/isochrone": {
+      "get": {
+        "summary": "Isochrone Request",
+        "description": "The GraphHopper Isochrone API allows calculating an isochrone of a locations means to calculate\n'a line connecting points at which a vehicle arrives at the same time,'\nsee [Wikipedia](http://en.wikipedia.org/wiki/Isochrone_map).\nIt is also called **reachability** or **walkability**.\n",
+        "parameters": [
+          {
+            "name": "point",
+            "in": "query",
+            "description": "Specify the start coordinate",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "time_limit",
+            "in": "query",
+            "description": "Specify which time the vehicle should travel. In seconds.",
+            "default": 600,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "distance_limit",
+            "in": "query",
+            "description": "Specify which distance the vehicle should travel. In meter.",
+            "default": -1,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "vehicle",
+            "in": "query",
+            "description": "Possible vehicles are bike, car, foot and [more](https://graphhopper.com/api/1/docs/supported-vehicle-profiles/)",
+            "default": "car",
+            "type": "string"
+          },
+          {
+            "name": "buckets",
+            "in": "query",
+            "description": "For how many sub intervals an additional polygon should be calculated.",
+            "default": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "reverse_flow",
+            "in": "query",
+            "description": "If `false` the flow goes from point to the polygon, if `true` the flow goes from the polygon \"inside\" to the point. Example usage for `false`&#58; *How many potential customer can be reached within 30min travel time from your store* vs. `true`&#58; *How many customers can reach your store within 30min travel time.*",
+            "default": false,
+            "type": "boolean"
+          },
+          {
+            "name": "weighting",
+            "in": "query",
+            "description": "Can be fastest or shortest",
+            "default": "fastest",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Isochrone API"
+        ],
+        "responses": {
+          "200": {
+            "description": "Isochrone Result",
+            "schema": {
+              "$ref": "#/definitions/IsochroneResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      }
+    },
+    "/matrix": {
+      "get": {
+        "summary": "Matrix API",
+        "description": "The Matrix API is part of the GraphHopper Directions API and with this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the Routing API multiple times.\nIn the Routing API we support multiple points, so called 'via points', which results in one route being calculated. The Matrix API results in NxM routes or more precise NxM weights, distances or times being calculated but is a lot faster compared to NxM single requests. The most simple example is a tourist trying to decide which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service in the need of often big NxN matrices to solve vehicle routing problems. E.g. the GraphHopper Route Optimization API uses the Matrix API under the hood to achieve this.\n",
+        "parameters": [
+          {
+            "name": "point",
+            "in": "query",
+            "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated. In this case the starts are identical to the destinations. If there are N points, then NxN entries will be calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with from_point or to_point. Is a string with the format latitude,longitude.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "from_point",
+            "in": "query",
+            "description": "The starting points for the routes. E.g. if you want to calculate the three routes A-&gt;1, A-&gt;2, A-&gt;3 then you have one from_point parameter and three to_point parameters. Is a string with the format latitude,longitude.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "to_point",
+            "in": "query",
+            "description": "The destination points for the routes. Is a string with the format latitude,longitude.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "point_hint",
+            "in": "query",
+            "description": "Optional parameter. Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "from_point_hint",
+            "in": "query",
+            "description": "For the from_point parameter. See point_hint",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "to_point_hint",
+            "in": "query",
+            "description": "For the to_point parameter. See point_hint",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "out_array",
+            "in": "query",
+            "description": "Specifies which arrays should be included in the response. Specify one or more of the following options 'weights', 'times', 'distances'. To specify more than one array use e.g. out_array=times&out_array=distances. The units of the entries of distances are meters, of times are seconds and of weights is arbitrary and it can differ for different vehicles or versions of this API.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "vehicle",
+            "in": "query",
+            "description": "The vehicle for which the route should be calculated. Other vehicles are foot, small_truck etc",
+            "default": "car",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Matrix API"
+        ],
+        "responses": {
+          "200": {
+            "description": "Isochrone Result",
+            "schema": {
+              "$ref": "#/definitions/MatrixResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Matrix API Post",
+        "description": "The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter in the URL will be the key which stays in the URL. Both request scenarios are identically except that all singular parameter names are named as their plural for a POST request.\n",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/MatrixRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Matrix API"
+        ],
+        "responses": {
+          "200": {
+            "description": "Isochrone Result",
+            "schema": {
+              "$ref": "#/definitions/MatrixResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      }
+    },
+    "/geocode": {
+      "get": {
+        "summary": "Execute a Geocoding request",
+        "description": "This endpoint provides forward and reverse geocoding. For more details, review the official documentation at: https://graphhopper.com/api/1/docs/geocoding/\n",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "If you do forward geocoding, then this would be a textual description of the address you are looking for",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "description": "Display the search results for the specified locale. Currently French (fr), English (en), German (de) and Italian (it) are supported. If the locale wasn't found the default (en) is used.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Specify the maximum number of returned results",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "reverse",
+            "in": "query",
+            "description": "Set to true to do a reverse Geocoding request, see point parameter",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "point",
+            "in": "query",
+            "description": "The location bias in the format 'latitude,longitude' e.g. point=45.93272,11.58803",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "description": "Can be either, default, nominatim, opencagedata",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Geocoding API"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array found locations",
+            "schema": {
+              "$ref": "#/definitions/GeocodingResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      }
+    },
+    "/vrp/optimize": {
+      "post": {
+        "summary": "Solves vehicle routing problems",
+        "description": " ### Introduction\n\nThe Route Optimization API can be used to solve traveling salesman or vehicle routing problems.\n### Endpoint\n\nThe endpoint is `https://graphhopper.com/api/[version]/vrp`\n\nThe Route Optimization API works in two steps\n1. Post your problem json: `curl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/vrp/optimize?key=[YOUR_KEY]\" --data @your-vrp-problem.json`\n\n2. Poll every 500ms until a solution is available: `curl -X GET \"https://graphhopper.com/api/1/vrp/solution/[RETURNED_JOB_ID]?key=[YOUR_KEY]\"`\n\nFor more details also about the format of the `your-vrp-problem.json` file you can use one of [the examples](https://github.com/graphhopper/directions-api-js-client/tree/master/route-optimization-examples).\n\n### API Clients and Examples\n\nSee the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization).\n",
+        "operationId": "postVrp",
+        "externalDocs": {
+          "description": "Find more info here",
+          "url": "https://graphhopper.com/api/1/docs/route-optimization/"
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request object that contains the problem to be solved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Request"
+            }
+          }
+        ],
+        "tags": [
+          "Route Optimization API"
+        ],
+        "responses": {
+          "200": {
+            "description": "A jobId you can use to retrieve your solution from the server - see solution endpoint.",
+            "schema": {
+              "$ref": "#/definitions/JobId"
+            }
+          },
+          "400": {
+            "description": "Error occurred when reading client request. Request is invalid.",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "500": {
+            "description": "Error occurred on server side.",
+            "schema": {
+              "$ref": "#/definitions/InternalErrorMessage"
+            }
+          }
+        }
+      }
+    },
+    "/vrp/solution/{jobId}": {
+      "get": {
+        "summary": "Retrieves solution associated to jobId",
+        "description": "This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.\n",
+        "operationId": "getSolution",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobId",
+            "description": "Request solution with jobId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Route Optimization API"
+        ],
+        "responses": {
+          "200": {
+            "description": "A response containing the solution",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error occurred on client side such as invalid input."
+          },
+          "500": {
+            "description": "Error occurred on server side."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GeocodingResponse": {
+      "properties": {
+        "hits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeocodingLocation"
+          }
+        },
+        "locale": {
+          "type": "string"
+        }
+      }
+    },
+    "GeocodingLocation": {
+      "type": "object",
+      "properties": {
+        "point": {
+          "$ref": "#/definitions/GeocodingPoint"
+        },
+        "osm_id": {
+          "type": "string",
+          "description": "OSM Id"
+        },
+        "osm_type": {
+          "type": "string",
+          "description": "N = node, R = relation, W = way"
+        },
+        "osm_key": {
+          "type": "string",
+          "description": "The osm key of the result like `place` or `amenity`"
+        },
+        "name": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "housenumber": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      }
+    },
+    "GeocodingPoint": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "format": "double",
+          "description": "Latitude"
+        },
+        "lng": {
+          "type": "number",
+          "format": "double",
+          "description": "Longitude"
+        }
+      }
+    },
+    "MatrixRequest": {
+      "type": "object",
+      "properties": {
+        "points": {
+          "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated. In this case the starts are identical to the destinations. If there are N points, then NxN entries will be calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with from_point or to_point. Is a string with the format longitude,latitude.",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "from_points": {
+          "description": "The starting points for the routes. E.g. if you want to calculate the three routes A-&gt;1, A-&gt;2, A-&gt;3 then you have one from_point parameter and three to_point parameters. Is a string with the format longitude,latitude.",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "to_points": {
+          "description": "The destination points for the routes. Is a string with the format longitude,latitude.",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "point_hints": {
+          "description": "Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "from_point_hints": {
+          "description": "More information for the `from_points` array. See `point_hints`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "to_point_hints": {
+          "description": "More information for the `to_points` array. See `point_hints`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "out_arrays": {
+          "description": "Specifies which arrays should be included in the response. Specify one or more of the following options 'weights', 'times', 'distances'. To specify more than one array use e.g. out_array=times&amp;out_array=distances. The units of the entries of distances are meters, of times are seconds and of weights is arbitrary and it can differ for different vehicles or versions of this API.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vehicle": {
+          "description": "The vehicle for which the route should be calculated. Other vehicles are foot, small_truck etc, see here for the details.",
+          "type": "string"
+        }
+      }
+    },
+    "MatrixResponse": {
+      "type": "object",
+      "properties": {
+        "distances": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "int64"
+            }
+          }
+        },
+        "times": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "int64"
+            }
+          }
+        },
+        "weights": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        },
+        "info": {
+          "$ref": "#/definitions/ResponseInfo"
+        }
+      }
+    },
+    "RouteResponse": {
+      "type": "object",
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RouteResponsePath"
+          }
+        },
+        "info": {
+          "$ref": "#/definitions/ResponseInfo"
+        }
+      }
+    },
+    "RouteResponsePath": {
+      "type": "object",
+      "description": "A found path",
+      "properties": {
+        "distance": {
+          "description": "The total distance of the route, in meter",
+          "type": "number",
+          "format": "double"
+        },
+        "time": {
+          "description": "The total time of the route, in ms",
+          "type": "integer",
+          "format": "int64"
+        },
+        "ascend": {
+          "type": "number",
+          "format": "double"
+        },
+        "descend": {
+          "description": "The total descend (downhill) of the route, in meter",
+          "type": "number",
+          "format": "double"
+        },
+        "points": {
+          "$ref": "#/definitions/ResponseCoordinates"
+        },
+        "points_encoded": {
+          "description": "Is true if the points are encoded, if not paths[0].points contains the geo json of the path (then order is lon,lat,elevation), which is easier to handle but consumes more bandwidth compared to encoded version",
+          "type": "boolean"
+        },
+        "bbox": {
+          "description": "The bounding box of the route, format <br> minLon, minLat, maxLon, maxLat",
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "snapped_waypoints": {
+          "$ref": "#/definitions/ResponseCoordinates"
+        },
+        "instructions": {
+          "$ref": "#/definitions/ResponseInstructions"
+        },
+        "details": {
+          "type": "object"
+        }
+      }
+    },
+    "ResponseCoordinates": {
+      "type": "object",
+      "properties": {
+        "coordinates": {
+          "$ref": "#/definitions/ResponseCoordinatesArray"
+        }
+      }
+    },
+    "ResponseCoordinatesArray": {
+      "type": "array",
+      "description": "An array containing coordinates",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "ResponseInstructions": {
+      "type": "array",
+      "description": "Contains information about the instructions for this route. The last instruction is always the Finish instruction and takes 0ms and 0meter. Keep in mind that instructions are currently under active development and can sometimes contain misleading information, so, make sure you always show an image of the map at the same time when navigating your users!",
+      "items": {
+        "$ref": "#/definitions/ResponseInstruction"
+      }
+    },
+    "ResponseInstruction": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "A description what the user has to do in order to follow the route. The language depends on the locale parameter."
+        },
+        "street_name": {
+          "type": "string",
+          "description": "The name of the street to turn onto in order to follow the route."
+        },
+        "distance": {
+          "type": "number",
+          "format": "double",
+          "description": "The distance for this instruction, in meter"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The duration for this instruction, in ms"
+        },
+        "interval": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "An array containing the first and the last index (relative to paths[0].points) of the points for this instruction. This is useful to know for which part of the route the instructions are valid."
+        },
+        "sign": {
+          "type": "integer",
+          "format": "int32",
+          "description": "A number which specifies the sign to show e.g. for right turn etc <br>TURN_SHARP_LEFT = -3<br>TURN_LEFT = -2<br>TURN_SLIGHT_LEFT = -1<br>CONTINUE_ON_STREET = 0<br>TURN_SLIGHT_RIGHT = 1<br>TURN_RIGHT = 2<br>TURN_SHARP_RIGHT = 3<br>FINISH = 4<br>VIA_REACHED = 5<br>USE_ROUNDABOUT = 6"
+        },
+        "annotation_text": {
+          "type": "string",
+          "description": "optional - A text describing the instruction in more detail, e.g. like surface of the way, warnings or involved costs."
+        },
+        "annotation_importance": {
+          "type": "integer",
+          "format": "int32",
+          "description": "optional - 0 stands for INFO, 1 for warning, 2 for costs, 3 for costs and warning"
+        },
+        "exit_number": {
+          "type": "integer",
+          "format": "int32",
+          "description": "optional - Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout."
+        },
+        "turn_angle": {
+          "type": "number",
+          "format": "double",
+          "description": "optional - Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout - 0&lt;r&lt;2*PI for clockwise and -2PI&lt;r&lt;0 for counterclockwise transit. Null if the direction of rotation is undefined."
+        }
+      }
+    },
+    "ResponseInfo": {
+      "type": "object",
+      "description": "Additional information for your request",
+      "properties": {
+        "copyrights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "took": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "IsochroneResponse": {
+      "type": "object",
+      "properties": {
+        "polygons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IsochroneResponsePolygon"
+          }
+        },
+        "copyrights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "IsochroneResponsePolygon": {
+      "type": "object",
+      "description": "A found path",
+      "properties": {
+        "properties": {
+          "type": "object",
+          "properties": {
+            "bucket": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "type": {
+          "type": "string"
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResponseCoordinatesArray"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GHError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "hints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "JobId": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "description": "UUID. Unique id for your job/request with which you can fetch your solution",
+          "example": "44886560-b584-4da5-b245-768151dacd8f"
+        }
+      }
+    },
+    "BadRequest": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "short error message",
+          "example": "Bad Request"
+        },
+        "hints": {
+          "type": "array",
+          "description": "Define one or more vehicles that can be employed to deliver items.",
+          "items": {
+            "$ref": "#/definitions/ErrorMessage"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status",
+          "default": "finished",
+          "example": "finished"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "error message",
+          "example": "unsupported json property [vehiles]. allowed properties: [vehicles, vehicle_types, services, shipments, relations, algorithm, objectives, cost_matrices, configuration]"
+        },
+        "details": {
+          "type": "string",
+          "description": "Details",
+          "example": "class java.lang.IllegalArgumentException"
+        }
+      }
+    },
+    "InternalErrorMessage": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "default": 500,
+          "example": 500
+        },
+        "message": {
+          "type": "string",
+          "description": "Details",
+          "example": "There has been an internal server error."
+        }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "properties": {
+        "vehicles": {
+          "type": "array",
+          "description": "Specifies the available vehicles.",
+          "items": {
+            "$ref": "#/definitions/Vehicle"
+          }
+        },
+        "vehicle_types": {
+          "type": "array",
+          "description": "Specifies the available vehicle types that are referred to by the specified vehicles.",
+          "items": {
+            "$ref": "#/definitions/VehicleType"
+          }
+        },
+        "services": {
+          "type": "array",
+          "description": "Specifies the available services, i.e. pickup, delivery or any other points to be visited by vehicles. Each service only involves exactly one location.",
+          "items": {
+            "$ref": "#/definitions/Service"
+          }
+        },
+        "shipments": {
+          "type": "array",
+          "description": "Specifies the available shipments, i.e. pickup AND delivery points to be visited by vehicles subsequently. Each shipment involves exactly two locations, a pickup and a delivery location.",
+          "items": {
+            "$ref": "#/definitions/Shipment"
+          }
+        },
+        "relations": {
+          "type": "array",
+          "description": "Specifies an arbitrary number of additional relations between and among services and shipments.",
+          "items": {
+            "$ref": "#/definitions/Relation"
+          }
+        },
+        "algorithm": {
+          "$ref": "#/definitions/Algorithm",
+          "description": "**Deprecated** Do NOT use this field anymore. It is deprecated. Use `objectives` instead."
+        },
+        "objectives": {
+          "type": "array",
+          "description": "Specifies an array of objective functions. This tells the algorithm the objective of the optimization.",
+          "items": {
+            "$ref": "#/definitions/Objective"
+          },
+          "example": [
+            {
+              "type": "min",
+              "value": "vehicles"
+            },
+            {
+              "type": "min",
+              "value": "completion_time"
+            }
+          ]
+        },
+        "cost_matrices": {
+          "type": "array",
+          "description": "Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.",
+          "items": {
+            "$ref": "#/definitions/CostMatrix"
+          }
+        },
+        "configuration": {
+          "$ref": "#/definitions/Configuration",
+          "description": "Specifies general configurations."
+        }
+      }
+    },
+    "Vehicle": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "description": "Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown.",
+          "example": "vehicle-1"
+        },
+        "type_id": {
+          "type": "string",
+          "description": "The type_id refers to specified vehicle type (see vehicle types). If it is omitted a default type will be used.",
+          "default": "default-type",
+          "example": "my-own-type"
+        },
+        "start_address": {
+          "$ref": "#/definitions/Address"
+        },
+        "end_address": {
+          "$ref": "#/definitions/Address",
+          "description": "If this is omitted AND return_to_depot is true then the vehicle needs to return to its start_address."
+        },
+        "break": {
+          "$ref": "#/definitions/Break",
+          "decription": "Specifies the driver break."
+        },
+        "return_to_depot": {
+          "type": "boolean",
+          "description": "If it is false, the algorithm decides where to end the vehicle route. It ends in one of your customers' locations. The end is chosen such that it contributes to the overall objective function, e.g. min transport_time. If it is true, you can either specify a specific end location (which is then regarded as end depot) or you can leave it and the driver returns to its start location.",
+          "default": true
+        },
+        "earliest_start": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Earliest start of vehicle in seconds. It is recommended to use the unix timestamp.",
+          "default": 0
+        },
+        "latest_end": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Latest end of vehicle in seconds, i.e. the time the vehicle needs to be at its end location at latest.",
+          "default": 9223372036854776000
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of skills, i.e. array of string (not case sensitive).",
+          "example": [
+            "drilling_maschine",
+            "screw_driver"
+          ]
+        },
+        "max_distance": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the maximum distance a vehicle can go.",
+          "example": 400000
+        },
+        "max_driving_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the maximum drive time a vehicle/driver can go, i.e. the maximum time on the road (service and waiting times are not included here)",
+          "example": 28800
+        },
+        "max_jobs": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies the maximum number of jobs a vehicle can load.",
+          "example": 12
+        },
+        "max_activities": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies the maximum number of activities a vehicle can conduct.",
+          "example": 24
+        },
+        "move_to_end_address": {
+          "type": "boolean",
+          "description": "Indicates whether a vehicle should be moved even though it has not been assigned any jobs."
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "start_address"
+      ],
+      "minItems": 1
+    },
+    "Algorithm": {
+      "type": "object",
+      "description": "Do NOT use this field anymore. It is deprecated. Use `objectives` instead.",
+      "properties": {
+        "problem_type": {
+          "type": "string",
+          "enum": [
+            "min",
+            "min-max"
+          ]
+        },
+        "objective": {
+          "type": "string",
+          "enum": [
+            "transport_time",
+            "completion_time"
+          ]
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "location_id": {
+          "type": "string",
+          "description": "Specifies the id of the location.",
+          "example": "550e8400-e29b-11d4-a716-446655440000"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of location.",
+          "example": "Queens Victoria Street 70, Second Floor, Flat 245"
+        },
+        "lon": {
+          "format": "double",
+          "type": "number",
+          "description": "Longitude of location.",
+          "example": -0.092869
+        },
+        "lat": {
+          "format": "double",
+          "type": "number",
+          "description": "Latitude of location.",
+          "example": 51.512665
+        },
+        "street_hint": {
+          "type": "string",
+          "description": "Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+          "example": "Queens Victoria Street 70"
+        }
+      },
+      "required": [
+        "location_id",
+        "lon",
+        "lat"
+      ]
+    },
+    "Break": {
+      "type": "object",
+      "properties": {
+        "earliest": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the earliest start time of the break in seconds.",
+          "example": 1550136467
+        },
+        "latest": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the latest start time of break in seconds.",
+          "example": 1550148467
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the duration of the break in seconds.",
+          "example": 2700
+        },
+        "max_driving_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the max driving time (in a row) without break in seconds.",
+          "example": 14400
+        },
+        "initial_driving_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the initial (current) driving time of a driver to allow dynamic adaptations in seconds.",
+          "example": 3600
+        },
+        "possible_split": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Array specifying how a break duration (in seconds) can be split into several smaller breaks",
+          "example": [
+            900,
+            1800
+          ]
+        }
+      },
+      "required": [
+        "duration"
+      ]
+    },
+    "VehicleType": {
+      "type": "object",
+      "properties": {
+        "type_id": {
+          "type": "string",
+          "description": "Specifies the id of the vehicle type. If a vehicle needs to be of this type, it should refer to this with its type_id attribute.",
+          "example": "my-own-type"
+        },
+        "profile": {
+          "type": "string",
+          "description": "Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.",
+          "example": "truck",
+          "enum": [
+            "car",
+            "bike",
+            "foot",
+            "hike",
+            "mtb",
+            "racingbike",
+            "scooter",
+            "truck",
+            "small_truck"
+          ],
+          "default": "car"
+        },
+        "capacity": {
+          "type": "array",
+          "description": "Specifies an array of capacity dimension values which need to be int values. For example, if there are two dimensions such as volume and weight then it needs to be defined as [ 1000, 300 ] assuming a maximum volume of 1000 and a maximum weight of 300.",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "default": [
+            0
+          ],
+          "example": [
+            100,
+            500
+          ]
+        },
+        "speed_factor": {
+          "format": "double",
+          "type": "number",
+          "description": "Specifies a speed factor for this vehicle type. If the vehicle that uses this type needs to be only half as fast as what is actually calculated with our routing engine then set the speed factor to 0.5.",
+          "default": 1
+        },
+        "service_time_factor": {
+          "format": "double",
+          "type": "number",
+          "description": "Specifies a service time factor for this vehicle type. If the vehicle/driver that uses this type is able to conduct the service as double as fast as it is determined in the corresponding service or shipment then set it to 0.5.",
+          "default": 1
+        },
+        "cost_per_meter": {
+          "format": "double",
+          "type": "number",
+          "description": "**_BETA feature_**! Cost parameter per distance unit, here meter is used"
+        },
+        "cost_per_second": {
+          "format": "double",
+          "type": "number",
+          "description": "**_BETA feature_**! Cost parameter per time unit, here second is used"
+        },
+        "cost_per_activation": {
+          "format": "double",
+          "type": "number",
+          "description": "**_BETA feature_**! Cost parameter vehicle activation, i.e. fixed costs per vehicle"
+        },
+        "consider_traffic": {
+          "type": "boolean",
+          "description": "Specifies whether traffic should be considered. if \"tomtom\" is used and this is false, free flow travel times from \"tomtom\" are calculated. If this is true, historical traffic info are used. We do not yet have traffic data for \"openstreetmap\", thus, setting this true has no effect at all.",
+          "default": false
+        },
+        "network_data_provider": {
+          "type": "string",
+          "description": "Specifies network data provider. Either use \"openstreetmap\" or \"tomtom\".",
+          "enum": [
+            "openstreetmap",
+            "tomtom"
+          ],
+          "default": "openstreetmap"
+        }
+      },
+      "required": [
+        "type_id"
+      ]
+    },
+    "Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Specifies the id of the service. Ids need to be unique so there must not be two services/shipments with the same id.",
+          "example": "7fe77504-7df8-4497-843c-02d70b6490ce"
+        },
+        "type": {
+          "type": "string",
+          "description": "Specifies type of service. This makes a difference if items are loaded or unloaded, i.e. if one of the size dimensions > 0. If it is specified as `service` or `pickup`, items are loaded and will stay in the vehicle for the rest of the route (and thus consumes capacity for the rest of the route). If it is a `delivery`, items are implicitly loaded at the beginning of the route and will stay in the route until delivery (and thus releases capacity for the rest of the route).",
+          "enum": [
+            "service",
+            "pickup",
+            "delivery"
+          ],
+          "default": "service",
+          "example": "delivery"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies the priority. Can be 1 = high priority to 10 = low priority. Often there are more services/shipments than the available vehicle fleet can handle. Then you could assign priorities to differentiate high priority tasks from those that can be served later or omitted at all.",
+          "default": 2,
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "Meaningful name for service, e.g. `\"deliver pizza\"`.",
+          "example": "delivery pizza"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the duration of the service in seconds, i.e. how long it takes at the customer site.",
+          "default": 0,
+          "example": 1800
+        },
+        "preparation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.",
+          "default": 0,
+          "example": 300
+        },
+        "time_windows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimeWindow"
+          },
+          "description": "Specifies an array of time window objects (see time_window object below). Specify the time either with the recommended Unix time stamp (the number of seconds since 1970-01-01) or you can also count the seconds relative to Monday morning 00:00 and define the whole week in seconds. For example, Monday 9am is then represented by 9hour * 3600sec/hour = 32400. In turn, Wednesday 1pm corresponds to 2day * 24hour/day * 3600sec/hour + 1day * 13hour/day * 3600sec/hour = 219600. See this tutorial for more information.",
+          "example": [
+            {
+              "earliest": 32400,
+              "latest": 36000
+            },
+            {
+              "earliest": 50400,
+              "latest": 54000
+            }
+          ]
+        },
+        "size": {
+          "type": "array",
+          "description": "Size can have multiple dimensions and should be in line with the capacity dimension array of the vehicle type. For example, if the item that needs to be delivered has two size dimension, volume and weight, then specify it as follow [ 20, 5 ] assuming a volume of 20 and a weight of 5.",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "default": [
+            0
+          ],
+          "example": [
+            30,
+            5,
+            1
+          ]
+        },
+        "required_skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this service needs to be conducted by a technician having a `drilling_machine` and a `screw_driver` then specify the array as follows: `[\"drilling_machine\",\"screw_driver\"]`. This means that the service can only be done by a vehicle (technician) that has the skills `drilling_machine` AND `screw_driver` in its skill array. Otherwise it remains unassigned.",
+          "example": [
+            "drilling_machine",
+            "screw_driver"
+          ]
+        },
+        "allowed_vehicles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids. For example, if this service can only be conducted EITHER by `technician_peter` OR `technician_stefan` specify this as follows: `[\"technician_peter\",\"technician_stefan\"]`.",
+          "example": [
+            "technician_peter",
+            "technician_stefan"
+          ]
+        },
+        "disallowed_vehicles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids.",
+          "example": [
+            "driver-A",
+            "driver-B"
+          ]
+        },
+        "max_time_in_vehicle": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the maximum time in seconds a delivery can stay in the vehicle. Currently, it only works with services of \"type\":\"delivery\".",
+          "default": 9223372036854776000,
+          "example": 900
+        },
+        "group": {
+          "type": "string",
+          "description": "Group this service belongs to.",
+          "example": "group-A"
+        }
+      },
+      "required": [
+        "id",
+        "address"
+      ]
+    },
+    "Shipment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Specifies the id of the shipment. Ids need to be unique so there must not be two services/shipments with the same id.",
+          "example": "7fe77504-7df8-4497-843c-02d70b6490ce"
+        },
+        "name": {
+          "type": "string",
+          "description": "Meaningful name for shipment, e.g. \"pickup and deliver pizza to Peter\".",
+          "example": "pickup and deliver pizza to Peter"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies the priority. Can be 1 = high priority to 10 = low priority. Often there are more services/shipments than the available vehicle fleet can handle. Then you could assign priorities to differentiate high priority tasks from those that can be served later or omitted at all.",
+          "default": 2,
+          "example": 1
+        },
+        "pickup": {
+          "$ref": "#/definitions/Stop",
+          "description": "Specifies pickup."
+        },
+        "delivery": {
+          "$ref": "#/definitions/Stop",
+          "description": "Specifies delivery."
+        },
+        "size": {
+          "type": "array",
+          "description": "Size can have multiple dimensions and should be in line with the capacity dimension array of the vehicle type. For example, if the item that needs to be delivered has two size dimension, volume and weight, then specify it as follow [ 20, 5 ] assuming a volume of 20 and a weight of 5.",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "default": [
+            0
+          ],
+          "example": [
+            3
+          ]
+        },
+        "required_skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of required skills, i.e. array of string (not case sensitive). For example, if this shipment needs to be conducted by a technician having a `drilling_machine` and a `screw_driver` then specify the array as follows: `[\"drilling_machine\",\"screw_driver\"]`. This means that the service can only be done by a vehicle (technician) that has the skills `drilling_machine` AND `screw_driver` in its skill array. Otherwise it remains unassigned.",
+          "example": [
+            "drilling_machine",
+            "screw_driver"
+          ]
+        },
+        "allowed_vehicles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of allowed vehicles, i.e. array of vehicle ids. For example, if this shipment can only be conducted EITHER by \"technician_peter\" OR \"technician_stefan\" specify this as follows: [\"technician_peter\",\"technician_stefan\"].",
+          "example": [
+            "technician_peter",
+            "technician_stefan"
+          ]
+        },
+        "disallowed_vehicles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifies an array of disallowed vehicles, i.e. array of vehicle ids.",
+          "example": [
+            "driver-A",
+            "driver-B"
+          ]
+        },
+        "max_time_in_vehicle": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the maximum time in seconds a shipment can stay in the vehicle.",
+          "default": 9223372036854776000,
+          "example": 1800
+        }
+      },
+      "required": [
+        "id",
+        "pickup",
+        "delivery"
+      ]
+    },
+    "Stop": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address",
+          "description": "Specifies pickup or delivery address."
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the duration of the pickup or delivery in seconds, e.g. how long it takes unload items at the customer site.",
+          "default": 0,
+          "example": 1800
+        },
+        "preparation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.",
+          "default": 0,
+          "example": 300
+        },
+        "time_windows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TimeWindow"
+          },
+          "description": "Specifies an array of time window objects (see time window object below). For example, if an item needs to be delivered between 7am and 10am then specify the array as follows: [ { \"earliest\": 25200, \"latest\" : 32400 } ] (starting the day from 0 in seconds).",
+          "example": [
+            {
+              "earliest": 32400,
+              "latest": 36000
+            },
+            {
+              "earliest": 50400,
+              "latest": 54000
+            }
+          ]
+        },
+        "group": {
+          "type": "string",
+          "description": "Group this stop belongs to",
+          "example": "ASAP"
+        }
+      }
+    },
+    "TimeWindow": {
+      "type": "object",
+      "properties": {
+        "earliest": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the opening time of the time window in seconds, i.e. the earliest time the service can start.",
+          "default": 0
+        },
+        "latest": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies the closing time of the time window in seconds, i.e. the latest time the service can start.",
+          "default": 9223372036854776000
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "lon": {
+          "format": "double",
+          "type": "number",
+          "description": "longitude",
+          "example": -0.092697
+        },
+        "lat": {
+          "format": "double",
+          "type": "number",
+          "description": "latitude",
+          "example": 51.51324
+        }
+      }
+    },
+    "Configuration": {
+      "type": "object",
+      "description": "Here you can specify general configurations of the API.",
+      "properties": {
+        "routing": {
+          "$ref": "#/definitions/Routing"
+        }
+      }
+    },
+    "Routing": {
+      "type": "object",
+      "properties": {
+        "calc_points": {
+          "type": "boolean",
+          "description": "It lets you specify whether the API should provide you with route geometries for vehicle routes or not. Thus, you do not need to do extra routing to get the polyline for each route.",
+          "default": false
+        },
+        "consider_traffic": {
+          "type": "boolean",
+          "description": "indicates whether historical traffic information should be considered",
+          "default": false
+        },
+        "network_data_provider": {
+          "type": "string",
+          "description": "specifies the data provider",
+          "enum": [
+            "openstreetmap",
+            "tomtom"
+          ],
+          "default": "openstreetmap"
+        },
+        "fail_fast": {
+          "type": "boolean",
+          "description": "indicates whether matrix calculation should fail fast when points cannot be connected",
+          "default": true
+        }
+      }
+    },
+    "Objective": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "type of objective function, i.e. min or min-max ",
+          "enum": [
+            "min",
+            "min-max"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "objective function value",
+          "enum": [
+            "completion_time",
+            "transport_time",
+            "vehicles",
+            "activities"
+          ]
+        }
+      },
+      "example": {
+        "type": "min",
+        "value": "vehicles"
+      }
+    },
+    "CostMatrix": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "type of cost matrix, currently default or google are supported",
+          "enum": [
+            "default",
+            "google"
+          ]
+        },
+        "location_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "data": {
+          "type": "object",
+          "description": "JSON data of matrix response",
+          "properties": {
+            "times": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            },
+            "distances": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            },
+            "info": {
+              "type": "object",
+              "description": "Additional information for your request",
+              "properties": {
+                "copyrights": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "took": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "profile": {
+          "type": "string",
+          "description": "vehicle profile or empty if catch all fallback"
+        }
+      }
+    },
+    "Relation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Specifies the type of relation. It must be either of type `in_same_route`, `in_sequence` or `in_direct_sequence`.",
+          "example": "in_direct_sequence"
+        },
+        "ids": {
+          "type": "array",
+          "description": "Specifies an array of shipment and/or service ids that are in relation. If you deal with services then you need to use the id of your services in ids. To also consider sequences of the pickups and deliveries of your shipments, you need to use a special ID, i.e. use your shipment id plus the keyword `_pickup` or `_delivery`. If you want to place a service or shipment activity at the beginning of your route, use the special ID `start`. In turn, use `end` to place it at the end of the route.",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "pickup-1",
+            "pickup-2"
+          ]
+        },
+        "groups": {
+          "type": "array",
+          "description": "An array of groups that should be related",
+          "items": {
+            "type": "string",
+            "description": "group of services or shipments"
+          },
+          "example": [
+            "group-A",
+            "group-B"
+          ]
+        },
+        "vehicle_id": {
+          "type": "string",
+          "description": "Id of pre-assigned vehicle, i.e. the vehicle id that is determined to conduct the services and shipments in this relation.",
+          "example": "driver-Peter"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "copyrights": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Attribution"
+          },
+          "example": [
+            "GraphHopper",
+            "OpenStreetMap contributors"
+          ]
+        },
+        "job_id": {
+          "type": "string",
+          "description": "UUID. Unique identifier of job - which you get when posting your request to the large problem solver",
+          "example": "8a78c515-3b87-4e2f-b0b3-3fef8f42a183"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "waiting_in_queue",
+            "processing",
+            "finished"
+          ],
+          "description": "Indicates the current status of the job",
+          "example": "finished"
+        },
+        "waiting_time_in_queue": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Waiting time in ms",
+          "example": 300000
+        },
+        "processing_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Processing time in ms. if job is still waiting in queue, processing_time is 0",
+          "example": 900000
+        },
+        "solution": {
+          "$ref": "#/definitions/Solution",
+          "description": "the solution. only available if status field indicates finished"
+        }
+      }
+    },
+    "Solution": {
+      "type": "object",
+      "properties": {
+        "costs": {
+          "type": "integer",
+          "format": "int32",
+          "description": "overall costs of solution"
+        },
+        "distance": {
+          "type": "integer",
+          "format": "int32",
+          "description": "overall travel distance in meters"
+        },
+        "time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "overall transport time in seconds"
+        },
+        "transport_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "overall transport time in seconds"
+        },
+        "max_operation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "operation time of the longest route in seconds"
+        },
+        "waiting_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total waiting time in seconds"
+        },
+        "service_duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total service time in seconds"
+        },
+        "preparation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total preparation time in seconds"
+        },
+        "completion_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total completion time in seconds"
+        },
+        "no_vehicles": {
+          "type": "integer",
+          "format": "int32",
+          "description": "number of employed vehicles"
+        },
+        "no_unassigned": {
+          "type": "integer",
+          "format": "int32",
+          "description": "number of jobs that could not be assigned to final solution"
+        },
+        "routes": {
+          "type": "array",
+          "description": "An array of routes",
+          "items": {
+            "$ref": "#/definitions/Route"
+          }
+        },
+        "unassigned": {
+          "type": "object",
+          "properties": {
+            "services": {
+              "type": "array",
+              "description": "An array of ids of unassigned services",
+              "items": {
+                "type": "string",
+                "description": "id of unassigned service"
+              }
+            },
+            "shipments": {
+              "type": "array",
+              "description": "An array of ids of unassigned shipments",
+              "items": {
+                "type": "string",
+                "description": "id of unassigned shipments"
+              }
+            },
+            "breaks": {
+              "type": "array",
+              "description": "An array of ids of unassigned breaks",
+              "items": {
+                "type": "string",
+                "description": "id of unassigned breaks"
+              }
+            },
+            "details": {
+              "type": "array",
+              "description": "An array of details, i.e. reason for unassigned services or shipments",
+              "items": {
+                "$ref": "#/definitions/Detail"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Detail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id of unassigned service/shipment"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "reason code"
+        },
+        "reason": {
+          "type": "string",
+          "description": "human readable reason"
+        }
+      }
+    },
+    "Route": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "description": "id of vehicle that operates route"
+        },
+        "distance": {
+          "type": "integer",
+          "format": "int64",
+          "description": "distance of route in meter"
+        },
+        "transport_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "transport time of route in seconds"
+        },
+        "completion_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "completion time of route in seconds"
+        },
+        "waiting_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "waiting time of route in seconds"
+        },
+        "service_duration": {
+          "type": "integer",
+          "format": "int64",
+          "description": "service duration of route in seconds"
+        },
+        "preparation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "preparation time of route in seconds"
+        },
+        "activities": {
+          "type": "array",
+          "description": "array of activities",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "points": {
+          "type": "array",
+          "description": "array of route planning points",
+          "items": {
+            "$ref": "#/definitions/RoutePoint"
+          }
+        }
+      }
+    },
+    "RoutePoint": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "Activity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "type of activity",
+          "enum": [
+            "start",
+            "end",
+            "service",
+            "pickupShipment",
+            "deliverShipment",
+            "pickup",
+            "delivery",
+            "break"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "id referring to the underlying service or shipment, i.e. the shipment or service this activity belongs to"
+        },
+        "location_id": {
+          "type": "string",
+          "description": "id that refers to address"
+        },
+        "address": {
+          "$ref": "#/definitions/Address",
+          "description": "address of activity"
+        },
+        "arr_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "arrival time at this activity in seconds"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "end time of and thus departure time at this activity"
+        },
+        "end_date_time": {
+          "type": "string",
+          "description": "end date time with offset like this 1970-01-01T01:00+01:00"
+        },
+        "arr_date_time": {
+          "type": "string",
+          "description": "arrival date time with offset like this 1970-01-01T01:00+01:00"
+        },
+        "waiting_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "waiting time at this activity in seconds"
+        },
+        "preparation_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "preparation time at this activity in seconds"
+        },
+        "distance": {
+          "type": "integer",
+          "format": "int64",
+          "description": "cumulated distance from start to this activity in m"
+        },
+        "driving_time": {
+          "type": "integer",
+          "format": "int64",
+          "description": "driving time of driver in seconds"
+        },
+        "load_before": {
+          "type": "array",
+          "description": "Array with size/capacity dimensions before this activity",
+          "items": {
+            "type": "integer",
+            "format": "int32",
+            "description": "dimension value"
+          }
+        },
+        "load_after": {
+          "type": "array",
+          "description": "Array with size/capacity dimensions after this activity",
+          "items": {
+            "type": "integer",
+            "format": "int32",
+            "description": "dimension value"
+          }
+        }
+      }
+    }
+  }
+}
