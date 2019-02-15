@@ -1916,7 +1916,7 @@
                          \"type\": \"in_direct_sequence\",
                          \"ids\": [\"service_i_id\",\"service_j_id\",\"service_k_id\"]
                      }
-                    \n`
+                    `\n
 
                     yielding service j to occur directly after service i, and service k to occur directly after service j i.e. in strong order. Again, a vehicle can be assigned a priority by adding a `vehicle_id` to the relation.
 
@@ -1929,7 +1929,7 @@
                          \"type\": \"in_direct_sequence\",
                          \"ids\": [\"start\",\"service_i_id\",\"service_j_id\",\"service_k_id\"]
                      }
-                    \n`
+                    `\n
 
                     Latter enforces the direct sequence of i, j and k at the beginning of the route. If this sequence should be bound to the end of the route, use the special ID `end` like this:
 
@@ -1938,7 +1938,7 @@
                          \"type\": \"in_direct_sequence\",
                          \"ids\": [\"service_i_id\",\"service_j_id\",\"service_k_id\",\"end\"]
                      }
-                    \n`
+                    `\n
 
                     If you deal with services then you need to use the 'id' of your services in the field 'ids'. To also consider sequences of the pickups and deliveries
                     of your shipments, you need to use a special ID, i.e. use the shipment id plus the keyword `_pickup` or `_delivery`. For example, to
@@ -1949,7 +1949,7 @@
                          \"type\": \"in_direct_sequence\",
                          \"ids\": [\"my_shipment_pickup\",\"my_shipment_delivery\"]
                      }
-                    \n`
+                    `\n
 
                     ",
                     "example": "in_direct_sequence"
