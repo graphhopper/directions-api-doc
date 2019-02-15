@@ -1399,14 +1399,20 @@ definitions:
     properties:
       type:
         type: string
-        description: |
+        description: |+
           Specifies the type of relation. It must be either of type `in_same_route`, `in_sequence` or `in_direct_sequence`. 
-          `in_same_route`: As the name suggest, it enforces the specified services or shipments to be in the same route. It can be specified as follows:
-          ```json { "type": "in_same_route", "ids": ["service_i_id","service_j_id"] } ```
+
+          `in_same_route`: As the name suggest, it enforces the specified services or shipments to be in the same route. It can be specified as follows: 
+           ` { "type": "in_same_route", "ids": ["service_i_id","service_j_id"] } `
+
           This enforces service i to be in the same route as service j no matter which vehicle will be employed. If a specific vehicle (driver) is required to conduct this, just add a `vehicle_id` like this:
-          ```json { "type": "in_same_route", "ids": ["service_i_id","service_j_id"], "vehicle_id": "vehicle1" } ```
+
+          ` { "type": "in_same_route", "ids": ["service_i_id","service_j_id"], "vehicle_id": "vehicle1" } `
+
           This not only enforce service i and j to be in the same route, but also makes sure that both services are in the route of `vehicle1`.
-          *Tip*: This way initial loads and vehicle routes can be modelled. For example, if your vehicles are already on the road and new orders come in, then vehicles can still be rescheduled subject to the orders that have already been assigned to these vehicles.
+
+          *Tip*: This way initial loads and vehicle routes can be modelled. For example, if your vehicles are already on the road and new orders come in, then vehicles can still be rescheduled subject to the orders that have already been assigned to these vehicles. 
+
         example: in_direct_sequence
       ids:
         type: array
