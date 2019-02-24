@@ -44,6 +44,11 @@
     "produces": [
         "application/json"
     ],
+    "security": [
+      {
+        "api_key": []
+      }
+    ],
     "securityDefinitions": {
         "api_key": {
             "type": "apiKey",
@@ -108,7 +113,7 @@
                     {
                         "name": "point_hint",
                         "in": "query",
-                        "description": "Optional parameter. Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+                        "description": "Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -143,8 +148,12 @@
                         "name": "heading",
                         "in": "query",
                         "description": "Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points. In this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree. This parameter also influences the tour generated with `algorithm=round_trip` and force the initial direction.",
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
                     },
                     {
                         "name": "heading_penalty",
@@ -208,13 +217,6 @@
                         "name": "avoid",
                         "in": "query",
                         "description": "comma separate list to avoid certain roads. You can avoid motorway, ferry, tunnel or track",
-                        "type": "string"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "description": "Get your key at graphhopper.com",
-                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -292,13 +294,6 @@
                         "in": "query",
                         "description": "Can be fastest or shortest",
                         "default": "fastest",
-                        "type": "string"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "description": "Get your key at graphhopper.com",
-                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -409,13 +404,6 @@
                         "description": "The vehicle for which the route should be calculated. Other vehicles are foot, small_truck etc",
                         "default": "car",
                         "type": "string"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "description": "Get your key at graphhopper.com",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "tags": [
@@ -446,13 +434,6 @@
                         "schema": {
                             "$ref": "#/definitions/MatrixRequest"
                         }
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "description": "Get your key at graphhopper.com",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "tags": [
@@ -521,13 +502,6 @@
                         "description": "Can be either, default, nominatim, opencagedata",
                         "required": false,
                         "type": "string"
-                    },
-                    {
-                        "name": "key",
-                        "in": "query",
-                        "description": "Get your key at graphhopper.com",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "tags": [
@@ -590,13 +564,6 @@
                 ],
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "key",
-                        "description": "Your API key",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "body",
                         "name": "body",
                         "description": "Request object that contains the problem to be solved",
@@ -643,13 +610,6 @@
                     "application/json"
                 ],
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "key",
-                        "description": "Your API key",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "jobId",
