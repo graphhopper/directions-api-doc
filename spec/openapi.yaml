@@ -44,6 +44,11 @@
     "produces": [
         "application/json"
     ],
+    "security": [
+      {
+        "api_key": []
+      }
+    ],
     "securityDefinitions": {
         "api_key": {
             "type": "apiKey",
