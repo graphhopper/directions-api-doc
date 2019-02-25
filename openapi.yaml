@@ -1593,18 +1593,22 @@ definitions:
       vehicle_id:
         type: string
         description: Id of vehicle that operates route
+        example: driver-stefan
       distance:
         type: integer
         format: int64
         description: Distance of route in meter
+        example: 10000
       transport_time:
         type: integer
         format: int64
         description: Transport time of route in seconds
+        example: 1800
       completion_time:
         type: integer
         format: int64
         description: Completion time of route in seconds
+        example: 1800
       waiting_time:
         type: integer
         format: int64
