@@ -1029,6 +1029,7 @@
       "properties": {
         "job_id": {
           "type": "string",
+          "format": "uuid",
           "description": "UUID. Unique id for your job/request with which you can fetch your solution",
           "example": "44886560-b584-4da5-b245-768151dacd8f"
         }
@@ -2166,11 +2167,11 @@
         },
         "id": {
           "type": "string",
-          "description": "id referring to the underlying service or shipment, i.e. the shipment or service this activity belongs to"
+          "description": "Id referring to the underlying service or shipment, i.e. the shipment or service this activity belongs to"
         },
         "location_id": {
           "type": "string",
-          "description": "id that refers to address"
+          "description": "Id that refers to address"
         },
         "address": {
           "$ref": "#/definitions/Address",
@@ -2179,20 +2180,22 @@
         "arr_time": {
           "type": "integer",
           "format": "int64",
-          "description": "arrival time at this activity in seconds"
+          "description": "Arrival time at this activity in seconds. If type is `start`, this is `null`."
         },
         "end_time": {
           "type": "integer",
           "format": "int64",
-          "description": "end time of and thus departure time at this activity"
+          "description": "End time of and thus departure time at this activity. If type is `end`, this is `null`."
         },
         "end_date_time": {
           "type": "string",
-          "description": "end date time with offset like this 1970-01-01T01:00+01:00"
+          "format": "date-time",
+          "description": "End date time with offset like this 1970-01-01T01:00+01:00. If you do not use time-dependent optimization, this is `null`."
         },
         "arr_date_time": {
           "type": "string",
-          "description": "arrival date time with offset like this 1970-01-01T01:00+01:00"
+          "format": "date-time",
+          "description": "Arrival date time with offset like this 1970-01-01T01:00+01:00. If you do not use time-dependent optimization, this is `null`."
         },
         "waiting_time": {
           "type": "integer",
