@@ -1472,9 +1472,9 @@ definitions:
         example: 900000
       solution:
         $ref: '#/definitions/Solution'
-        description: Only available if status field indicates `finished`.
   Solution:
     type: object
+    description: Only available if status field indicates `finished`.
     properties:
       costs:
         type: integer
