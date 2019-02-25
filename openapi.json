@@ -1927,6 +1927,7 @@
         },
         "job_id": {
           "type": "string",
+          "format": "uuid",
           "description": "UUID. Unique identifier of job - which you get when posting your request to the large problem solver",
           "example": "8a78c515-3b87-4e2f-b0b3-3fef8f42a183"
         },
@@ -1949,12 +1950,12 @@
         "processing_time": {
           "type": "integer",
           "format": "int64",
-          "description": "Processing time in ms. if job is still waiting in queue, processing_time is 0",
+          "description": "Processing time in ms. If job is still waiting in queue, processing_time is 0",
           "example": 900000
         },
         "solution": {
           "$ref": "#/definitions/Solution",
-          "description": "the solution. only available if status field indicates finished"
+          "description": "Only available if status field indicates `finished`."
         }
       }
     },
@@ -1964,57 +1965,57 @@
         "costs": {
           "type": "integer",
           "format": "int32",
-          "description": "overall costs of solution"
+          "description": "**Deprecated** Do NOT use this field anymore. It is deprecated and not interpretable if you do not know our cost function."
         },
         "distance": {
           "type": "integer",
           "format": "int32",
-          "description": "overall travel distance in meters"
+          "description": "Overall distance travelled in meter, i.e. the sum of each route's transport distance"
         },
         "time": {
           "type": "integer",
           "format": "int64",
-          "description": "overall transport time in seconds"
+          "description": "**Deprecated** Do NOT use this field anymore. It is deprecated. Use `transport_time` instead."
         },
         "transport_time": {
           "type": "integer",
           "format": "int64",
-          "description": "overall transport time in seconds"
+          "description": "Overall time travelled in seconds, i.e. the sum of each route's transport time."
         },
         "max_operation_time": {
           "type": "integer",
           "format": "int64",
-          "description": "operation time of the longest route in seconds"
+          "description": "Operation time of longest route in seconds."
         },
         "waiting_time": {
           "type": "integer",
           "format": "int64",
-          "description": "total waiting time in seconds"
+          "description": "Overall waiting time in seconds."
         },
         "service_duration": {
           "type": "integer",
           "format": "int64",
-          "description": "total service time in seconds"
+          "description": "Overall service time in seconds."
         },
         "preparation_time": {
           "type": "integer",
           "format": "int64",
-          "description": "total preparation time in seconds"
+          "description": "Overall preparation time in seconds."
         },
         "completion_time": {
           "type": "integer",
           "format": "int64",
-          "description": "total completion time in seconds"
+          "description": "Overall completion time in seconds, i.e. the sum of each routes/drivers operation time."
         },
         "no_vehicles": {
           "type": "integer",
           "format": "int32",
-          "description": "number of employed vehicles"
+          "description": "Number of employed vehicles."
         },
         "no_unassigned": {
           "type": "integer",
           "format": "int32",
-          "description": "number of jobs that could not be assigned to final solution"
+          "description": "Number of jobs that could not be assigned to final solution."
         },
         "routes": {
           "type": "array",
@@ -2031,7 +2032,7 @@
               "description": "An array of ids of unassigned services",
               "items": {
                 "type": "string",
-                "description": "id of unassigned service"
+                "description": "Id of unassigned service"
               }
             },
             "shipments": {
@@ -2039,7 +2040,7 @@
               "description": "An array of ids of unassigned shipments",
               "items": {
                 "type": "string",
-                "description": "id of unassigned shipments"
+                "description": "Id of unassigned shipments"
               }
             },
             "breaks": {
@@ -2047,7 +2048,7 @@
               "description": "An array of ids of unassigned breaks",
               "items": {
                 "type": "string",
-                "description": "id of unassigned breaks"
+                "description": "Id of unassigned breaks"
               }
             },
             "details": {
@@ -2066,16 +2067,16 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "id of unassigned service/shipment"
+          "description": "Id of unassigned service/shipment"
         },
         "code": {
           "type": "integer",
           "format": "int32",
-          "description": "reason code"
+          "description": "Reason code"
         },
         "reason": {
           "type": "string",
-          "description": "human readable reason"
+          "description": "Human readable reason"
         }
       }
     },
@@ -2084,48 +2085,48 @@
       "properties": {
         "vehicle_id": {
           "type": "string",
-          "description": "id of vehicle that operates route"
+          "description": "Id of vehicle that operates route"
         },
         "distance": {
           "type": "integer",
           "format": "int64",
-          "description": "distance of route in meter"
+          "description": "Distance of route in meter"
         },
         "transport_time": {
           "type": "integer",
           "format": "int64",
-          "description": "transport time of route in seconds"
+          "description": "Transport time of route in seconds"
         },
         "completion_time": {
           "type": "integer",
           "format": "int64",
-          "description": "completion time of route in seconds"
+          "description": "Completion time of route in seconds"
         },
         "waiting_time": {
           "type": "integer",
           "format": "int64",
-          "description": "waiting time of route in seconds"
+          "description": "Waiting time of route in seconds"
         },
         "service_duration": {
           "type": "integer",
           "format": "int64",
-          "description": "service duration of route in seconds"
+          "description": "Service duration of route in seconds"
         },
         "preparation_time": {
           "type": "integer",
           "format": "int64",
-          "description": "preparation time of route in seconds"
+          "description": "Preparation time of route in seconds"
         },
         "activities": {
           "type": "array",
-          "description": "array of activities",
+          "description": "Array of activities",
           "items": {
             "$ref": "#/definitions/Activity"
           }
         },
         "points": {
           "type": "array",
-          "description": "array of route planning points",
+          "description": "Array of route planning points",
           "items": {
             "$ref": "#/definitions/RoutePoint"
           }
@@ -2148,7 +2149,6 @@
     },
     "Activity": {
       "type": "object",
-      "discriminator": "type",
       "properties": {
         "type": {
           "type": "string",
