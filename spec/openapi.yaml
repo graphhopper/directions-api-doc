@@ -1640,16 +1640,22 @@ definitions:
         type: integer
         format: int64
         description: arrival time at this activity in seconds
+        nullable: true
       end_time:
         type: integer
         format: int64
         description: end time of and thus departure time at this activity
+        nullable: true
       end_date_time:
         type: string
         description: 'end date time with offset like this 1970-01-01T01:00+01:00'
+        nullable: true
+        format: date-time
       arr_date_time:
         type: string
         description: 'arrival date time with offset like this 1970-01-01T01:00+01:00'
+        nullable: true
+        format: date-time
       waiting_time:
         type: integer
         format: int64
