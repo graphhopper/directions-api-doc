@@ -1484,6 +1484,7 @@ definitions:
         type: integer
         format: int32
         description: Overall distance travelled in meter, i.e. the sum of each route's transport distance
+        example: 1200
       time:
         type: integer
         format: int64
@@ -1492,18 +1493,22 @@ definitions:
         type: integer
         format: int64
         description: Overall time travelled in seconds, i.e. the sum of each route's transport time.
+        example: 12000
       max_operation_time:
         type: integer
         format: int64
         description: Operation time of longest route in seconds.
+        example: 4000
       waiting_time:
         type: integer
         format: int64
         description: Overall waiting time in seconds.
+        example: 200
       service_duration:
         type: integer
         format: int64
         description: Overall service time in seconds.
+        example: 1200
       preparation_time:
         type: integer
         format: int64
@@ -1512,14 +1517,17 @@ definitions:
         type: integer
         format: int64
         description: 'Overall completion time in seconds, i.e. the sum of each routes/drivers operation time.'
+        example: 12000
       no_vehicles:
         type: integer
         format: int32
         description: Number of employed vehicles.
+        example: 10
       no_unassigned:
         type: integer
         format: int32
         description: Number of jobs that could not be assigned to final solution.
+        example: 1
       routes:
         type: array
         description: An array of routes
@@ -1534,9 +1542,11 @@ definitions:
             items:
               type: string
               description: Id of unassigned service
+            example: ["service-1", "service-3"]
           shipments:
             type: array
             description: An array of ids of unassigned shipments
+            example: ["shipment-5"]
             items:
               type: string
               description: Id of unassigned shipments
@@ -1551,6 +1561,7 @@ definitions:
             description: 'An array of details, i.e. reason for unassigned services or shipments'
             items:
               $ref: '#/definitions/Detail'
+            example: [ { "id": "shipment-5", "code": 2, "reason": "cannot be visited within time window" }, { "id": "service-1", "code": 3, "reason": "does not fit into any vehicle due to capacity" } ]
   Detail:
     type: object
     properties:
