@@ -2075,14 +2075,19 @@
               },
               "example": [
                 {
-                  "id": "shipment-5",
-                  "code": 2,
-                  "reason": "cannot be visited within time window"
-                },
-                {
                   "id": "service-1",
                   "code": 3,
                   "reason": "does not fit into any vehicle due to capacity"
+                },
+                {
+                  "id": "service-2",
+                  "code": 27,
+                  "reason": "could not be assigned due to max job constraint"
+                },
+                {
+                  "id": "shipment-5",
+                  "code": 2,
+                  "reason": "cannot be visited within time window"
                 }
               ]
             }
