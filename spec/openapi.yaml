@@ -1613,7 +1613,7 @@ definitions:
           type: object
   Activity:
     type: object
-    descriminator: type
+    discriminator: type
     properties:
       type:
         type: string
