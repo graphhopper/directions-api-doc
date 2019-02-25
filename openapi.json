@@ -2159,7 +2159,93 @@
           "description": "Array of activities",
           "items": {
             "$ref": "#/definitions/Activity"
-          }
+          },
+          "example": [
+            {
+              "type": "start",
+              "location_id": "berlin",
+              "address": {
+                "location_id": "berlin",
+                "lat": 52.537,
+                "lon": 13.406
+              },
+              "end_time": 1551122400,
+              "end_date_time": "2019-02-25T20:20+01:00",
+              "distance": 0,
+              "driving_time": 0,
+              "preparation_time": 0,
+              "waiting_time": 0,
+              "load_after": [
+                0
+              ]
+            },
+            {
+              "type": "service",
+              "id": "berlin-2",
+              "location_id": "13.408642_52.527094",
+              "address": {
+                "location_id": "13.408642_52.527094",
+                "lat": 52.527094,
+                "lon": 13.408642
+              },
+              "arr_time": 1551122713,
+              "arr_date_time": "2019-02-25T20:25:13+01:00",
+              "end_time": 1551122713,
+              "end_date_time": "2019-02-25T20:25:13+01:00",
+              "waiting_time": 0,
+              "distance": 1777,
+              "driving_time": 313,
+              "preparation_time": 0,
+              "load_before": [
+                0
+              ],
+              "load_after": [
+                0
+              ]
+            },
+            {
+              "type": "service",
+              "id": "berlin-1",
+              "location_id": "13.398170_52.527303",
+              "address": {
+                "location_id": "13.398170_52.527303",
+                "lat": 52.527303,
+                "lon": 13.39817
+              },
+              "arr_time": 1551122864,
+              "arr_date_time": "2019-02-25T20:27:44+01:00",
+              "end_time": 1551122864,
+              "end_date_time": "2019-02-25T20:27:44+01:00",
+              "waiting_time": 0,
+              "distance": 2562,
+              "driving_time": 464,
+              "preparation_time": 0,
+              "load_before": [
+                0
+              ],
+              "load_after": [
+                0
+              ]
+            },
+            {
+              "type": "end",
+              "location_id": "berlin",
+              "address": {
+                "location_id": "berlin",
+                "lat": 52.537,
+                "lon": 13.406
+              },
+              "arr_time": 1551123189,
+              "arr_date_time": "2019-02-25T20:33:09+01:00",
+              "distance": 4334,
+              "driving_time": 789,
+              "preparation_time": 0,
+              "waiting_time": 0,
+              "load_before": [
+                0
+              ]
+            }
+          ]
         },
         "points": {
           "type": "array",
