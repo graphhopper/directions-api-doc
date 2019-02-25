@@ -735,6 +735,7 @@ definitions:
     properties:
       job_id:
         type: string
+        format: uuid
         description: UUID. Unique id for your job/request with which you can fetch your solution
         example: 44886560-b584-4da5-b245-768151dacd8f
   BadRequest:
