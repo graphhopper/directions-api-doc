@@ -1630,31 +1630,29 @@ definitions:
           - break
       id:
         type: string
-        description: 'id referring to the underlying service or shipment, i.e. the shipment or service this activity belongs to'
+        description: 'Id referring to the underlying service or shipment, i.e. the shipment or service this activity belongs to'
       location_id:
         type: string
-        description: id that refers to address
+        description: Id that refers to address
       address:
         $ref: '#/definitions/Address'
         description: address of activity
       arr_time:
         type: integer
         format: int64
-        description: arrival time at this activity in seconds
-        nullable: true
+        description: 'Arrival time at this activity in seconds. If type is `start`, this is `null`.'
       end_time:
         type: integer
         format: int64
-        description: end time of and thus departure time at this activity
-        nullable: true
+        description: 'End time of and thus departure time at this activity. If type is `end`, this is `null`.'
       end_date_time:
         type: string
         format: date-time
-        description: 'end date time with offset like this 1970-01-01T01:00+01:00'
+        description: 'End date time with offset like this 1970-01-01T01:00+01:00. If you do not use time-dependent optimization, this is `null`.'
       arr_date_time:
         type: string
         format: date-time
-        description: 'arrival date time with offset like this 1970-01-01T01:00+01:00'
+        description: 'Arrival date time with offset like this 1970-01-01T01:00+01:00. If you do not use time-dependent optimization, this is `null`.'
       waiting_time:
         type: integer
         format: int64
