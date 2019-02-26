@@ -553,6 +553,19 @@ paths:
           description: A jobId you can use to retrieve your solution from the server - see solution endpoint.
           schema:
             $ref: '#/definitions/JobId'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              type: integer
         '400':
           description: Error occurred when reading client request. Request is invalid.
           schema:
