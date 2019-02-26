@@ -1,7 +1,11 @@
 swagger: '2.0'
 info:
   title: GraphHopper Directions API
-  description: 'You use the GraphHopper Directions API to add route planning, navigation and route optimization to your software. E.g. the Routing API has turn instructions and elevation data and the Route Optimization API solves your logistic problems and supports various constraints like time window and capacity restrictions. Also it is possible to get all distances between all locations with our fast Matrix API.'
+  description: |
+    You use the GraphHopper Directions API to add route planning, navigation and route optimization to your software.
+    E.g. the Routing API has turn instructions and elevation data and the Route Optimization API solves your logistic problems
+    and supports various constraints like time window and capacity restrictions. Also it is possible to get all distances between
+    all locations with our fast Matrix API.
   version: 1.0.0
   termsOfService: 'https://www.graphhopper.com/terms/'
   contact:
@@ -42,7 +46,8 @@ paths:
       parameters:
         - name: point
           in: query
-          description: Specify multiple points for which the route should be calculated. The order is important. Specify at least two points.
+          description: |
+            Specifiy multiple points for which the route should be calculated. The order [latitude,longitude] is important. Specify at least two points. The maximum number depends on the selected package.
           required: true
           type: array
           items:
@@ -50,55 +55,115 @@ paths:
           collectionFormat: multi
         - name: locale
           in: query
-          description: The locale of the resulting turn instructions. E.g. `pt_PT` for Portuguese or `de` for German
+          description: |
+            The locale of the resulting turn instructions. E.g. `pt_PT` for Portuguese or `de` for German.
           type: string
+          default: en
+        - name: optimize
+          in: query
+          description: |
+            If `false`, the order of the locations will be identical to the order of the point parameters.
+            If you have more than 2 points you can set this optimize parameter to `true` and the points will be sorted regarding the minimum overall time - e.g. suiteable for sightseeing tours or salesman.
+            Keep in mind that the location limit of the Route Optimization API applies and the credit costs are higher! Note to all customers with a self-hosted license: this parameter is only available if
+            your package includes the Route Optimization API.
+          type: boolean
+          default: false
         - name: instructions
           in: query
-          description: If instruction should be calculated and returned
+          description: |
+            If instruction should be calculated and returned
           type: boolean
+          default: true
         - name: vehicle
           in: query
-          description: 'The vehicle for which the route should be calculated. Other vehicles are foot, small_truck, ...'
+          description: |
+            The vehicle profile for which the route should be calculated.
           type: string
+          enum:
+            - car
+            - bike
+            - foot
+            - hike
+            - mtb
+            - racingbike
+            - scooter
+            - truck
+            - small_truck
+          default: car
         - name: elevation
           in: query
-          description: If `true` a third dimension - the elevation - is included in the polyline or in the GeoJson. If enabled you have to use a modified version of the decoding method or set points_encoded to `false`. See the points_encoded attribute for more details. Additionally a request can fail if the vehicle does not support elevation. See the features object for every vehicle.
+          description: |
+            If true a third dimension - the elevation - is included in the polyline or in the GeoJson.
+            IMPORTANT: If enabled you have to use a modified version of the decoding method or set `points_encoded` to `false`. See the `points_encoded`
+            attribute for more details. Additionally a request can fail if the vehicle does not support elevation. See the features object for every vehicle.
           type: boolean
+          default: false
         - name: points_encoded
           in: query
-          description: 'IMPORTANT- TODO - currently you have to pass false for the swagger client - Have not found a way to force add a parameter. If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point. If `true` the coordinates will be encoded as string leading to less bandwith usage. You''ll need a special handling for the decoding of this string on the client-side. We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/java/com/graphhopper/http/WebHelper.java#L43) and [JavaScript](https://github.com/graphhopper/graphhopper/blob/d70b63660ac5200b03c38ba3406b8f93976628a6/web/src/main/webapp/js/ghrequest.js#L139). It is especially important to use no 3rd party client if you set `elevation=true`!'
+          description: |
+            If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point.
+            If `true` the coordinates will be encoded as string leading to less bandwith usage. You'll need a special handling for the decoding
+            of this string on the client-side. We provide open source code code in Java and JavaScript, see the clients section.
+            It is especially important to use our official client or code if you set `elevation=true`!
           type: boolean
-          required: true
+          default: false
         - name: calc_points
           in: query
-          description: If the points for the route should be calculated at all printing out only distance and time.
+          description: |
+            If the points for the route should be calculated at all printing out only distance and time.
           type: boolean
+          default: true
+        - name: debug
+          in: query
+          type: boolean
+          default: false
+          description: |
+            If `true`, the output will be formatted.
+        - name: type
+          in: query
+          type: string
+          enum:
+            - json
+            - gpx
+          default: json
+          description: |
+            Specifies the resulting format of the route, for `json` the content type will be `application/json`. Or use `gpx`, the content type will be `application/gpx+xml`, see below for more parameters.
         - name: point_hint
           in: query
-          description: Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
+          description: |
+            Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup.
+            E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
+          type: array
+          items:
+            type: string
+          collectionFormat: multi
+        - name: details
+          in: query
+          description: |
+            Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.
+            For all motor vehicles we additionally support `max_speed`, `toll` (`no`, `all`, `hgv`), `road_class` (`motorway`, `primary`, ...), `road_environment`, and `surface`.
+            The returned format for one details is [fromRef, toRef, value]. The ref references the points of the response.
+            Multiple details are possible via multiple key value pairs, like `details=time&details=toll`.
           type: array
           items:
             type: string
           collectionFormat: multi
         - name: ch.disable
           in: query
-          description: Use this parameter in combination with one or more parameters of this table
+          description: |
+            Use this parameter in combination with one or more parameters of this table
           type: boolean
         - name: weighting
           in: query
-          description: 'Which kind of ''best'' route calculation you need. Other option is `shortest` (e.g. for `vehicle=foot` or `bike`), `short_fastest` if time and distance is expensive e.g. for `vehicle=truck`'
-          type: string
-        - name: edge_traversal
-          in: query
-          description: Use `true` if you want to consider turn restrictions for bike and motor vehicles. Keep in mind that the response time is roughly 2 times slower.
-          type: boolean
-        - name: algorithm
-          in: query
-          description: 'The algorithm to calculate the route. Other options are `dijkstra`, `astar`, `astarbi`, `alternative_route` and `round_trip`'
+          description: |
+            Which kind of ''best'' route calculation you need. Other option is `shortest` (e.g. for `vehicle=foot` or `bike`), `short_fastest` if time and distance is expensive e.g. for `vehicle=truck`
           type: string
         - name: heading
           in: query
-          description: Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points. In this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree. This parameter also influences the tour generated with `algorithm=round_trip` and force the initial direction.
+          description: |
+            Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points.
+            In this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree.
+            This parameter also influences the tour generated with `algorithm=round_trip` and forces the initial direction.
           type: array
           items:
             type: integer
@@ -106,49 +171,73 @@ paths:
           collectionFormat: multi
         - name: heading_penalty
           in: query
-          description: Penalty for omitting a specified heading. The penalty corresponds to the accepted time delay in seconds in comparison to the route without a heading.
+          description: |
+            Time penalty in seconds for not obeying a specified heading.
           type: integer
           format: int32
+          default: 120
         - name: pass_through
           in: query
-          description: If `true` u-turns are avoided at via-points with regard to the `heading_penalty`.
+          description: |
+            If `true`, u-turns are avoided at via-points with regard to the `heading_penalty`.
           type: boolean
-        - name: details
+          default: false
+        - name: block_area
           in: query
-          description: 'List of additional trip attributes to be returned. Try some of the following: `average_speed`, `street_name`, `edge_id`, `time`, `distance`.'
-          type: array
-          items:
-            type: string
-          collectionFormat: multi
+          description: |
+            Block road access via a point with the format `latitude,longitude`
+            or an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.
+            Separate several values with `;`.
+          type: string
+        - name: avoid
+          in: query
+          description: |
+            Specify which road classes you would like to avoid (currently only
+            supported for motor vehicles like `car`). Possible values are `ferry`, `motorway`, `toll`, `tunnel` and `ford`.
+            Separate several values with `;`.
+          type: string
+        - name: algorithm
+          in: query
+          type: string
+          enum: [round_trip, alternative_route]
+          description: |
+            Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:
+            With `round_trip`, the route will get you back to where you started. This is meant for fun (think of
+            a bike trip), so we will add some randomness.
+            With `alternative_route`, we give you not one but several routes that are close to optimal, but
+            not too similar to each other. You can control both of these features with additional parameters, see below.
         - name: round_trip.distance
           in: query
-          description: If `algorithm=round_trip` this parameter configures approximative length of the resulting round trip
+          description: |
+            If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip.
           type: integer
           format: int32
+          default: 10000
         - name: round_trip.seed
           in: query
-          description: If `algorithm=round_trip` this parameter introduces randomness if e.g. the first try wasn't good.
+          description: |
+            If `algorithm=round_trip`, this sets the random seed. Change this to get a different tour for each value.
           type: integer
           format: int64
         - name: alternative_route.max_paths
           in: query
-          description: If `algorithm=alternative_route` this parameter sets the number of maximum paths which should be calculated. Increasing can lead to worse alternatives.
+          description: |
+            If `algorithm=alternative_route`, this parameter sets the number of maximum paths which should be calculated. Increasing can lead to worse alternatives.
           type: integer
           format: int32
+          default: 2
         - name: alternative_route.max_weight_factor
           in: query
-          description: If `algorithm=alternative_route` this parameter sets the factor by which the alternatives routes can be longer than the optimal route. Increasing can lead to worse alternatives.
-          type: integer
-          format: int32
+          description: |
+            If `algorithm=alternative_route`, this parameter sets the factor by which the alternatives routes can be longer than the optimal route. Increasing can lead to worse alternatives.
+          type: number
+          default: 1.4
         - name: alternative_route.max_share_factor
           in: query
-          description: If `algorithm=alternative_route` this parameter specifies how much alternatives routes can have maximum in common with the optimal route. Increasing can lead to worse alternatives.
-          type: integer
-          format: int32
-        - name: avoid
-          in: query
-          description: 'comma separate list to avoid certain roads. You can avoid motorway, ferry, tunnel or track'
-          type: string
+          description: |
+            If `algorithm=alternative_route`, this parameter specifies how similar an alternative route can be to the optimal route. Increasing can lead to worse alternatives.
+          type: number
+          default: 0.6
       tags:
         - Routing API
       responses:
