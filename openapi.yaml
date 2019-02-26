@@ -64,7 +64,14 @@ paths:
   /route:
     get:
       summary: Execute a routing request
-      description: ''
+      description: |
+        ### Fast
+        To get started using this API, just provide two or more points and retrieve the fastest route through the road
+        network that connects them. This type of request is heavily optimized for query performance, so it does not
+        take turn restrictions into account, and it does not allow for some advanced features.
+        ### Flexible
+        Enable turn restrictions and unlock further flexible features via ch.disable=true`.
+        Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
       parameters:
         - name: point
           in: query
@@ -84,15 +91,15 @@ paths:
         - name: optimize
           in: query
           description: |
-            Normally, the order of the locations will be identical to the order of the point parameters.
-            If you have more than two points, you can set this parameter to `true` and the points will be re-ordered to minimize the overall travel time.
-            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the credit costs are higher.
+            Normally, the calculated route will visit the points in the order you specified them.
+            If you have more than two points, you can set this parameter to `true` and the points may be re-ordered to minimize the total travel time.
+            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the request is more expensive.
           type: boolean
           default: false
         - name: instructions
           in: query
           description: |
-            If instruction should be calculated and returned
+            If instructions should be calculated and returned
           type: boolean
           default: true
         - name: vehicle
@@ -272,14 +279,25 @@ paths:
           description: Unexpected Error
           schema:
             $ref: '#/definitions/GHError'
+  /route/info:
+    get:
+      tags:
+        - Routing API
+      summary: Coverage information
+      description: |
+        Use this to find out details about the supported vehicle profiles and features, or if you just need to ping the server.
+      responses:
+        '200':
+          description: Coverage Information
+          schema:
+            $ref: '#/definitions/InfoResponse'
   /isochrone:
     get:
       summary: Isochrone Request
       description: |
-        The GraphHopper Isochrone API allows calculating an isochrone of a locations means to calculate
+        The GraphHopper Isochrone API allows calculating an isochrone of a location. This means to calculate
         'a line connecting points at which a vehicle arrives at the same time,'
         see [Wikipedia](http://en.wikipedia.org/wiki/Isochrone_map).
-        It is also called **reachability** or **walkability**.
       parameters:
         - name: point
           in: query
@@ -885,6 +903,35 @@ definitions:
       took:
         type: number
         format: double
+  InfoResponse:
+    type: object
+    description: Information about the server and the geographical area that it covers.
+    properties:
+      version:
+        type: string
+        description: |
+          The version of the GraphHopper server that provided this response. This is not related to the API version.
+      bbox:
+        type: string
+        description: |
+          The bounding box of the geographical area covered by this GraphHopper instance. Format: `"minLon,minLat,maxLon,maxLat"
+      features:
+        type: object
+        description: |
+          The supported features, such as elevation, per vehicle profile.
+    example:
+      build_date: '2014-02-21T16:52'
+      bbox:
+        - 13.072624
+        - 52.333508
+        - 13.763972
+        - 52.679616
+      version: '0.4'
+      features:
+        foot:
+          elevation: true
+        car:
+          elevation: false
   IsochroneResponse:
     type: object
     properties:
