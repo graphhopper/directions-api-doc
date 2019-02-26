@@ -824,6 +824,115 @@ definitions:
         description: Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.
         items:
           $ref: '#/definitions/CostMatrix'
+        example: [ {
+                               "profile": "car",
+                               "location_ids": [
+                                   "start",
+                                   "Dammstrasse",
+                                   "Bergstrasse",
+                                   "Koppstrasse",
+                                   "start2",
+                                   "nirvana"
+                               ],
+                               "data": {
+                                   "times": [
+                                       [
+                                           0,
+                                           1000,
+                                           1400,
+                                           2000,
+                                           0,
+                                           4000
+                                       ],
+                                       [
+                                           1000,
+                                           0,
+                                           1000,
+                                           2100,
+                                           1000,
+                                           4000
+                                       ],
+                                       [
+                                           1400,
+                                           1000,
+                                           0,
+                                           1100,
+                                           1100,
+                                           4000
+                                       ],
+                                       [
+                                           2000,
+                                           2100,
+                                           1100,
+                                           0,
+                                           1200,
+                                           4000
+                                       ],[
+                                           0,
+                                           1000,
+                                           1400,
+                                           2000,
+                                           0,
+                                           4000
+                                       ],[
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000
+                                       ]
+                                   ],
+                                   "distances": [
+                                       [
+                                           0,
+                                           1000,
+                                           1400,
+                                           2000,
+                                           0,
+                                           4000
+                                       ],
+                                       [
+                                           1000,
+                                           0,
+                                           1000,
+                                           2100,
+                                           1000,
+                                           4000
+                                       ],
+                                       [
+                                           1400,
+                                           1000,
+                                           0,
+                                           1100,
+                                           1100,
+                                           4000
+                                       ],
+                                       [
+                                           2000,
+                                           2100,
+                                           1100,
+                                           0,
+                                           1200,
+                                           4000
+                                       ],[
+                                           0,
+                                           1000,
+                                           1400,
+                                           2000,
+                                           0,
+                                           4000
+                                       ],[
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000,
+                                           4000
+                                       ]
+                                   ]
+                               }
+                           } ]
       configuration:
         $ref: '#/definitions/Configuration'
         description: Specifies general configurations.
