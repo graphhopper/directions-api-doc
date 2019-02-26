@@ -22,7 +22,7 @@ tags:
   - name: Route Optimization API
     description: Everything about route optimization
   - name: Routing API
-    description: |2
+    description: |
       ### Endpoint
 
       The endpoint is https://graphhopper.com/api/1/route
@@ -35,7 +35,7 @@ tags:
       Don't forget to replace the placeholder with your own key.
 
       ### Introduction
-      
+
       ![Routing screenshot](https://graphhopper.com/api/1/docs/img/routing-example.png)
 
       The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
@@ -497,7 +497,7 @@ paths:
   /vrp/optimize:
     post:
       summary: Solves vehicle routing problems
-      description: |
+      description: |2
          ### Introduction
 
          ![Route Editor Overview](https://graphhopper.com/api/1/docs/img/route-editor-overview.png)
