@@ -418,7 +418,7 @@ paths:
             $ref: '#/definitions/InternalErrorMessage'
   '/vrp/solution/{jobId}':
     get:
-      summary: Retrieves solution associated to jobId
+      summary: Retrieves solutions
       description: |
         This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.
       operationId: getSolution
