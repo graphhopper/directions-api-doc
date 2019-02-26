@@ -771,24 +771,32 @@ definitions:
         items:
           type: array
           items:
-            type: number
-            format: double
+            type: string
+        example:
+          - '52.522112,13.424606'
+          - '52.504979,13.423920'
+          - '52.506233,13.400574'
       from_points:
         description: 'The starting points for the routes. E.g. if you want to calculate the three routes A->1, A->2, A->3 then you have one `from_point` parameter and three `to_point` parameters. Is a string with the format `latitude,longitude`.'
         type: array
         items:
           type: array
           items:
-            type: number
-            format: double
+            type: string
+        example:
+          - '52.522112,13.424606'
+          - '52.504979,13.423920'
+          - '52.506233,13.400574'
       to_points:
         description: 'The destination points for the routes. Is a string with the format `latitude,longitude`.'
         type: array
         items:
           type: array
           items:
-            type: number
-            format: double
+            type: string
+        example:
+          - '52.522112,13.424606'
+          - '52.504979,13.423920'
       point_hints:
         description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
         type: array
