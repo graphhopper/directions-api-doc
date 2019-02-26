@@ -2097,12 +2097,13 @@ definitions:
         format: int64
         description: 'Arrival time at this activity in seconds. If type is `start`, this is not available (since it makes no sense to have `arr_time` at start).
           However, `end_time` is available and actually means \"departure time\" at start location. It is important to note that
-          `arr_time` does not necessarily mean \"start of underlying\" activity, it solely means arrival time at activity location.
-          If this activity has no time windows and if there are no further preparation times, arr_time is equal to activity start time.'
+          `arr_time` does not necessarily mean \"start of underlying activity\", it solely means arrival time at activity location.
+          If this activity has no time windows and if there are no further preparation times, `arr_time` is equal to activity start time.'
       end_time:
         type: integer
         format: int64
-        description: 'End time of and thus departure time at this activity. If type is `end`, this is `null`.'
+        description: 'End time of and thus departure time at this activity. If type is `end`, this is not available (since it makes no sense to have an `end_time` at end)
+        `end_time` at each activity is equal to the departure time at the activity location.'
       end_date_time:
         type: string
         format: date-time
@@ -2114,7 +2115,8 @@ definitions:
       waiting_time:
         type: integer
         format: int64
-        description: waiting time at this activity in seconds
+        description: 'Waiting time at this activity in seconds. A waiting time can occur if the activity has at least one time window.
+        If `arr_time` < `time_window.earliest` a waiting time of `time_window_earliest` - `arr_time` occurs.'
       preparation_time:
         type: integer
         format: int64
