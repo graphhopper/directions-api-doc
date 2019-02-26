@@ -926,6 +926,13 @@
         }
       },
       "example": {
+        "info": {
+          "copyrights": [
+            "GraphHopper",
+            "OpenStreetMap contributors"
+          ],
+          "took": 15
+        },
         "paths": [
           {
             "bbox": [

@@ -769,6 +769,11 @@ definitions:
       info:
         $ref: '#/definitions/ResponseInfo'
     example:
+      info:
+        copyrights:
+          - GraphHopper
+          - OpenStreetMap contributors
+        took: 15
       paths:
         - bbox:
             - 13.362853824187303
