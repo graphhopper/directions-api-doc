@@ -26,7 +26,7 @@
     },
     {
       "name": "Routing API",
-      "description": "Everything about routing"
+      "description": "### Endpoint\n\nThe endpoint is https://graphhopper.com/api/1/route\n\nYou get an example response via:\n```\ncurl \"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&key=[YOUR_KEY]\"\n```\n\nDon't forget to replace the placeholder with your own key.\n\n### Introduction\n![Routing screenshot](https://graphhopper.com/api/1/docs/img/routing-example.png)\n\nThe Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting\ntwo or more points, where the meaning of ''best'' depends on the vehicle and use case.\n\n### Navigation\nIf you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.\n\n### API Clients and Examples\nSee the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#routing).\n"
     },
     {
       "name": "Matrix API",
@@ -59,8 +59,8 @@
   "paths": {
     "/route": {
       "get": {
-        "summary": "Routing Request",
-        "description": "The GraphHopper Routing API allows to calculate route and implement navigation via the turn instructions",
+        "summary": "Execute a routing request",
+        "description": "",
         "parameters": [
           {
             "name": "point",
