@@ -590,7 +590,7 @@ paths:
             $ref: '#/definitions/GHError'
   /vrp/optimize:
     post:
-      summary: Solves vehicle routing problems
+      summary: Solve vehicle routing problem
       description: |2
          ### Introduction
 
@@ -676,7 +676,7 @@ paths:
             $ref: '#/definitions/InternalErrorMessage'
   '/vrp/solution/{jobId}':
     get:
-      summary: Retrieves solutions
+      summary: Retrieve solution
       description: |
         This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.
       operationId: getSolution
