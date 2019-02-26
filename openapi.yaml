@@ -1939,7 +1939,7 @@ definitions:
       arr_time:
         type: integer
         format: int64
-        description: 'Arrival time at this activity in seconds. If type is `start`, this is `null`.'
+        description: 'Arrival time at this activity in seconds. If type is `start`, this is not available (since it makes no sense to have `arr_time` at start). However, `end_time` is available and actually means \"departure time\" at start location. It is important to note that `arr_time` does not necessarily mean \"start of underlying\" activity, it solely means arrival time at activity location. If this activity has no time windows and if there are no further preparation times, arr_time is equal to activity start time.'
       end_time:
         type: integer
         format: int64
