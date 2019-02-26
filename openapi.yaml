@@ -70,7 +70,7 @@ paths:
         network that connects them. This type of request is heavily optimized for query performance, so it does not
         take turn restrictions into account, and it does not allow for some advanced features.
         ### Flexible
-        Enable turn restrictions and unlock further flexible features via ch.disable=true`.
+        Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
         Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
       parameters:
         - name: point

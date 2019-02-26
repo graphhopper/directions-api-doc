@@ -60,7 +60,7 @@
     "/route": {
       "get": {
         "summary": "Execute a routing request",
-        "description": "### Fast\nTo get started using this API, just provide two or more points and retrieve the fastest route through the road\nnetwork that connects them. This type of request is heavily optimized for query performance, so it does not\ntake turn restrictions into account, and it does not allow for some advanced features.\n### Flexible\nEnable turn restrictions and unlock further flexible features via ch.disable=true`.\nPlease note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.\n",
+        "description": "### Fast\nTo get started using this API, just provide two or more points and retrieve the fastest route through the road\nnetwork that connects them. This type of request is heavily optimized for query performance, so it does not\ntake turn restrictions into account, and it does not allow for some advanced features.\n### Flexible\nEnable turn restrictions and unlock further flexible features via `ch.disable=true`.\nPlease note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.\n",
         "parameters": [
           {
             "name": "point",
