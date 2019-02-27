@@ -527,7 +527,7 @@
       },
       "post": {
         "summary": "Post a matrix request",
-        "description": "The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter in the URL will be the key which stays in the URL. Both request scenarios are identically except that all singular parameter names are named as their plural for a POST request.\n",
+        "description": "The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter in the URL will be the key which stays in the URL. Both request scenarios are identically except that all singular parameter names are named as their plural for a POST request. For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:\n```json\n{ \"points\": [[11,10], [22,20]] }\n```\nNote that also the order changes to `[longitude,latitude]` similar to a [GeoJson](http://geojson.org/geojson-spec.html#examples). All effected parameters are: `points`, `from_points` and `to_points`.\n\nAlso `out_array` has to be named `out_arrays` in a POST request.\n\ncurl example with a JSON as input:\n```bash\ncurl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]\" -d '{\"elevation\":false,\"out_arrays\":[\"weights\"],\"from_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"to_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"vehicle\":\"car\"}'\n```\n\nJSON response:\n```json\n{\n\"weights\":[\n    [0.0,886.302,605.321,1130.814],\n    [847.615,0.0,807.13,927.05],\n    [561.073,777.362,0.0,660.521],\n    [1102.726,905.626,662.717,0.0]],\n\"info\":{\"copyrights\":[\"GraphHopper\",\"OpenStreetMap contributors\"]}\n}\n```\n",
         "parameters": [
           {
             "name": "body",
@@ -848,13 +848,23 @@
           "items": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "number",
+              "format": "double"
             }
           },
           "example": [
-            "52.522112,13.424606",
-            "52.504979,13.423920",
-            "52.506233,13.400574"
+            [
+              52.522112,
+              13.424606
+            ],
+            [
+              52.504979,
+              13.42392
+            ],
+            [
+              52.506233,
+              13.400574
+            ]
           ]
         },
         "from_points": {
@@ -863,7 +873,8 @@
           "items": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "number",
+              "format": "double"
             }
           },
           "example": [
