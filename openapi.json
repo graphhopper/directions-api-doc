@@ -2051,8 +2051,7 @@
           },
           "algorithm": {
             "$ref": "#/components/schemas/Algorithm",
-            "description": "**Deprecated** Do NOT use this field anymore. It is deprecated. Use `objectives` instead.",
-            "deprecated": true
+            "description": "**Deprecated** Do NOT use this field anymore. It is deprecated. Use `objectives` instead."
           },
           "objectives": {
             "type": "array",
@@ -2290,6 +2289,7 @@
       "Algorithm": {
         "type": "object",
         "description": "Do NOT use this field anymore. It is deprecated. Use `objectives` instead.",
+        "deprecated": true,
         "properties": {
           "problem_type": {
             "type": "string",
