@@ -2632,12 +2632,10 @@
             "example": 1
           },
           "pickup": {
-            "$ref": "#/components/schemas/Stop",
-            "description": "Specifies pickup."
+            "$ref": "#/components/schemas/Stop"
           },
           "delivery": {
-            "$ref": "#/components/schemas/Stop",
-            "description": "Specifies delivery."
+            "$ref": "#/components/schemas/Stop"
           },
           "size": {
             "type": "array",
