@@ -39,7 +39,11 @@
     },
     {
       "name": "Isochrone API",
-      "description": "### Endpoint\nThe endpoint is https://graphhopper.com/api/1/isochrone\n\nYou get an example response via:`\n\n```\ncurl \"https://graphhopper.com/api/1/isochrone?point=51.131108,12.414551&key=[YOUR_KEY]\"`\n```\n\nDon't forget to replace the placeholder with your own key.\n\n### Introduction\n\n![Isochrone screenshot](https://graphhopper.com/api/1/docs/img/isochrone-example.png)\n\nAn isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.\nWith the same API you can also calculate isodistances, just use the parameter distance_limit instead of time_limit`.\n\n### Use Cases\nSome possible areas in which this API may be useful to you:\n\n- real estate analysis\n- realtors\n- vehicle scheduling\n- geomarketing\n- reach of electric vehicles\n- transport planning\n- logistics (distribution and retail network planning)\n\n### API Clients and Examples\nSee the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).\n"
+      "description": "### Endpoint\nThe endpoint is https://graphhopper.com/api/1/isochrone\n\nYou get an example response via:`\n\n```\ncurl \"https://graphhopper.com/api/1/isochrone?point=51.131108,12.414551&key=[YOUR_KEY]\"`\n```\n\nDon't forget to replace the placeholder with your own key.\n\n### Introduction\n![Isochrone screenshot](https://graphhopper.com/api/1/docs/img/isochrone-example.png)\n\nAn isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.\nWith the same API you can also calculate isodistances, just use the parameter distance_limit instead of time_limit`.\n\n### Use Cases\nSome possible areas in which this API may be useful to you:\n\n- real estate analysis\n- realtors\n- vehicle scheduling\n- geomarketing\n- reach of electric vehicles\n- transport planning\n- logistics (distribution and retail network planning)\n\n### API Clients and Examples\nSee the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).\n"
+    },
+    {
+      "name": "Map Matching API",
+      "description": "### Endpoint\nThe endpoint is https://graphhopper.com/api/1/match\n\nYou get an example response for a GPX via:\n\n```\ncurl -XPOST -H \"Content-Type: application/gpx+xml\" \"https://graphhopper.com/api/1/match?vehicle=car&key=[YOUR_KEY]\" --data @/path/to/some.gpx\n```\n\n### Introduction\n![Map Matching screenshot](https://graphhopper.com/api/1/docs/img/map-matching-example.gif)\n\nThe Map Matching API is part of the GraphHopper Directions API and with this API you can snap measured GPS points typically as GPX files to a digital\nroad network to e.g. clean data or attach certain data like elevation or turn instructions to it. Read more at Wikipedia.\n\nIn the example screenshot above and demo you see the Map Matching API in action where the black line is the GPS track and the green one is matched result.\n\n### API Clients and Examples\nSee the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).\n\n### Limits and Counts\nThe cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).\n\nOne request should not exceed the Map Matching API location limit depending on the package, see the pricing in our dashboard.\n"
     }
   ],
   "produces": [
@@ -696,6 +700,46 @@
         }
       }
     },
+    "/match": {
+      "post": {
+        "summary": "Map-match a GPX file",
+        "consumes": [
+          "application/gpx+xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "Routing Result",
+            "schema": {
+              "$ref": "#/definitions/RouteResponse"
+            },
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Your current daily credit limit.",
+                "type": "integer"
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Your remaining credits until the reset.",
+                "type": "integer"
+              },
+              "X-RateLimit-Reset": {
+                "description": "The number of seconds that you have to wait before a reset of the credit count is done.",
+                "type": "integer"
+              },
+              "X-RateLimit-Credits": {
+                "description": "The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.",
+                "type": "integer"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/GHError"
+            }
+          }
+        }
+      }
+    },
     "/geocode": {
       "get": {
         "summary": "Execute a Geocoding request",
@@ -718,7 +762,7 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Specify the maximum number of returned results",
+            "description": "Specify the maximum number of results to return",
             "required": false,
             "type": "integer",
             "format": "int32"
