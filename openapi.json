@@ -918,32 +918,53 @@
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "example": [
+            "King St.",
+            "Bedford St.",
+            "Henrietta St."
+          ]
         },
         "from_point_hints": {
           "description": "More information for the `from_points` array. See `point_hints`",
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "example": [
+            "King St.",
+            "Bedford St.",
+            "Henrietta St."
+          ]
         },
         "to_point_hints": {
           "description": "More information for the `to_points` array. See `point_hints`",
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "example": [
+            "King St.",
+            "Bedford St."
+          ]
         },
         "out_arrays": {
-          "description": "Specifies which arrays should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. To specify more than one array use e.g. `out_array=times&out_array=distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.",
+          "description": "Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.",
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "example": [
+            "weights",
+            "times",
+            "distances"
+          ]
         },
         "vehicle": {
           "description": "The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.",
-          "type": "string"
+          "type": "string",
+          "default": "car",
+          "example": "bike"
         }
       }
     },
