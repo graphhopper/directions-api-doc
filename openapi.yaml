@@ -563,6 +563,105 @@ paths:
           description: Unexpected Error
           schema:
             $ref: '#/definitions/GHError'
+  /matrix/calculate:
+    post:
+      summary: Post a matrix request in batch mode
+      description: |
+        The Batch Matrix API allows using matrices with more locations and works asynchronously - similar to our Route Optimization API:
+         * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
+         * Poll via HTTP GET requests every second against `/matrix/solution/[job_id]`
+
+        Here are some full examples via curl:
+        ```bash
+        $ curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix/calculate?key=[YOUR_KEY]" -d '{"points":[[13.29895,52.48696],[13.370876,52.489575],[13.439026,52.511206]]}'
+        {"job_id":"7ac65787-fb99-4e02-a832-2c3010c70097"}
+        ```
+
+        Pick the returned `job_id` and use it in the next GET requests:
+        ```bash
+        $ curl -X GET "https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]"
+        {"status":"waiting"}
+        ```
+
+        When the calculation is finished (`status:finished`) the JSON response will contain the full matrix JSON under `solution`:
+        ```bash
+        $ curl -X GET "https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]"
+        {"solution":{"weights":[[0.0,470.453,945.414],[503.793,0.0,580.871],[970.49,569.511,0.0]],"info":{"copyrights":["GraphHopper","OpenStreetMap contributors"]}},"status":"finished"}
+        ```
+
+        Please note, if an error occured while calculation the JSON will not have a status but contain directly the error message e.g.:
+        ```json
+        {"message":"Cannot find from_points: 1","hints":[{...}]}
+        ```
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/MatrixRequest'
+      tags:
+        - Matrix API
+      responses:
+        '200':
+          description: A jobId you can use to retrieve your solution from the server.
+          schema:
+            $ref: '#/definitions/JobId'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              type: integer
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/GHError'
+  '/matrix/solution/{jobId}':
+    get:
+      summary: Retrieve matrix
+      description: |
+        This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
+      operationId: getMatrix
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: jobId
+          description: Request solution with jobId
+          required: true
+          type: string
+      tags:
+        - Matrix API
+      responses:
+        '200':
+          description: A response containing the matrix
+          schema:
+            $ref: '#/definitions/MatrixResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              type: integer
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/GHError'
   /geocode:
     get:
       summary: Execute a Geocoding request
