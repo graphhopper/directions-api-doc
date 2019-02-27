@@ -2110,7 +2110,7 @@ components:
     Pickup:
       allOf:
       - $ref: '#/components/schemas/Stop'
-      - decription: pickup
+      - description: pickup
     Stop:
       type: object
       properties:
