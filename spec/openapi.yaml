@@ -847,6 +847,7 @@ definitions:
     type: object
     properties:
       distances:
+        description: The distance matrix for the specified points in the same order as the time matrix. The distances are in meters.
         type: array
         items:
           type: array
@@ -854,6 +855,7 @@ definitions:
             type: number
             format: int64
       times:
+        description: The time matrix for the specified points in the order [[from1->to1, from1->to2, ...], [from2->to1, from2->to2, ...], ...]. The times are in seconds.
         type: array
         items:
           type: array
@@ -861,6 +863,7 @@ definitions:
             type: number
             format: int64
       weights:
+        description: The weight matrix for the specified points in the same order as the time matrix. The weights for different vehicles can have a different unit but the weights array is perfectly suited as input for Vehicle Routing Problems as it is currently faster to calculate.
         type: array
         items:
           type: array
@@ -1116,6 +1119,7 @@ definitions:
     description: Additional information for your request
     properties:
       copyrights:
+        description: Attribution according to our documentation is necessary if no white-label option included.
         type: array
         items:
           type: string
