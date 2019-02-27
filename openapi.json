@@ -2632,7 +2632,7 @@
             "example": 1
           },
           "pickup": {
-            "$ref": "#/components/schemas/Stop"
+            "$ref": "#/components/schemas/Pickup"
           },
           "delivery": {
             "$ref": "#/components/schemas/Stop"
@@ -2696,6 +2696,16 @@
           "id",
           "pickup",
           "delivery"
+        ]
+      },
+      "Pickup": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Stop"
+          },
+          {
+            "description": "pickup"
+          }
         ]
       },
       "Stop": {
