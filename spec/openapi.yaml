@@ -1596,7 +1596,6 @@ components:
             $ref: '#/components/schemas/Relation'
         algorithm:
           $ref: '#/components/schemas/Algorithm'
-          description: '**Deprecated** Do NOT use this field anymore. It is deprecated. Use `objectives` instead.'
         objectives:
           type: array
           description: Specifies an array of objective functions. This tells the algorithm the objective of the optimization.
@@ -2377,7 +2376,7 @@ components:
         costs:
           type: integer
           format: int32
-          description: '**Deprecated** Do NOT use this field anymore. It is deprecated and not interpretable if you do not know our cost function.'
+          deprecated: true
         distance:
           type: integer
           format: int32
@@ -2386,7 +2385,8 @@ components:
         time:
           type: integer
           format: int64
-          description: '**Deprecated** Do NOT use this field anymore. It is deprecated. Use `transport_time` instead.'
+          deprecated: true
+          description: 'Use `transport_time` instead.'
         transport_time:
           type: integer
           format: int64
