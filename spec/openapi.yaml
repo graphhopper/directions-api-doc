@@ -1597,7 +1597,6 @@ components:
         algorithm:
           $ref: '#/components/schemas/Algorithm'
           description: '**Deprecated** Do NOT use this field anymore. It is deprecated. Use `objectives` instead.'
-          deprecated: true
         objectives:
           type: array
           description: Specifies an array of objective functions. This tells the algorithm the objective of the optimization.
@@ -1797,6 +1796,7 @@ components:
     Algorithm:
       type: object
       description: Do NOT use this field anymore. It is deprecated. Use `objectives` instead.
+      deprecated: true
       properties:
         problem_type:
           type: string
