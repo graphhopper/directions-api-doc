@@ -12,7 +12,8 @@
     },
     "x-logo": {
       "url": "graphhopper-logo.svg",
-      "altText": "GraphHopper"
+      "altText": "GraphHopper",
+      "background-size": "20px 30px"
     }
   },
   "host": "graphhopper.com",
