@@ -67,7 +67,7 @@ tags:
       this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the
       Routing API multiple times.
 
-      In the [Routing API](./routing.md) we support multiple points, so called 'via points', which results in one
+      In the [Routing API](./routing.md) we supprt multiple points, so called 'via points', which results in one
       route being calculated. The Matrix API results in NxM routes or more precise NxM weights, distances or times being calculated
       but is a lot faster compared to NxM single requests. The most simple example is a tourist trying to decide
       which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service in the
@@ -108,7 +108,38 @@ tags:
   - name: Geocoding API
     description: Everything about geocoding
   - name: Isochrone API
-    description: Everything about geocoding
+    description: |
+      ### Endpoint
+      The endpoint is https://graphhopper.com/api/1/isochrone
+
+      You get an example response via:`
+
+      ```
+      curl "https://graphhopper.com/api/1/isochrone?point=51.131108,12.414551&key=[YOUR_KEY]"`
+      ```
+
+      Don't forget to replace the placeholder with your own key.
+
+      ### Introduction
+
+      ![Isochrone screenshot](https://graphhopper.com/api/1/docs/img/isochrone-example.png)
+
+      An isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.
+      With the same API you can also calculate isodistances, just use the parameter distance_limit instead of time_limit`.
+
+      ### Use Cases
+      Some possible areas in which this API may be useful to you:
+
+      - real estate analysis
+      - realtors
+      - vehicle scheduling
+      - geomarketing
+      - reach of electric vehicles
+      - transport planning
+      - logistics (distribution and retail network planning)
+
+      ### API Clients and Examples
+      See the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).
 produces:
   - application/json
 security:
@@ -364,9 +395,6 @@ paths:
     get:
       summary: Isochrone Request
       description: |
-        The GraphHopper Isochrone API allows calculating an isochrone of a location. This means to calculate
-        'a line connecting points at which a vehicle arrives at the same time,'
-        see [Wikipedia](http://en.wikipedia.org/wiki/Isochrone_map).
       parameters:
         - name: point
           in: query
@@ -381,31 +409,45 @@ paths:
           format: int32
         - name: distance_limit
           in: query
-          description: Specify which distance the vehicle should travel. In meter.
-          default: -1
+          description: Specify which distance the vehicle should travel. In meters.
           type: integer
           format: int32
         - name: vehicle
           in: query
-          description: 'Possible vehicles are bike, car, foot and [more](https://graphhopper.com/api/1/docs/supported-vehicle-profiles/)'
-          default: car
+          description: |
+            The vehicle profile for which the route should be calculated.
+            type: string
           type: string
+          enum:
+            - car
+            - bike
+            - foot
+            - hike
+            - mtb
+            - racingbike
+            - scooter
+            - truck
+            - small_truck
+          default: car
         - name: buckets
           in: query
-          description: For how many sub intervals an additional polygon should be calculated.
+          description: For how many subintervals an additional polygon should be calculated.
           default: 1
           type: integer
           format: int32
         - name: reverse_flow
           in: query
-          description: 'If `false` the flow goes from point to the polygon, if `true` the flow goes from the polygon "inside" to the point. Example usage for `false`&#58; *How many potential customer can be reached within 30min travel time from your store* vs. `true`&#58; *How many customers can reach your store within 30min travel time.*'
+          description: |
+            If `false` the flow goes from point to the polygon, if `true` the flow goes from the polygon "inside" to the point.
+            Example use case for `false`&#58; *How many potential customer can be reached within 30min travel time from your store* vs. `true`&#58; *How many customers can reach your store within 30min travel time.*
           default: false
           type: boolean
         - name: weighting
           in: query
-          description: Can be fastest or shortest
-          default: fastest
+          description: Use `"shortest"` to get an isodistance line instead of an isochrone.
           type: string
+          enum: [fastest, shortest]
+          default: fastest
       tags:
         - Isochrone API
       responses:
@@ -1257,12 +1299,32 @@ definitions:
     properties:
       polygons:
         type: array
+        description: |
+          The list of polygons in GeoJson format. It can be used e.g. in the Leaflet framework:
+
+          ```
+          L.geoJson(json.polygons).addTo(map)
+          ```
+
+          The number of polygon is identical to the specified buckets in the query. Every polygon contains the bucket number in the properties section of the GeoJson.
         items:
           $ref: '#/definitions/IsochroneResponsePolygon'
       copyrights:
         type: array
         items:
           type: string
+    example: {
+      "polygons": [{
+         "properties": {
+           "bucket": 0
+         },
+         "type": "Feature",
+         "geometry": {
+           "type": "Polygon",
+           "coordinates": [[13.351851, 52.513450], [13.350402, 52.516949], [13.352598, 52.522252], [13.351851, 52.513450]]
+         }
+      }]
+    }
   IsochroneResponsePolygon:
     type: object
     description: A found path
