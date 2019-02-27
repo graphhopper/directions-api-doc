@@ -1803,7 +1803,7 @@ components:
       minItems: 1
     Algorithm:
       type: object
-      description: Do NOT use this field anymore. It is deprecated. Use `objectives` instead.
+      description: Use `objectives` instead.
       deprecated: true
       properties:
         problem_type:
