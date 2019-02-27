@@ -4,4 +4,5 @@ theme:
       main: '#32329f'
   logo:
     maxHeight: '50px'
+    maxWidth: '50px'
 
