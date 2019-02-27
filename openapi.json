@@ -2632,7 +2632,14 @@
             "example": 1
           },
           "pickup": {
-            "$ref": "#/components/schemas/Pickup"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stop"
+              },
+              {
+                "description": "This is a pickup."
+              }
+            ]
           },
           "delivery": {
             "$ref": "#/components/schemas/Stop"
