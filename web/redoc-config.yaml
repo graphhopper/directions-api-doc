@@ -3,5 +3,5 @@ theme:
     primary:
       main: '#32329f'
   logo:
-    maxHeight: '100px'
+    maxHeight: '50px'
 
