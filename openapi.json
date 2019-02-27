@@ -666,7 +666,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MatrixRequest"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/MatrixRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SymmetricalMatrixRequest"
+                  }
+                ]
               }
             }
           }
@@ -1236,31 +1243,6 @@
       "MatrixRequest": {
         "type": "object",
         "properties": {
-          "points": {
-            "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated as follows: `[longitude,latitude]`. In this case the origins are identical to the destinations. Thus, if there are N points, NxN entries are calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with `from_point` or `to_point.`.",
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "number",
-                "format": "double"
-              }
-            },
-            "example": [
-              [
-                52.522112,
-                13.424606
-              ],
-              [
-                52.504979,
-                13.42392
-              ],
-              [
-                52.506233,
-                13.400574
-              ]
-            ]
-          },
           "from_points": {
             "description": "The starting points for the routes in an array of `[longitude,latitude]`. For instance, if you want to calculate three routes from point A such as A->1, A->2, A->3 then you have one `from_point` parameter and three `to_point` parameters.",
             "type": "array",
@@ -1307,18 +1289,6 @@
               ]
             ]
           },
-          "point_hints": {
-            "description": "Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "King St.",
-              "Bedford St.",
-              "Henrietta St."
-            ]
-          },
           "from_point_hints": {
             "description": "More information for the `from_points` array. See `point_hints`",
             "type": "array",
@@ -1340,6 +1310,66 @@
             "example": [
               "King St.",
               "Bedford St."
+            ]
+          },
+          "out_arrays": {
+            "description": "Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "weights",
+              "times",
+              "distances"
+            ]
+          },
+          "vehicle": {
+            "description": "The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.",
+            "type": "string",
+            "default": "car",
+            "example": "bike"
+          }
+        }
+      },
+      "SymmetricalMatrixRequest": {
+        "type": "object",
+        "properties": {
+          "points": {
+            "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated as follows: `[longitude,latitude]`. In this case the origins are identical to the destinations. Thus, if there are N points, NxN entries are calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with `from_point` or `to_point.`.",
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            },
+            "example": [
+              [
+                52.522112,
+                13.424606
+              ],
+              [
+                52.504979,
+                13.42392
+              ],
+              [
+                52.506233,
+                13.400574
+              ]
+            ]
+          },
+          "point_hints": {
+            "description": "Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "King St.",
+              "Bedford St.",
+              "Henrietta St."
             ]
           },
           "out_arrays": {
