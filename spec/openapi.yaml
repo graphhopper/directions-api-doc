@@ -837,7 +837,7 @@ definitions:
         type: array
         items:
           type: string
-      example: [ "weights", "times", "distances" ]
+        example: [ "weights", "times", "distances" ]
       vehicle:
         description: 'The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
         type: string
