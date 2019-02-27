@@ -861,6 +861,9 @@
     "/match": {
       "post": {
         "summary": "Map-match a GPX file",
+        "tags": [
+          "Map Matching API"
+        ],
         "responses": {
           "200": {
             "description": "Routing Result",
