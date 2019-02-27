@@ -121,7 +121,6 @@ tags:
       Don't forget to replace the placeholder with your own key.
 
       ### Introduction
-
       ![Isochrone screenshot](https://graphhopper.com/api/1/docs/img/isochrone-example.png)
 
       An isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.
@@ -140,6 +139,32 @@ tags:
 
       ### API Clients and Examples
       See the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).
+  - name: Map Matching API
+    description: |
+      ### Endpoint
+      The endpoint is https://graphhopper.com/api/1/match
+
+      You get an example response for a GPX via:
+
+      ```
+      curl -XPOST -H "Content-Type: application/gpx+xml" "https://graphhopper.com/api/1/match?vehicle=car&key=[YOUR_KEY]" --data @/path/to/some.gpx
+      ```
+
+      ### Introduction
+      ![Map Matching screenshot](https://graphhopper.com/api/1/docs/img/map-matching-example.gif)
+
+      The Map Matching API is part of the GraphHopper Directions API and with this API you can snap measured GPS points typically as GPX files to a digital
+      road network to e.g. clean data or attach certain data like elevation or turn instructions to it. Read more at Wikipedia.
+
+      In the example screenshot above and demo you see the Map Matching API in action where the black line is the GPS track and the green one is matched result.
+
+      ### API Clients and Examples
+      See the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).
+
+      ### Limits and Counts
+      The cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).
+
+      One request should not exceed the Map Matching API location limit depending on the package, see the pricing in our dashboard.
 produces:
   - application/json
 security:
@@ -705,6 +730,34 @@ paths:
           description: Unexpected Error
           schema:
             $ref: '#/definitions/GHError'
+  /match:
+    post:
+      summary: Map-match a GPX file
+      consumes:
+        - application/gpx+xml
+      responses:
+        '200':
+          description: Routing Result
+          schema:
+            $ref: '#/definitions/RouteResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              type: integer
+            X-RateLimit-Credits:
+              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
+              type: integer
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/GHError'
+
   /geocode:
     get:
       summary: Execute a Geocoding request
@@ -723,7 +776,7 @@ paths:
           type: string
         - name: limit
           in: query
-          description: Specify the maximum number of returned results
+          description: Specify the maximum number of results to return
           required: false
           type: integer
           format: int32
