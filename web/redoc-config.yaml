@@ -2,3 +2,6 @@ theme:
   colors:
     primary:
       main: '#32329f'
+  logo:
+    maxHeight: '100px'
+
