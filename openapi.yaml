@@ -687,7 +687,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MatrixRequest'
+              oneOf:
+                - $ref: '#/components/schemas/MatrixRequest'
+                - $ref: '#/components/schemas/SymmetricalMatrixRequest'
       tags:
         - Matrix API
       responses:
