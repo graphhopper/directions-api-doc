@@ -627,7 +627,7 @@ paths:
       summary: Retrieve matrix
       description: |
         This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
-      operationId: getSolution
+      operationId: getMatrix
       consumes:
         - application/json
       produces:
