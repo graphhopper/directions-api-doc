@@ -102,19 +102,7 @@
             "name": "vehicle",
             "description": "The vehicle profile for which the route should be calculated.\n",
             "schema": {
-              "type": "string",
-              "enum": [
-                "car",
-                "bike",
-                "foot",
-                "hike",
-                "mtb",
-                "racingbike",
-                "scooter",
-                "truck",
-                "small_truck"
-              ],
-              "default": "car"
+              "$ref": "#/components/schemas/VehicleProfileId"
             }
           },
           {
@@ -424,21 +412,9 @@
           {
             "name": "vehicle",
             "in": "query",
-            "description": "The vehicle profile for which the route should be calculated.\ntype: string\n",
+            "description": "The vehicle profile for which the route should be calculated.\n",
             "schema": {
-              "type": "string",
-              "enum": [
-                "car",
-                "bike",
-                "foot",
-                "hike",
-                "mtb",
-                "racingbike",
-                "scooter",
-                "truck",
-                "small_truck"
-              ],
-              "default": "car"
+              "$ref": "#/components/schemas/VehicleProfileId"
             }
           },
           {
@@ -600,10 +576,9 @@
           {
             "name": "vehicle",
             "in": "query",
-            "description": "The vehicle for which the route should be calculated. Other vehicles are foot, small_truck etc",
+            "description": "The vehicle profile for which the route should be calculated. Other vehicles are foot, small_truck etc",
             "schema": {
-              "default": "car",
-              "type": "string"
+              "$ref": "#/components/schemas/VehicleProfileId"
             }
           }
         ],
@@ -1332,10 +1307,14 @@
             ]
           },
           "vehicle": {
-            "description": "The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.",
-            "type": "string",
-            "default": "car",
-            "example": "bike"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VehicleProfileId"
+              },
+              {
+                "description": "The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details."
+              }
+            ]
           }
         }
       },
@@ -1392,10 +1371,14 @@
             ]
           },
           "vehicle": {
-            "description": "The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.",
-            "type": "string",
-            "default": "car",
-            "example": "bike"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VehicleProfileId"
+              },
+              {
+                "description": "The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details."
+              }
+            ]
           }
         }
       },
@@ -2285,6 +2268,21 @@
         ],
         "minItems": 1
       },
+      "VehicleProfileId": {
+        "type": "string",
+        "enum": [
+          "car",
+          "bike",
+          "foot",
+          "hike",
+          "mtb",
+          "racingbike",
+          "scooter",
+          "truck",
+          "small_truck"
+        ],
+        "default": "car"
+      },
       "Algorithm": {
         "type": "object",
         "description": "Use `objectives` instead.",
@@ -2402,21 +2400,14 @@
             "example": "my-own-type"
           },
           "profile": {
-            "type": "string",
-            "description": "Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.",
-            "example": "truck",
-            "enum": [
-              "car",
-              "bike",
-              "foot",
-              "hike",
-              "mtb",
-              "racingbike",
-              "scooter",
-              "truck",
-              "small_truck"
-            ],
-            "default": "car"
+            "allOf": [
+              {
+                "description": "Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle."
+              },
+              {
+                "$ref": "#/components/schemas/VehicleProfileId"
+              }
+            ]
           },
           "capacity": {
             "type": "array",
