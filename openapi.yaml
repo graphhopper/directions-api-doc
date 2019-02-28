@@ -2142,19 +2142,6 @@ components:
           format: int64
           description: 'Specifies the closing time of the time window in seconds, i.e. the latest time the service can start.'
           default: 9223372036854776000
-    Location:
-      type: object
-      properties:
-        lon:
-          format: double
-          type: number
-          description: longitude
-          example: -0.092697
-        lat:
-          format: double
-          type: number
-          description: latitude
-          example: 51.51324
     Configuration:
       type: object
       description: Here you can specify general configurations of the API.
