@@ -60,7 +60,7 @@
           {
             "name": "point",
             "in": "query",
-            "description": "Specifiy multiple points for which the route should be calculated. The order [latitude,longitude] is important. Specify at least two points. The maximum number depends on the selected package.\n",
+            "description": "The points for which the route should be calculated. Format: `[latitude,longitude]`. Specify at least an origin and a destination. Via points are possible.\nThe maximum number depends on your plan.\n",
             "required": true,
             "schema": {
               "type": "array",
@@ -71,6 +71,26 @@
             "explode": true
           },
           {
+            "name": "point_hint",
+            "in": "query",
+            "description": "For each `point` value, a hint about the road segment it should be snapped to.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explode": true
+          },
+          {
+            "in": "query",
+            "name": "vehicle",
+            "description": "The vehicle profile for which the route should be calculated.\n",
+            "schema": {
+              "$ref": "#/components/schemas/VehicleProfileId"
+            }
+          },
+          {
             "name": "locale",
             "in": "query",
             "description": "The locale of the resulting turn instructions. E.g. `pt_PT` for Portuguese or `de` for German.\n",
@@ -78,6 +98,27 @@
               "type": "string",
               "default": "en"
             }
+          },
+          {
+            "name": "elevation",
+            "in": "query",
+            "description": "If `true`, a third coordinate, the altitude, is included to all positions in the response.\nThis changes the format of the `points` and `snapped_waypoints` fields of the response, in both their\nencodings. Unless you switch off the `points_encoded` parameter, you need special code on the\nclient side that can handle triple coordinates.\nA request can fail if the vehicle profile does not support elevation. See the features object for every vehicle profile.\n",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "details",
+            "in": "query",
+            "description": "Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.\nFor all motor vehicle profiles, we additionally support `max_speed`, `toll`, `road_class`, `road_environment`, and `surface`.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explode": true
           },
           {
             "in": "query",
@@ -98,35 +139,9 @@
             }
           },
           {
-            "in": "query",
-            "name": "vehicle",
-            "description": "The vehicle profile for which the route should be calculated.\n",
-            "schema": {
-              "$ref": "#/components/schemas/VehicleProfileId"
-            }
-          },
-          {
-            "name": "elevation",
-            "in": "query",
-            "description": "If true a third dimension - the elevation - is included in the polyline or in the GeoJson.\nIMPORTANT: If enabled you have to use a modified version of the decoding method or set `points_encoded` to `false`. See the `points_encoded`\nattribute for more details. Additionally a request can fail if the vehicle does not support elevation. See the features object for every vehicle.\n",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          },
-          {
-            "name": "points_encoded",
-            "in": "query",
-            "description": "If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point.\nIf `true` the coordinates will be encoded as string leading to less bandwith usage. You'll need a special handling for the decoding\nof this string on the client-side. We provide open source code code in Java and JavaScript, see the clients section.\nIt is especially important to use our official client or code if you set `elevation=true`!\n",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          },
-          {
             "name": "calc_points",
             "in": "query",
-            "description": "If the points for the route should be calculated at all printing out only distance and time.\n",
+            "description": "If the points for the route should be calculated at all.\n",
             "schema": {
               "type": "boolean",
               "default": true
@@ -142,6 +157,15 @@
             "description": "If `true`, the output will be formatted.\n"
           },
           {
+            "name": "points_encoded",
+            "in": "query",
+            "description": "If `false`, the coordinates in `point` and `snapped_waypoints` are returned as lists of positions using the order `[lon,lat,elevation]`.\nThis format may be easier to handle, but can consume a lot of bandwidth for long routes.\nIf `true`, the coordinates will be encoded as a string. You'll need to decode this string in client code.\nWe provide open source code in Java and JavaScript, see the clients section.\n",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
             "name": "type",
             "in": "query",
             "schema": {
@@ -152,31 +176,7 @@
               ],
               "default": "json"
             },
-            "description": "Specifies the resulting format of the route, for `json` the content type will be `application/json`. Or use `gpx`, the content type will be `application/gpx+xml`, see below for more parameters.\n"
-          },
-          {
-            "name": "point_hint",
-            "in": "query",
-            "description": "Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup.\nE.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.\n",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "explode": true
-          },
-          {
-            "name": "details",
-            "in": "query",
-            "description": "Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.\nFor all motor vehicles we additionally support `max_speed`, `toll` (`no`, `all`, `hgv`), `road_class` (`motorway`, `primary`, ...), `road_environment`, and `surface`.\nThe returned format for one details is [fromRef, toRef, value]. The ref references the points of the response.\nMultiple details are possible via multiple key value pairs, like `details=time&details=toll`.\n",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "explode": true
+            "description": "Specifies the media type for the response.\nFor `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.\n"
           },
           {
             "name": "ch.disable",
@@ -576,7 +576,7 @@
           {
             "name": "vehicle",
             "in": "query",
-            "description": "The vehicle profile for which the route should be calculated. Other vehicles are foot, small_truck etc",
+            "description": "The vehicle profile for which the matrix should be calculated.",
             "schema": {
               "$ref": "#/components/schemas/VehicleProfileId"
             }
@@ -1642,133 +1642,139 @@
           ]
         }
       },
+      "EncodedLineString": {
+        "type": "string",
+        "description": "An encoded list of positions."
+      },
       "RouteResponsePath": {
         "type": "object",
-        "description": "A found path",
         "properties": {
           "distance": {
-            "description": "The total distance of the route, in meter",
+            "description": "The total distance, in meters.\n",
             "type": "number",
             "format": "double"
           },
           "time": {
-            "description": "The total time of the route, in ms",
+            "description": "The total travel time, in milliseconds.\n",
             "type": "integer",
             "format": "int64"
           },
           "ascend": {
+            "description": "The total ascent, in meters.\n",
             "type": "number",
             "format": "double"
           },
           "descend": {
-            "description": "The total descend (downhill) of the route, in meter",
+            "description": "The total descent, in meters.\n",
             "type": "number",
             "format": "double"
           },
           "points": {
-            "$ref": "#/components/schemas/ResponseCoordinates"
+            "allOf": [
+              {
+                "description": "The geometry of the route. The format depends on the value of `points_encoded`.\n"
+              },
+              {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/EncodedLineString"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LineString"
+                  }
+                ]
+              }
+            ]
+          },
+          "snapped_waypoints": {
+            "allOf": [
+              {
+                "description": "The snapped input points. The format depends on the value of `points_encoded`.\n"
+              },
+              {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/EncodedLineString"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LineString"
+                  }
+                ]
+              }
+            ]
           },
           "points_encoded": {
-            "description": "Is true if the points are encoded, if not paths[0].points contains the geo json of the path (then order is lon,lat,elevation), which is easier to handle but consumes more bandwidth compared to encoded version",
+            "description": "Whether the `points` and `snapped_waypoints` fields are encoded strings rather than GeoJSON LineStrings.\n",
             "type": "boolean"
           },
           "bbox": {
-            "description": "The bounding box of the route, format <br> minLon, minLat, maxLon, maxLat",
+            "description": "The bounding box of the route geometry. Format: `[minLon, minLat, maxLon, maxLat]`.\n",
             "type": "array",
             "items": {
               "type": "number",
               "format": "double"
             }
           },
-          "snapped_waypoints": {
-            "$ref": "#/components/schemas/ResponseCoordinates"
-          },
           "instructions": {
-            "$ref": "#/components/schemas/ResponseInstructions"
+            "type": "array",
+            "description": "The instructions for this route. This feature is under active development, and our instructions can sometimes be misleading,\nso be mindful when using them for navigation.\n",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "A description what the user has to do in order to follow the route. The language depends on the locale parameter.\n"
+                },
+                "street_name": {
+                  "type": "string",
+                  "description": "The name of the street to turn onto in order to follow the route.\n"
+                },
+                "distance": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "The distance for this instruction, in meters.\n"
+                },
+                "time": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "The duration for this instruction, in milliseconds.\n"
+                },
+                "interval": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "description": "Two indices into `points`, referring to the beginning and the end of the segment of the route\nthis instruction refers to.\n"
+                },
+                "sign": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A number which specifies the sign to show:\n\n|   |   |\n|---|---|\n|TURN_SHARP_LEFT |-3|\n|TURN_LEFT | -2|\n|TURN_SLIGHT_LEFT | -1|\n|CONTINUE_ON_STREET | 0|\n|TURN_SLIGHT_RIGHT |1|\n|TURN_RIGHT | 2|\n|TURN_SHARP_RIGHT | 3|\n|FINISH | 4|\n|VIA_REACHED | 5|\n|USE_ROUNDABOUT | 6|\n|KEEP_RIGHT | 7|\n"
+                },
+                "exit_number": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout.\n"
+                },
+                "turn_angle": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout `0 < r < 2*PI` for clockwise and\n`-2*PI < r < 0` for counterclockwise turns.\n"
+                }
+              }
+            }
           },
           "details": {
-            "type": "object"
-          }
-        }
-      },
-      "ResponseCoordinates": {
-        "type": "object",
-        "properties": {
-          "coordinates": {
-            "$ref": "#/components/schemas/ResponseCoordinatesArray"
-          }
-        }
-      },
-      "ResponseCoordinatesArray": {
-        "type": "array",
-        "description": "An array containing coordinates",
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "format": "double"
-          }
-        }
-      },
-      "ResponseInstructions": {
-        "type": "array",
-        "description": "Contains information about the instructions for this route. The last instruction is always the Finish instruction and takes 0ms and 0meter. Keep in mind that instructions are currently under active development and can sometimes contain misleading information, so, make sure you always show an image of the map at the same time when navigating your users!",
-        "items": {
-          "$ref": "#/components/schemas/ResponseInstruction"
-        }
-      },
-      "ResponseInstruction": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "A description what the user has to do in order to follow the route. The language depends on the locale parameter."
+            "type": "object",
+            "description": "Details, as requested with the `details` parameter. Consider the value `{\"street_name\": [[0,2,\"Frankfurter Straße\"],[2,6,\"Zollweg\"]]}`.\nIn this example, the route uses two streets: The first, Frankfurter Straße, is\nused between `points[0]` and `points[2]`, and the second, Zollweg, between `points[2]` and `points[6]`.\nSee [here](https://discuss.graphhopper.com/t/2539) for discussion.\n"
           },
-          "street_name": {
-            "type": "string",
-            "description": "The name of the street to turn onto in order to follow the route."
-          },
-          "distance": {
-            "type": "number",
-            "format": "double",
-            "description": "The distance for this instruction, in meter"
-          },
-          "time": {
-            "type": "integer",
-            "format": "int32",
-            "description": "The duration for this instruction, in ms"
-          },
-          "interval": {
+          "points_order": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "integer"
             },
-            "description": "An array containing the first and the last index (relative to paths[0].points) of the points for this instruction. This is useful to know for which part of the route the instructions are valid."
-          },
-          "sign": {
-            "type": "integer",
-            "format": "int32",
-            "description": "A number which specifies the sign to show e.g. for right turn etc <br>TURN_SHARP_LEFT = -3<br>TURN_LEFT = -2<br>TURN_SLIGHT_LEFT = -1<br>CONTINUE_ON_STREET = 0<br>TURN_SLIGHT_RIGHT = 1<br>TURN_RIGHT = 2<br>TURN_SHARP_RIGHT = 3<br>FINISH = 4<br>VIA_REACHED = 5<br>USE_ROUNDABOUT = 6"
-          },
-          "annotation_text": {
-            "type": "string",
-            "description": "optional - A text describing the instruction in more detail, e.g. like surface of the way, warnings or involved costs."
-          },
-          "annotation_importance": {
-            "type": "integer",
-            "format": "int32",
-            "description": "optional - 0 stands for INFO, 1 for warning, 2 for costs, 3 for costs and warning"
-          },
-          "exit_number": {
-            "type": "integer",
-            "format": "int32",
-            "description": "optional - Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout."
-          },
-          "turn_angle": {
-            "type": "number",
-            "format": "double",
-            "description": "optional - Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout - 0&lt;r&lt;2*PI for clockwise and -2PI&lt;r&lt;0 for counterclockwise transit. Null if the direction of rotation is undefined."
+            "description": "An array of indices (zero-based), specifiying the order in which the input points are visited.\nOnly present if the `optimize` parameter was used.\n"
           }
         }
       },
@@ -1891,15 +1897,41 @@
             "type": "string"
           },
           "geometry": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string"
-              },
-              "coordinates": {
+            "$ref": "#/components/schemas/Polygon"
+          }
+        }
+      },
+      "LineString": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      },
+      "Polygon": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/ResponseCoordinatesArray"
+                  "type": "number"
                 }
               }
             }

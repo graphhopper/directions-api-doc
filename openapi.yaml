@@ -66,13 +66,29 @@ paths:
         - name: point
           in: query
           description: |
-            Specifiy multiple points for which the route should be calculated. The order [latitude,longitude] is important. Specify at least two points. The maximum number depends on the selected package.
+            The points for which the route should be calculated. Format: `[latitude,longitude]`. Specify at least an origin and a destination. Via points are possible.
+            The maximum number depends on your plan.
           required: true
           schema:
             type: array
             items:
               type: string
           explode: true
+        - name: point_hint
+          in: query
+          description: |
+            For each `point` value, a hint about the road segment it should be snapped to.
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - in: query
+          name: vehicle
+          description: |
+            The vehicle profile for which the route should be calculated.
+          schema:
+            $ref: '#/components/schemas/VehicleProfileId'
         - name: locale
           in: query
           description: |
@@ -80,6 +96,27 @@ paths:
           schema:
             type: string
             default: en
+        - name: elevation
+          in: query
+          description: |
+            If `true`, a third coordinate, the altitude, is included to all positions in the response.
+            This changes the format of the `points` and `snapped_waypoints` fields of the response, in both their
+            encodings. Unless you switch off the `points_encoded` parameter, you need special code on the
+            client side that can handle triple coordinates.
+            A request can fail if the vehicle profile does not support elevation. See the features object for every vehicle profile.
+          schema:
+            type: boolean
+            default: false
+        - name: details
+          in: query
+          description: |
+            Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.
+            For all motor vehicle profiles, we additionally support `max_speed`, `toll`, `road_class`, `road_environment`, and `surface`.
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
         - in: query
           name: optimize
           description: |
@@ -96,35 +133,10 @@ paths:
           schema:
             type: boolean
             default: true
-        - in: query
-          name: vehicle
-          description: |
-            The vehicle profile for which the route should be calculated.
-          schema:
-            $ref: '#/components/schemas/VehicleProfileId'
-        - name: elevation
-          in: query
-          description: |
-            If true a third dimension - the elevation - is included in the polyline or in the GeoJson.
-            IMPORTANT: If enabled you have to use a modified version of the decoding method or set `points_encoded` to `false`. See the `points_encoded`
-            attribute for more details. Additionally a request can fail if the vehicle does not support elevation. See the features object for every vehicle.
-          schema:
-            type: boolean
-            default: false
-        - name: points_encoded
-          in: query
-          description: |
-            If `false` the coordinates in `point` and `snapped_waypoints` are returned as array using the order [lon,lat,elevation] for every point.
-            If `true` the coordinates will be encoded as string leading to less bandwith usage. You'll need a special handling for the decoding
-            of this string on the client-side. We provide open source code code in Java and JavaScript, see the clients section.
-            It is especially important to use our official client or code if you set `elevation=true`!
-          schema:
-            type: boolean
-            default: false
         - name: calc_points
           in: query
           description: |
-            If the points for the route should be calculated at all printing out only distance and time.
+            If the points for the route should be calculated at all.
           schema:
             type: boolean
             default: true
@@ -135,6 +147,16 @@ paths:
             default: false
           description: |
             If `true`, the output will be formatted.
+        - name: points_encoded
+          in: query
+          description: |
+            If `false`, the coordinates in `point` and `snapped_waypoints` are returned as lists of positions using the order `[lon,lat,elevation]`.
+            This format may be easier to handle, but can consume a lot of bandwidth for long routes.
+            If `true`, the coordinates will be encoded as a string. You'll need to decode this string in client code.
+            We provide open source code in Java and JavaScript, see the clients section.
+          schema:
+            type: boolean
+            default: false
         - name: type
           in: query
           schema:
@@ -144,29 +166,8 @@ paths:
               - gpx
             default: json
           description: |
-            Specifies the resulting format of the route, for `json` the content type will be `application/json`. Or use `gpx`, the content type will be `application/gpx+xml`, see below for more parameters.
-        - name: point_hint
-          in: query
-          description: |
-            Specifies a hint for each `point` parameter to prefer a certain street for the closest location lookup.
-            E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
-          schema:
-            type: array
-            items:
-              type: string
-          explode: true
-        - name: details
-          in: query
-          description: |
-            Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.
-            For all motor vehicles we additionally support `max_speed`, `toll` (`no`, `all`, `hgv`), `road_class` (`motorway`, `primary`, ...), `road_environment`, and `surface`.
-            The returned format for one details is [fromRef, toRef, value]. The ref references the points of the response.
-            Multiple details are possible via multiple key value pairs, like `details=time&details=toll`.
-          schema:
-            type: array
-            items:
-              type: string
-          explode: true
+            Specifies the media type for the response.
+            For `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.
         - name: ch.disable
           in: query
           description: |
@@ -538,7 +539,7 @@ paths:
           explode: true
         - name: vehicle
           in: query
-          description: 'The vehicle profile for which the route should be calculated. Other vehicles are foot, small_truck etc'
+          description: The vehicle profile for which the matrix should be calculated.
           schema:
             $ref: '#/components/schemas/VehicleProfileId'
       tags:
@@ -1317,102 +1318,135 @@ components:
                   - 110
                 - ..
             time: 129290
+    EncodedLineString:
+      type: string
+      description: An encoded list of positions.
     RouteResponsePath:
       type: object
-      description: A found path
       properties:
         distance:
-          description: 'The total distance of the route, in meter'
+          description: |
+            The total distance, in meters.
           type: number
           format: double
         time:
-          description: 'The total time of the route, in ms'
+          description: |
+            The total travel time, in milliseconds.
           type: integer
           format: int64
         ascend:
+          description: |
+            The total ascent, in meters.
           type: number
           format: double
         descend:
-          description: 'The total descend (downhill) of the route, in meter'
+          description: |
+            The total descent, in meters.
           type: number
           format: double
         points:
-          $ref: '#/components/schemas/ResponseCoordinates'
+          allOf:
+            - description: |
+                The geometry of the route. The format depends on the value of `points_encoded`.
+            - anyOf:
+                - $ref: '#/components/schemas/EncodedLineString'
+                - $ref: '#/components/schemas/LineString'
+        snapped_waypoints:
+          allOf:
+            - description: |
+                The snapped input points. The format depends on the value of `points_encoded`.
+            - anyOf:
+                - $ref: '#/components/schemas/EncodedLineString'
+                - $ref: '#/components/schemas/LineString'
         points_encoded:
-          description: 'Is true if the points are encoded, if not paths[0].points contains the geo json of the path (then order is lon,lat,elevation), which is easier to handle but consumes more bandwidth compared to encoded version'
+          description: |
+            Whether the `points` and `snapped_waypoints` fields are encoded strings rather than GeoJSON LineStrings.
           type: boolean
         bbox:
-          description: 'The bounding box of the route, format <br> minLon, minLat, maxLon, maxLat'
+          description: |
+            The bounding box of the route geometry. Format: `[minLon, minLat, maxLon, maxLat]`.
           type: array
           items:
             type: number
             format: double
-        snapped_waypoints:
-          $ref: '#/components/schemas/ResponseCoordinates'
         instructions:
-          $ref: '#/components/schemas/ResponseInstructions'
+          type: array
+          description: |
+            The instructions for this route. This feature is under active development, and our instructions can sometimes be misleading,
+            so be mindful when using them for navigation.
+          items:
+            type: object
+            properties:
+              text:
+                type: string
+                description: |
+                  A description what the user has to do in order to follow the route. The language depends on the locale parameter.
+              street_name:
+                type: string
+                description: |
+                  The name of the street to turn onto in order to follow the route.
+              distance:
+                type: number
+                format: double
+                description: |
+                  The distance for this instruction, in meters.
+              time:
+                type: integer
+                format: int32
+                description: |
+                  The duration for this instruction, in milliseconds.
+              interval:
+                type: array
+                items:
+                  type: integer
+                  format: int32
+                description: |
+                  Two indices into `points`, referring to the beginning and the end of the segment of the route
+                  this instruction refers to.
+              sign:
+                type: integer
+                format: int32
+                description: |
+                  A number which specifies the sign to show:
+
+                  |   |   |
+                  |---|---|
+                  |TURN_SHARP_LEFT |-3|
+                  |TURN_LEFT | -2|
+                  |TURN_SLIGHT_LEFT | -1|
+                  |CONTINUE_ON_STREET | 0|
+                  |TURN_SLIGHT_RIGHT |1|
+                  |TURN_RIGHT | 2|
+                  |TURN_SHARP_RIGHT | 3|
+                  |FINISH | 4|
+                  |VIA_REACHED | 5|
+                  |USE_ROUNDABOUT | 6|
+                  |KEEP_RIGHT | 7|
+              exit_number:
+                type: integer
+                format: int32
+                description: |
+                  Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout.
+              turn_angle:
+                type: number
+                format: double
+                description: |
+                  Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout `0 < r < 2*PI` for clockwise and
+                  `-2*PI < r < 0` for counterclockwise turns.
         details:
           type: object
-    ResponseCoordinates:
-      type: object
-      properties:
-        coordinates:
-          $ref: '#/components/schemas/ResponseCoordinatesArray'
-    ResponseCoordinatesArray:
-      type: array
-      description: An array containing coordinates
-      items:
-        type: array
-        items:
-          type: number
-          format: double
-    ResponseInstructions:
-      type: array
-      description: 'Contains information about the instructions for this route. The last instruction is always the Finish instruction and takes 0ms and 0meter. Keep in mind that instructions are currently under active development and can sometimes contain misleading information, so, make sure you always show an image of the map at the same time when navigating your users!'
-      items:
-        $ref: '#/components/schemas/ResponseInstruction'
-    ResponseInstruction:
-      type: object
-      properties:
-        text:
-          type: string
-          description: A description what the user has to do in order to follow the route. The language depends on the locale parameter.
-        street_name:
-          type: string
-          description: The name of the street to turn onto in order to follow the route.
-        distance:
-          type: number
-          format: double
-          description: 'The distance for this instruction, in meter'
-        time:
-          type: integer
-          format: int32
-          description: 'The duration for this instruction, in ms'
-        interval:
+          description: |
+            Details, as requested with the `details` parameter. Consider the value `{"street_name": [[0,2,"Frankfurter Straße"],[2,6,"Zollweg"]]}`.
+            In this example, the route uses two streets: The first, Frankfurter Straße, is
+            used between `points[0]` and `points[2]`, and the second, Zollweg, between `points[2]` and `points[6]`.
+            See [here](https://discuss.graphhopper.com/t/2539) for discussion.
+        points_order:
           type: array
           items:
             type: integer
-            format: int32
-          description: 'An array containing the first and the last index (relative to paths[0].points) of the points for this instruction. This is useful to know for which part of the route the instructions are valid.'
-        sign:
-          type: integer
-          format: int32
-          description: A number which specifies the sign to show e.g. for right turn etc <br>TURN_SHARP_LEFT = -3<br>TURN_LEFT = -2<br>TURN_SLIGHT_LEFT = -1<br>CONTINUE_ON_STREET = 0<br>TURN_SLIGHT_RIGHT = 1<br>TURN_RIGHT = 2<br>TURN_SHARP_RIGHT = 3<br>FINISH = 4<br>VIA_REACHED = 5<br>USE_ROUNDABOUT = 6
-        annotation_text:
-          type: string
-          description: 'optional - A text describing the instruction in more detail, e.g. like surface of the way, warnings or involved costs.'
-        annotation_importance:
-          type: integer
-          format: int32
-          description: 'optional - 0 stands for INFO, 1 for warning, 2 for costs, 3 for costs and warning'
-        exit_number:
-          type: integer
-          format: int32
-          description: optional - Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout.
-        turn_angle:
-          type: number
-          format: double
-          description: optional - Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout - 0&lt;r&lt;2*PI for clockwise and -2PI&lt;r&lt;0 for counterclockwise transit. Null if the direction of rotation is undefined.
+          description: |
+            An array of indices (zero-based), specifiying the order in which the input points are visited.
+            Only present if the `optimize` parameter was used.
     ResponseInfo:
       type: object
       description: Additional information for your request
@@ -1502,14 +1536,31 @@ components:
         type:
           type: string
         geometry:
-          type: object
-          properties:
-            type:
-              type: string
-            coordinates:
+          $ref: '#/components/schemas/Polygon'
+    LineString:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+    Polygon:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
               type: array
               items:
-                $ref: '#/components/schemas/ResponseCoordinatesArray'
+                type: number
     GHError:
       type: object
       properties:
