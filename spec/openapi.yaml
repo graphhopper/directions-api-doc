@@ -1426,6 +1426,8 @@ components:
         # Extra information pertaining to extra parameters
         points_order:
           type: array
+          items:
+            type: integer
           description: |
             An array of indices (zero-based), specifiying the order in which the input points are visited.
             Only present if the `optimize` parameter was used.
