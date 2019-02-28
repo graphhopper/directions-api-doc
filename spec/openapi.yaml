@@ -101,18 +101,7 @@ paths:
           description: |
             The vehicle profile for which the route should be calculated.
           schema:
-            type: string
-            enum:
-              - car
-              - bike
-              - foot
-              - hike
-              - mtb
-              - racingbike
-              - scooter
-              - truck
-              - small_truck
-            default: car
+            $ref: "#/components/schemas/VehicleProfileId"
         - name: elevation
           in: query
           description: |
@@ -383,20 +372,8 @@ paths:
           in: query
           description: |
             The vehicle profile for which the route should be calculated.
-            type: string
           schema:
-            type: string
-            enum:
-              - car
-              - bike
-              - foot
-              - hike
-              - mtb
-              - racingbike
-              - scooter
-              - truck
-              - small_truck
-            default: car
+            $ref: "#/components/schemas/VehicleProfileId"
         - name: buckets
           in: query
           description: For how many subintervals an additional polygon should be calculated.
@@ -557,10 +534,9 @@ paths:
           explode: true
         - name: vehicle
           in: query
-          description: 'The vehicle for which the route should be calculated. Other vehicles are foot, small_truck etc'
+          description: 'The vehicle profile for which the route should be calculated. Other vehicles are foot, small_truck etc'
           schema:
-            default: car
-            type: string
+            $ref: "#/components/schemas/VehicleProfileId"
       tags:
         - Matrix API
       responses:
@@ -1110,10 +1086,9 @@ components:
             type: string
           example: [ "weights", "times", "distances" ]
         vehicle:
-          description: 'The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
-          type: string
-          default: "car"
-          example: "bike"
+          allOf:
+            - $ref: "#/components/schemas/VehicleProfileId"
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
     SymmetricalMatrixRequest:
       type: object
       properties:
@@ -1139,10 +1114,9 @@ components:
             type: string
           example: [ "weights", "times", "distances" ]
         vehicle:
-          description: 'The vehicle for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
-          type: string
-          default: "car"
-          example: "bike"
+          allOf:
+            - $ref: "#/components/schemas/VehicleProfileId"
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
     MatrixResponse:
       type: object
       properties:
@@ -1792,6 +1766,19 @@ components:
         - vehicle_id
         - start_address
       minItems: 1
+    VehicleProfileId:
+      type: string
+      enum:
+        - car
+        - bike
+        - foot
+        - hike
+        - mtb
+        - racingbike
+        - scooter
+        - truck
+        - small_truck
+      default: car
     Algorithm:
       type: object
       description: Use `objectives` instead.
@@ -1883,20 +1870,9 @@ components:
           description: 'Specifies the id of the vehicle type. If a vehicle needs to be of this type, it should refer to this with its type_id attribute.'
           example: my-own-type
         profile:
-          type: string
-          description: 'Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.'
-          example: truck
-          enum:
-            - car
-            - bike
-            - foot
-            - hike
-            - mtb
-            - racingbike
-            - scooter
-            - truck
-            - small_truck
-          default: car
+          allOf:
+            - description: 'Specifies the vehicle profile of this type. The profile is used to determine the network, speed and other physical attributes to use for routing the vehicle.'
+            - $ref: "#/components/schemas/VehicleProfileId"
         capacity:
           type: array
           description: 'Specifies an array of capacity dimension values which need to be int values. For example, if there are two dimensions such as volume and weight then it needs to be defined as [ 1000, 300 ] assuming a maximum volume of 1000 and a maximum weight of 300.'
