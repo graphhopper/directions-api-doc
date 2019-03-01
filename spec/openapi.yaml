@@ -836,18 +836,27 @@ paths:
             type: string
         - name: locale
           in: query
+          default: en
           description: 'Display the search results for the specified locale. Currently French (fr), English (en), German (de) and Italian (it) are supported. If the locale wasn''t found the default (en) is used.'
           schema:
             type: string
         - name: limit
           in: query
           description: Specify the maximum number of results to return
+          default: 10
           schema:
             type: integer
             format: int32
         - name: reverse
           in: query
           description: 'It is `required` to be `true` if you want to do a reverse geocoding request. If it is `true`, `point` must be defined as well, and `q` must not be used.'
+          default: false
+          schema:
+            type: boolean
+        - name: debug
+          in: query
+          description: 'If `true`, the output will be formated.'
+          default: false
           schema:
             type: boolean
         - name: point
