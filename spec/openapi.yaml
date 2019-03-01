@@ -864,9 +864,7 @@ paths:
             The intend is to provide alternatives to our default geocoder.
             Each provider has its own strenghts and might fit better for certain scenarios, so it's worth to compare the different providers.
             To try it append the `provider`parameter to the URL like `&provider=nominatim`.
-          externalDoc:
-            description: Find more info about our external providers.
-            url: 'https://graphhopper.com/api/1/docs/geocoding/#external-providers'
+            Find more info about our external providers [here](https://graphhopper.com/api/1/docs/geocoding/#external-providers).
           schema:
             type: string
       tags:
