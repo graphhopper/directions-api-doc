@@ -835,20 +835,29 @@ paths:
           description: 'Display the search results for the specified locale. Currently French (fr), English (en), German (de) and Italian (it) are supported. If the locale wasn''t found the default (en) is used.'
           schema:
             type: string
+            default: en
         - name: limit
           in: query
           description: Specify the maximum number of results to return
           schema:
             type: integer
             format: int32
+            default: 10
         - name: reverse
           in: query
           description: 'It is `required` to be `true` if you want to do a reverse geocoding request. If it is `true`, `point` must be defined as well, and `q` must not be used.'
           schema:
             type: boolean
+            default: false
+        - name: debug
+          in: query
+          description: 'If `true`, the output will be formated.'
+          schema:
+            type: boolean
+            default: false
         - name: point
           in: query
-          description: '_Forward geocoding_: The location bias in the format ''latitude,longitude'' e.g. point=45.93272,11.58803. _Reverse geocoding_: The location to find amenities, cities. '
+          description: '_Forward geocoding_: The location bias in the format ''latitude,longitude'' e.g. point=45.93272,11.58803. _Reverse geocoding_: The location to find amenities, cities.'
           schema:
             type: string
         - name: provider
@@ -861,6 +870,7 @@ paths:
             Find more info about our external providers [here](https://graphhopper.com/api/1/docs/geocoding/#external-providers).
           schema:
             type: string
+            default: default
       tags:
         - Geocoding API
       responses:
