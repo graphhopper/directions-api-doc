@@ -19,7 +19,14 @@
     
   </head>
   <body>
-    <redoc spec-url="./spec/openapi.yaml"></redoc>
-    <script src="//rebilly.github.io/ReDoc/releases/v2.0.0-rc.2/redoc.min.js"> </script>
+    <div id="redoc_container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"></script>
+    <script>
+      Redoc.init(
+        './openapi.json',
+        {"theme":{"colors":{"primary":{"main":"#32329f"}},"logo":{"maxHeight":"200px","maxWidth":"200px"}}},
+        document.getElementById("redoc_container")
+      );
+    </script>
   </body>
 </html>
