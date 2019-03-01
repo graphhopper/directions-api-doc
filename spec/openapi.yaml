@@ -815,7 +815,9 @@ paths:
 
         You can get an example response via:
 
-        `curl "https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]"`
+        ```
+        curl "https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]"
+        ```
 
         ### Introduction
 
