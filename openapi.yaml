@@ -857,54 +857,8 @@ paths:
             The provider parameter is currently under development and can fall back to `default` at any time.
             The intend is to provide alternatives to our default geocoder.
             Each provider has its own strenghts and might fit better for certain scenarios, so it's worth to compare the different providers.
-            To try it append the `provider`parameter to the URL like `&provider=nominatim`,
-            the result structure should be identical in all cases - if not, please report this back to us.
-            Keep in mind that some providers do not support certain parameters or don't return some fields, for example `osm_id` and `osm_type` are not supported by every geocoding provider.
-            If you would like to use additional parameters of one of the providers, but it's not available for the GraphHopper Geocoding API, yet? Please contact us.
-
-            The credit costs can be different for all providers - see [here](./FAQ.md#what-is-one-credit)
-            for more information about it.
-
-            Currently, only the default provider and gisgraphy supports autocompletion of partial search strings.
-
-            All providers support normal "forward" geocoding and reverse geocoding via `reverse=true`.
-
-            ### Default (`provider=default`)
-
-            This provider returns results of our internal geocoding engine, as described above.
-
-            ### Nominatim (`provider=nominatim`)
-
-            The Nominatim provider uses a commercially hosted Nominatim Geocoder that does **not** fall under the [restrictions](https://operations.osmfoundation.org/policies/nominatim/) of the Nominatim instance hosted by OpeStreetMap.
-            You can try this provider [here](https://nominatim.openstreetmap.org/).
-
-            In addition to the above documented parameters Nominatim allows to use the following parameters, which can be used as documented [here](https://wiki.openstreetmap.org/wiki/Nominatim#Parameters):
-
-            * viewbox
-            * viewboxlbrt
-            * bounded
-
-            ### OpenCage Data (`provider=opencagedata`)
-
-            This provider returns results from the OpenCageData geocoder which you can try [here](https://geocoder.opencagedata.com/demo).
-
-            In addition to the above documented parameters OpenCage Data allows to use the following parameters, which can be used as documented [here](https://geocoder.opencagedata.com/api#forward-opt):
-
-            * countrycode
-            * bounds
-
-            ### Gisgraphy (`provider=gisgraphy`)
-
-            This provider returns results from the Gisgraphy geocoder which you can try [here](https://services.gisgraphy.com/static/leaflet/index.html).
-
-            **Limitations:** Gisgraphy does not return tags from OSM nor an extent. The locale parameter is currently not supported for Gisgraphy.
-
-            Gisgraphy has a special autocomplete API, which you can use by adding `autocomplete=true` (does not work with `reverse=true`). The autocomplete API is optimized on predicting text input, but returns less information.
-
-            In addition to the above documented parameters Gisgraphy allows to use the following parameters, which can be used as documented [here](http://www.gisgraphy.com/documentation/user-guide.php):
-
-            * radius
-            * country
+            To try it append the `provider`parameter to the URL like `&provider=nominatim`.
+            Find more info about our external providers [here](https://graphhopper.com/api/1/docs/geocoding/#external-providers).
           schema:
             type: string
       tags:
