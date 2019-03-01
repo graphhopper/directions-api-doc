@@ -907,7 +907,7 @@
     },
     "/geocode": {
       "get": {
-        "summary": "Execute a Geocoding request",
+        "summary": "Execute a geocoding request",
         "description": "### Endpoint\n\nThe endpoint is `https://graphhopper.com/api/[version]/geocode`\n\nYou can get an example response via:\n\n```\ncurl \"https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]\"\n```\n\n### Introduction\n\n![Geocoding Example](https://graphhopper.com/api/1/docs/img/geocoding-example.png)\n\nGeocoding describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).\nFor example the conversion from `Berlin` to `52.5170365,13.3888599`.\nReverse geocoding describes the opposite, converting a coordinate to a textual address representation.\nFind out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).\n\n### API Clients and Examples\n\nSee the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).\n",
         "parameters": [
           {
