@@ -822,8 +822,6 @@ paths:
 
         Geocoding describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).
         For example the conversion from `Berlin` to `52.5170365,13.3888599`.
-        Reverse geocoding describes the opposite, converting a coordinate to a textual address representation.
-        Find out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).
 
         ### API Clients and Examples
 
@@ -834,6 +832,7 @@ paths:
           description: 'If you do forward geocoding, then this would be a textual description of the address you are looking for'
           schema:
             type: string
+          required: true
         - name: locale
           in: query
           description: 'Display the search results for the specified locale. Currently French (fr), English (en), German (de) and Italian (it) are supported. If the locale wasn''t found the default (en) is used.'
