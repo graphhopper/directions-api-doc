@@ -908,12 +908,12 @@
     "/geocode": {
       "get": {
         "summary": "Execute a geocoding request",
-        "description": "### Endpoint\n\nThe endpoint is `https://graphhopper.com/api/[version]/geocode`\n\nYou can get an example response via:\n\n```\ncurl \"https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]\"\n```\n\n### Introduction\n\n![Geocoding Example](https://graphhopper.com/api/1/docs/img/geocoding-example.png)\n\nGeocoding describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).\nFor example the conversion from `Berlin` to `52.5170365,13.3888599`.\n\n### API Clients and Examples\n\nSee the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).\n",
+        "description": "### Endpoint\n\nThe endpoint is `https://graphhopper.com/api/[version]/geocode`\n\nYou can get an example response via:\n\n```\ncurl \"https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]\"\n```\n\n### Introduction\n\n![Geocoding Example](https://graphhopper.com/api/1/docs/img/geocoding-example.png)\n\n_Geocoding_ describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).\nFor example the conversion from `Berlin` to `52.5170365,13.3888599`.\n\n_Reverse geocoding_ converts a coordinate to a textual address representation or place name. Find out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).\n",
         "parameters": [
           {
             "name": "q",
             "in": "query",
-            "description": "If you do forward geocoding, then this would be a textual description of the address you are looking for",
+            "description": "If you do forward geocoding, this is `required` and is a textual description of the address you are looking for.",
             "schema": {
               "type": "string"
             }
@@ -938,7 +938,7 @@
           {
             "name": "reverse",
             "in": "query",
-            "description": "Set to true to do a reverse Geocoding request, see point parameter",
+            "description": "It is `required` to be `true` if you want to do a reverse geocoding request. If it is `true`, `point` must be defined as well, and `q` must not be used.",
             "schema": {
               "type": "boolean"
             }
@@ -946,7 +946,7 @@
           {
             "name": "point",
             "in": "query",
-            "description": "The location bias in the format 'latitude,longitude' e.g. point=45.93272,11.58803",
+            "description": "_Forward geocoding_: The location bias in the format 'latitude,longitude' e.g. point=45.93272,11.58803. _Reverse geocoding_: The location to find amenities, cities. ",
             "schema": {
               "type": "string"
             }
