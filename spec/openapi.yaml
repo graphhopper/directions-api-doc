@@ -894,7 +894,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-  /geocode:
     get:
       summary: Execute a reverse geocoding request
       description:  Reverse geocoding converts a coordinate to a textual address representation or place name.
@@ -902,7 +901,7 @@ paths:
       parameters:
         - name: reverse
           in: query
-          description: 'Set to true to do a reverse Geocoding request'
+          description: 'Must be `true` to do a reverse geocoding request'
           schema:
             type: boolean
           required: true
