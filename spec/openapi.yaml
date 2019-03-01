@@ -1048,8 +1048,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GeocodingLocation'
-        locale:
-          type: string
+        took:
+          type: number
+          format: int64
     GeocodingLocation:
       type: object
       properties:
@@ -1057,27 +1058,34 @@ components:
           $ref: '#/components/schemas/GeocodingPoint'
         osm_id:
           type: string
-          description: OSM Id
+          description: The OSM ID of the entity
         osm_type:
           type: string
           description: 'N = node, R = relation, W = way'
         osm_key:
           type: string
-          description: The osm key of the result like `place` or `amenity`
+          description: The OSM key of the entity
         name:
           type: string
+          description: The name of the entity. Can be a boundary, POI, address, etc
         country:
           type: string
+          description: The country of the address
         city:
           type: string
+          description: The city of the address
         state:
           type: string
+          description: The state of the address
         street:
           type: string
+          description: The street of the address
         housenumber:
           type: string
+          description: The housenumber of the address
         postcode:
           type: string
+          description: The postcode of the address
     GeocodingPoint:
       type: object
       properties:
