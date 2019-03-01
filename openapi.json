@@ -908,7 +908,7 @@
     "/geocode": {
       "get": {
         "summary": "Execute a Geocoding request",
-        "description": "This endpoint provides forward and reverse geocoding. For more details, review the official documentation at: https://graphhopper.com/api/1/docs/geocoding/\n",
+        "description": "### Endpoint\n\nThe endpoint is `https://graphhopper.com/api/[version]/geocode`\n\nYou can get an example response via:\n\n`curl \"https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]\"`\n\n### Introduction\n\n![Geocoding Example](https://graphhopper.com/api/1/docs/img/geocoding-example.png)\n\nGeocoding describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).\nFor example the conversion from `Berlin` to `52.5170365,13.3888599`.\nReverse geocoding describes the opposite, converting a coordinate to a textual address representation.\nFind out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).\n\n### API Clients and Examples\n\nSee the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).\n",
         "parameters": [
           {
             "name": "q",
@@ -970,6 +970,32 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GeocodingResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Your current daily credit limit.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Your remaining credits until the reset.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "The number of seconds that you have to wait before a reset of the credit count is done.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Credits": {
+                "description": "The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.",
+                "schema": {
+                  "type": "integer"
                 }
               }
             }
