@@ -1189,7 +1189,8 @@
           },
           "took": {
             "type": "number",
-            "format": "int64"
+            "format": "int64",
+            "description": "in ms"
           }
         },
         "example": {

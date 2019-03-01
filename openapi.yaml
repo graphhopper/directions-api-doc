@@ -1049,6 +1049,7 @@ components:
         took:
           type: number
           format: int64
+          description: in ms
       example:
         hits:
           - osm_id: 240109189
