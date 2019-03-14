@@ -58,7 +58,7 @@ info:
 
     ## Supported Vehicle Profiles
 
-    The Routing, Matrix and Route Optimization APIs support the following vehicles:
+    The Routing, Matrix and Route Optimization APIs support the following vehicle profiles:
 
     Name       | Description           | Restrictions              | Icon
     -----------|:----------------------|:--------------------------|:---------------------------------------------------------
