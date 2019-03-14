@@ -17,9 +17,9 @@ info:
 
     ### Getting started
 
-     1. To use one of these APIs, you need an API key. Get it for free [here](https://graphhopper.com/#directions-api).
-     2. Read the documentation below or try the examples in our dashboard.
-     3. Start solving your problems.
+     1. To use one of these APIs, you require an API key. Sign up [here](https://graphhopper.com/dashboard/#/register) to get one.
+     2. Read the documentation of the desired API below.
+     3. Start using the API.
 
     You can see the Routing and Geocoding API in action at [GraphHopper Maps](https://graphhopper.com/maps). You can see the Route Optimization API in action in the [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) available in the [dashboard](https://graphhopper.com/#directions-api), the route optimization uses the Matrix API under the hood.
 
