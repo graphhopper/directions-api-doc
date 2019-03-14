@@ -8,17 +8,17 @@ info:
 
     The GraphHopper Directions API consists of the following RESTful web services:
 
-     * the [Routing API](#tag/Routing-API),
-     * the [Route Optimization API](#tag/Route-Optimization-API),
-     * the [Isochrone API](#tag/Isochrone-API),
-     * the [Map Matching API](#tag/Map-Matching-API),
-     * the [Matrix API](#tag/Matrix-API) and
-     * the [Geocoding API](#tag/Geocoding-API).
+     * [Routing API](#tag/Routing-API),
+     * [Route Optimization API](#tag/Route-Optimization-API),
+     * [Isochrone API](#tag/Isochrone-API),
+     * [Map Matching API](#tag/Map-Matching-API),
+     * [Matrix API](#tag/Matrix-API) and
+     * [Geocoding API](#tag/Geocoding-API).
 
     ### Getting started
 
      1. To use one of these APIs, you require an API key. Sign up [here](https://graphhopper.com/dashboard/#/register) to get one.
-     2. Read the documentation of the desired API below. 
+     2. Read the documentation of the desired API below.
      3. Start using the API.
 
     You can see the Routing and Geocoding API in action at [GraphHopper Maps](https://graphhopper.com/maps). You can see the Route Optimization API in action in the [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) available in the [dashboard](https://graphhopper.com/#directions-api), the route optimization uses the Matrix API under the hood.
@@ -997,7 +997,7 @@ paths:
         The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
         of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
         efficiently service its customers given a variety of requirements: customer requirements like time windows,
-        the product's transport requirements e.g. that refrigerated, must be picked up first, driver skills, vehicles/capacities available
+        the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
         and more.
 
         Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
