@@ -18,11 +18,13 @@ info:
 
     ### How to Start
 
-     1. To use the Directions API you need an API key. Get it for free [here](https://graphhopper.com/#directions-api).
+     1. To use one of these APIs, you need an API key. Get it for free [here](https://graphhopper.com/#directions-api).
      2. Read the documentation below or try the examples in our dashboard.
-     3. To increase your query limits for production you pay online within a few minutes via credit card or debit advice.
+     3. Start solving your problems.
 
     You can see the Routing and Geocoding API in action at [GraphHopper Maps](https://graphhopper.com/maps). You can see the Route Optimization API in action in the [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) available in the [dashboard](https://graphhopper.com/#directions-api), the route optimization uses the Matrix API under the hood.
+
+    To increase your query limits for production you pay online within a few minutes via credit card or debit advice.
 
     ### Problems or Questions?
 
