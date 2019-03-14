@@ -2,10 +2,66 @@ openapi: 3.0.0
 info:
   title: GraphHopper Directions API
   description: |
-    You use the GraphHopper Directions API to add route planning, navigation and route optimization to your software.
-    E.g. the Routing API has turn instructions and elevation data and the Route Optimization API solves your logistic problems
-    and supports various constraints like time window and capacity restrictions. Also it is possible to get all distances between
-    all locations with our fast Matrix API.
+    With the [GraphHopper Directions API](https://graphhopper.com/#directions-api) you get reliable and fast web services for routing and more
+    with world wide coverage. We offer A-to-B routing via the Routing API optionally with turn instructions and elevation data as well as
+    route optimization with various constraints like time window and capacity restrictions. Also it is possible to get all distances
+    between all locations with our fast Matrix API.
+
+    The GraphHopper Directions API consists of the following parts:
+
+     * the [Routing API](./routing.md),
+     * the [Route Optimization API](./route-optimization.md),
+     * the [Isochrone API](./isochrone.md),
+     * the [Map Matching API](./map-matching.md),
+     * the [Matrix API](./matrix.md) and
+     * the [Geocoding API](./geocoding.md).
+
+    ## How to Start
+
+     1. To use the Directions API you need an API key. Get it for free [here](https://graphhopper.com/#directions-api).
+     2. Read the documentation below or try the examples in our dashboard.
+     3. To increase your query limits for production you pay online within a few minutes via credit card or debit advice.
+
+    You can see the Routing and Geocoding API in action at [GraphHopper Maps](https://graphhopper.com/maps). You can see the Route Optimization API in action in the [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) available in the [dashboard](https://graphhopper.com/#directions-api), the route optimization uses the Matrix API under the hood.
+
+    ## Problems or Questions?
+
+    If you have problems or questions please see the [FAQ.md](FAQ.md) or [contact us](https://graphhopper.com/#contact).
+
+    Or search [our public forum](https://discuss.graphhopper.com/c/directions-api).
+
+    ## Pricing
+
+    The pricing is available [here](https://graphhopper.com/#pricing) or with all details about monthly/annually [in the dashboard](https://graphhopper.com/dashboard/).
+
+    ## API Clients and Examples
+
+     * [JavaScript client](https://github.com/graphhopper/directions-api-js-client) - try the [live examples](https://graphhopper.com/api/1/examples/)
+     * [Java client](https://github.com/graphhopper/directions-api-java-client)
+     * [Others](https://github.com/graphhopper/directions-api-clients-route-optimization) like C#, Ruby, PHP, Python, ... automatically created for the Route Optimization API with our [swagger spec](https://graphhopper.com/api/1/swagger.json).
+
+    Let us know your language requirements!
+
+    **Examples and Applications and Community supported clients**:
+
+     * [Showcases](https://www.graphhopper.com/showcases/) from our customers
+     * A community developed Swift client for the [Geocoding API](https://github.com/rmnblm/GraphHopperGeocoder) and [Routing API](https://github.com/rmnblm/GraphHopperRouting)
+
+    Do not hesitate to share your websites, apps or API clients with us!
+
+    ### Bandwidth reduction
+
+    If you create your own client make sure it supports http/2 and gzipped
+    responses.
+
+    For the Matrix and Route Optimization API the bandwidth can be further reduced especially for larger problems
+    if you [gzip the POST request](https://gist.github.com/karussell/82851e303ea7b3459b2dea01f18949f4)
+    too and specify the header `Content-Encoding: gzip` for those requests.
+
+    ## Keep up-to-date
+
+    To get informed about the newest features and development follow us at [twitter](https://twitter.com/graphhopper/) or our [blog](https://graphhopper.com/blog/). Furthermore you can watch [this git repository](https://github.com/graphhopper/directions-api) of this documentation, sign up at our [dashboard](https://graphhopper.com/dashboard/) to get the newsletter or sign up at [our forum](https://discuss.graphhopper.com/c/directions-api). Pick the channel you like most.
+
 
     # Supported Vehicle Profiles
 
