@@ -5,4 +5,5 @@ theme:
   logo:
     maxHeight: '200px'
     maxWidth: '200px'
+unstable_externalDescription: supported-vehicle-profiles.md
 
