@@ -1004,7 +1004,7 @@ paths:
         The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
         of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
         efficiently service its customers given a variety of requirements: customer requirements like time windows,
-        the product's transport requirements e.g. that refrigerated, must be picked up first, driver skills, vehicles/capacities available
+        the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
         and more.
 
         Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
