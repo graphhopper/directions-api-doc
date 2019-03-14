@@ -8,12 +8,12 @@ info:
 
     The GraphHopper Directions API consists of the following RESTful web services:
 
-     * the [Routing API](#tag/Routing-API),
-     * the [Route Optimization API](#tag/Route-Optimization-API),
-     * the [Isochrone API](#tag/Isochrone-API),
-     * the [Map Matching API](#tag/Map-Matching-API),
-     * the [Matrix API](#tag/Matrix-API) and
-     * the [Geocoding API](#tag/Geocoding-API).
+     * [Routing API](#tag/Routing-API),
+     * [Route Optimization API](#tag/Route-Optimization-API),
+     * [Isochrone API](#tag/Isochrone-API),
+     * [Map Matching API](#tag/Map-Matching-API),
+     * [Matrix API](#tag/Matrix-API) and
+     * [Geocoding API](#tag/Geocoding-API).
 
     ### Getting started
 
