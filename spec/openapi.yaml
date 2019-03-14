@@ -34,20 +34,11 @@ info:
      * find answers or ask questions in [our public forum](https://discuss.graphhopper.com/c/directions-api)
      * [contact us](https://graphhopper.com/#contact)
 
-    ## API Clients and Examples
+    ## API Clients
 
      * [JavaScript client](https://github.com/graphhopper/directions-api-js-client) - try the [live examples](https://graphhopper.com/api/1/examples/)
      * [Java client](https://github.com/graphhopper/directions-api-java-client)
      * [Others](https://github.com/graphhopper/directions-api-clients-route-optimization) like C#, Ruby, PHP, Python, ... automatically created for the Route Optimization API with our [swagger spec](https://graphhopper.com/api/1/swagger.json).
-
-    Let us know your language requirements!
-
-    **Examples and Applications and Community supported clients**:
-
-     * [Showcases](https://www.graphhopper.com/showcases/) from our customers
-     * A community developed Swift client for the [Geocoding API](https://github.com/rmnblm/GraphHopperGeocoder) and [Routing API](https://github.com/rmnblm/GraphHopperRouting)
-
-    Do not hesitate to share your websites, apps or API clients with us!
 
     ### Bandwidth reduction
 
