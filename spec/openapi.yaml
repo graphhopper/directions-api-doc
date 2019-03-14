@@ -26,9 +26,11 @@ info:
 
     ### Problems or Questions?
 
-    If you have problems or questions please see the [FAQ.md](FAQ.md) or [contact us](https://graphhopper.com/#contact).
+    If you have problems or questions, we offer you the following options:
 
-    Or search [our public forum](https://discuss.graphhopper.com/c/directions-api).
+     * find answers to frequently asked questions [here](FAQ.md)
+     * find answers or ask questions in [our public forum](https://discuss.graphhopper.com/c/directions-api)
+     * [contact us](https://graphhopper.com/#contact)
 
     ## API Clients and Examples
 
