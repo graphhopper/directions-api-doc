@@ -47,12 +47,11 @@ info:
 
     ### Bandwidth reduction
 
-    If you create your own client make sure it supports http/2 and gzipped
-    responses.
+    If you create your own client, make sure it supports http/2 and gzipped responses.
 
-    For the Matrix and Route Optimization API the bandwidth can be further reduced especially for larger problems
-    if you [gzip the POST request](https://gist.github.com/karussell/82851e303ea7b3459b2dea01f18949f4)
-    too and specify the header `Content-Encoding: gzip` for those requests.
+    If you use the Matrix or Route Optimization API and want to solve large problems, we recommend you to reduce bandwidth
+    by [compressing your POST request](https://gist.github.com/karussell/82851e303ea7b3459b2dea01f18949f4)
+    and specifying the header as follows: `Content-Encoding: gzip`.
 
     ### Keep up-to-date
 
