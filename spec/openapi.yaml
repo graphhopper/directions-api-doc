@@ -999,7 +999,7 @@ paths:
       description: |2
          ### Introduction
 
-         ![Route Editor Overview](https://graphhopper.com/api/1/docs/img/route-editor-overview.png)
+         ![VRP](vrp.png)
 
         The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
         of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
@@ -1036,9 +1036,11 @@ paths:
         ### API Clients and Examples
 
         See the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization).
-      externalDocs:
-        description: Find more info here
-        url: 'https://graphhopper.com/api/1/docs/route-optimization/'
+
+        ### Tutorials
+
+        To make modelling your vehicle routing problem easier, we provide you with a increasing number of tutorials.
+
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
