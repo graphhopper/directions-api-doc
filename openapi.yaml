@@ -2411,7 +2411,37 @@ components:
              If you have more than one vehicle, then the algorithm tries to constantly move stops from one vehicle to another such that
              the completion time of longest vehicle route can be further reduced. For example, if you have one vehicle that takes 8 hours
              to serve all customers, adding another vehicle (and using `min-max`) might halve the time to serve all customers to 4 hours. However,
-              this usually comes with higher transport costs.
+             this usually comes with higher transport costs.
+
+             If you want to minimize `vehicles` first and, second, `completion_time`, you can also combine different objectives like this:
+
+             ```json
+             "objectives" : [
+                {
+                   "type": "min",
+                   "value": "vehicles"
+                },
+                {
+                   "type": "min",
+                   "value": "completion_time"
+                }
+             ]
+             ```
+
+             If you want to balance activities or the number of stops among all employed drivers, you need to specify it as follows:
+
+             ```json
+             "objectives" : [
+                {
+                   "type": "min-max",
+                   "value": "completion_time"
+                },
+                {
+                   "type": "min-max",
+                   "value": "activities"
+                }
+             ]
+             ```
           default: min
           enum:
             - min
