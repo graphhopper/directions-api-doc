@@ -2472,16 +2472,13 @@ components:
           default: transport_time
           description: |
             The value of the objective function.
-
-             * `transport_time`: It solely considers the time on the road, i.e. transport time.
-             * `completion_time`: In contrary to `transport_time`, `completion_time` also takes waiting times at customer sites into account.
-                                  The `completion_time` of a route is defined as the time from starting to ending the route,
-                                  i.e. the route's transport time, the sum of waiting times plus the sum of activity durations.
-                                  Note that choosing `transport_time` or `completion_time` only makes a difference if you specified time windows for your services/shipments since only in
-                                  scenarios with time windows waiting times can occur.
-             * `vehicles`: Considers the employed vehicles and can only be used along with type `min`, i.e. it minimizes the employed vehicles.
-             * `activities`: Considers the activities of a route and can only be used along with `min-max`.
-
+            The objective value `transport_time` solely considers the time
+            your drivers spend on the road, i.e. transport time. In contrary to `transport_time`, `completion_time` also takes waiting times at customer sites into account.
+            The `completion_time` of a route is defined as the time from starting to ending the route,
+            i.e. the route's transport time, the sum of waiting times plus the sum of activity durations.
+            Note that choosing `transport_time` or `completion_time` only makes a difference if you specified time windows for your services/shipments since only in
+            scenarios with time windows waiting times can occur.
+            The objective value `vehicles` can only be used along with `min` and minimizes vehicles.
           enum:
             - completion_time
             - transport_time
