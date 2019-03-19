@@ -1041,6 +1041,12 @@ paths:
 
         To make modelling your vehicle routing problem easier, we provide you with an increasing number of [tutorials](https://www.graphhopper.com/tutorial/).
 
+        ### Route Editor
+
+        The [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) in the Directions API dashboard is a helpful tool to understand the JSON input and output format.
+        This way, you can learn the Optimization API just by using it. It allows you to specify simple vehicle routing problems, solve them and analyse
+                the API response visually, i.e. on a map, or as raw data.
+
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
