@@ -1032,7 +1032,7 @@ paths:
 
         ### Tutorials
 
-        To make modelling your vehicle routing problem easier, we provide you with a increasing number of tutorials.
+        To make modelling your vehicle routing problem easier, we provide you with an increasing number of [tutorials](https://www.graphhopper.com/tutorial/).
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
