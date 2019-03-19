@@ -3,8 +3,7 @@
 
 ## Links
 
-- [Reference Documentation (ReDoc)](https://graphhopper.github.io/directions-api-doc/)
-- [SwaggerUI](https://graphhopper.github.io/directions-api-doc/swagger-ui/)
+- [View Documentation (ReDoc)](https://graphhopper.github.io/directions-api-doc/)
 - OpenAPI Raw Files: [JSON](https://graphhopper.github.io/directions-api-doc/openapi.json) [YAML](https://graphhopper.github.io/directions-api-doc/openapi.yaml)
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
