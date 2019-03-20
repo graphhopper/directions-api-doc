@@ -523,11 +523,11 @@ paths:
         this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the
         Routing API multiple times.
 
-        In the [Routing API](./routing.md) we supprt multiple points, so called 'via points', which results in one
+        In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
         route being calculated. The Matrix API results in NxM routes or more precise NxM weights, distances or times being calculated
         but is a lot faster compared to NxM single requests. The most simple example is a tourist trying to decide
         which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service in the
-        need of often big NxN matrices to solve vehicle routing problems. E.g. the [GraphHopper Route Optimization API](https://graphhopper.com/api/1/docs/route-optimization/)
+        need of often big NxN matrices to solve vehicle routing problems. E.g. the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
         uses the Matrix API under the hood to achieve this.
 
         Some other use case scenarios for the Matrix API:
