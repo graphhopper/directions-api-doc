@@ -851,7 +851,7 @@ paths:
         ```
 
         ### Introduction
-        ![Map Matching screenshot](https://graphhopper.com/api/1/docs/img/map-matching-example.gif)
+        ![Map Matching screenshot](./img/map-matching-example.gif)
 
         The Map Matching API is part of the GraphHopper Directions API and with this API you can snap measured GPS points typically as GPX files to a digital
         road network to e.g. clean data or attach certain data like elevation or turn instructions to it. Read more at Wikipedia.
