@@ -440,7 +440,7 @@ paths:
         - logistics (distribution and retail network planning)
 
         ### API Clients and Examples
-        See the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).
+        See the [clients](#section/API-Clients) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).
       parameters:
         - name: point
           in: query
@@ -539,7 +539,7 @@ paths:
 
         ### API Clients and Examples
 
-        See the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
+        See the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
 
         ### Description
 
@@ -853,7 +853,7 @@ paths:
         In the example screenshot above and demo you see the Map Matching API in action where the black line is the GPS track and the green one is matched result.
 
         ### API Clients and Examples
-        See the [clients](https://graphhopper.com/api/1/docs/#api-clients-and-examples) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).
+        See the [clients](#section/API-Clients) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).
 
         ### Limits and Counts
         The cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).
@@ -1037,7 +1037,7 @@ paths:
 
         ### API Clients and Examples
 
-        We offer a number of clients to make coding against the Route Optimization API easier (see the [clients](./index.md#api-clients-and-examples) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization)).
+        We offer a number of clients to make coding against the Route Optimization API easier (see the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization)).
 
         ### Tutorials
 
