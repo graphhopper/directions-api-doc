@@ -134,7 +134,7 @@ paths:
 
         ### Introduction
 
-        ![Routing screenshot](https://graphhopper.com/api/1/docs/img/routing-example.png)
+        ![Routing screenshot](./img/routing-example.png)
 
         The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
         two or more points, where the meaning of ''best'' depends on the vehicle and use case.
@@ -423,7 +423,7 @@ paths:
         Don't forget to replace the placeholder with your own key.
 
         ### Introduction
-        ![Isochrone screenshot](https://graphhopper.com/api/1/docs/img/isochrone-example.png)
+        ![Isochrone screenshot](./img/isochrone-example.png)
 
         An isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.
         With the same API you can also calculate isodistances, just use the parameter distance_limit instead of time_limit`.
@@ -517,7 +517,7 @@ paths:
 
         ### Introduction
 
-        ![Matrix Example](https://graphhopper.com/api/1/docs/img/matrix-example.png)
+        ![Matrix Example](./img/matrix-example.png)
 
         The Matrix API is part of the [GraphHopper Directions API](https://graphhopper.com/#directions-api) and with
         this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the
@@ -914,7 +914,7 @@ paths:
 
         ### Introduction
 
-        ![Geocoding Example](https://graphhopper.com/api/1/docs/img/geocoding-example.png)
+        ![Geocoding Example](./img/geocoding-example.png)
 
         _Geocoding_ describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).
         For example the conversion from `Berlin` to `52.5170365,13.3888599`.
@@ -1007,7 +1007,7 @@ paths:
       description: |2
          ### Introduction
 
-         ![VRP](vrp.png)
+         ![VRP Example Screenshot](./img/vrp.png)
 
         The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
         of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
