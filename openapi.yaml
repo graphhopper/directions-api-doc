@@ -2856,7 +2856,7 @@ components:
             50 | underlying location cannot be accessed over road network by at least one vehicle
         reason:
           type: string
-          description: Human readable reason
+          description: Human readable reason as listed above
     Route:
       type: object
       properties:
