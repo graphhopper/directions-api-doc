@@ -2162,7 +2162,14 @@
             "type": "array",
             "description": "Specifies an arbitrary number of additional relations between and among services and shipments.",
             "items": {
-              "$ref": "#/components/schemas/Relation"
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/JobRelation"
+                },
+                {
+                  "$ref": "#/components/schemas/GroupRelation"
+                }
+              ]
             }
           },
           "algorithm": {
@@ -3058,7 +3065,33 @@
           }
         }
       },
-      "Relation": {
+      "GroupRelation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Specifies the type of relation. It must be either of type `in_sequence` or `in_direct_sequence`.\n",
+            "example": "in_direct_sequence"
+          },
+          "groups": {
+            "type": "array",
+            "description": "An array of groups that should be related",
+            "items": {
+              "type": "string",
+              "description": "group of services or shipments"
+            },
+            "example": [
+              "group-A",
+              "group-B"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "groups"
+        ]
+      },
+      "JobRelation": {
         "type": "object",
         "properties": {
           "type": {
@@ -3077,24 +3110,16 @@
               "pickup-2"
             ]
           },
-          "groups": {
-            "type": "array",
-            "description": "An array of groups that should be related",
-            "items": {
-              "type": "string",
-              "description": "group of services or shipments"
-            },
-            "example": [
-              "group-A",
-              "group-B"
-            ]
-          },
           "vehicle_id": {
             "type": "string",
             "description": "Id of pre-assigned vehicle, i.e. the vehicle id that is determined to conduct the services and shipments in this relation.",
             "example": "driver-Peter"
           }
-        }
+        },
+        "required": [
+          "type",
+          "ids"
+        ]
       },
       "Response": {
         "type": "object",
