@@ -3315,7 +3315,7 @@
           "code": {
             "type": "integer",
             "format": "int32",
-            "description": "Reason code"
+            "description": "Reason code\n\nCode   |  Reason\n:------|:---------\n1 | cannot serve required skill\n2 | cannot be visited within time window\n3 | does not fit into any vehicle due to capacity\n4 | cannot be assigned due to max distance constraint of vehicles\n21 | could not be assigned due to relation constraint\n22 | could not be assigned due to allowed vehicle constraint\n23 | could not be assigned due to max-time-in-vehicle constraint\n24 | driver does not need a break\n25 | could not be assigned due to disallowed vehicle constraint\n26 | could not be assigned due to max drive time constraint\n27 | could not be assigned due to max job constraint\n28 | could not be assigned due to max activity constraint\n50 | underlying location cannot be accessed over road network by at least one vehicle\n"
           },
           "reason": {
             "type": "string",
