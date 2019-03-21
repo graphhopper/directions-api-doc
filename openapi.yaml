@@ -1056,6 +1056,53 @@ paths:
               $ref: '#/components/schemas/Request'
       tags:
         - Route Optimization API
+      x-code-samples:
+        - lang: Curl
+          source: |-
+            curl -X POST -H "Content-Type: application/json"   "https://graphhopper.com/api/1/vrp/optimize?key=api_key"   -d '{
+              "vehicles": [
+                {
+                  "vehicle_id": "my_vehicle",
+                  "start_address": {
+                    "location_id": "berlin",
+                    "lon": 13.406,
+                    "lat": 52.537
+                  }
+                }
+              ],
+              "services": [
+                {
+                  "id": "hamburg",
+                  "name": "visit_hamburg",
+                  "address": {
+                    "location_id": "hamburg",
+                    "lon": 9.999,
+                    "lat": 53.552
+                  }
+                },
+                { 
+                 "id": "munich",
+                  "name": "visit_munich",
+                  "address": {
+                    "location_id": "munich",
+                    "lon": 11.57,
+                    "lat": 48.145
+                  }
+                }
+              ]}'
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/vrp/optimize?key=api_key")
+                    .post(body)
+                    .addHeader("content-type", "application/json")
+                    .build();
+
+            Response response = client.newCall(request).execute();
       responses:
         '200':
           description: A jobId you can use to retrieve your solution from the server - see solution endpoint.

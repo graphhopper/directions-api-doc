@@ -1044,6 +1044,16 @@
         "tags": [
           "Route Optimization API"
         ],
+        "x-code-samples": [
+          {
+            "lang": "Curl",
+            "source": "curl -X POST -H \"Content-Type: application/json\"   \"https://graphhopper.com/api/1/vrp/optimize?key=api_key\"   -d '{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}'"
+          },
+          {
+            "lang": "Java",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\n  \\\"vehicles\\\": [\\n    {\\n      \\\"vehicle_id\\\": \\\"my_vehicle\\\",\\n      \\\"start_address\\\": {\\n        \\\"location_id\\\": \\\"berlin\\\",\\n        \\\"lon\\\": 13.406,\\n        \\\"lat\\\": 52.537\\n      }\\n    }\\n  ],\\n  \\\"services\\\": [\\n    {\\n      \\\"id\\\": \\\"hamburg\\\",\\n      \\\"name\\\": \\\"visit_hamburg\\\",\\n      \\\"address\\\": {\\n        \\\"location_id\\\": \\\"hamburg\\\",\\n        \\\"lon\\\": 9.999,\\n        \\\"lat\\\": 53.552\\n      }\\n    },\\n    { \\n     \\\"id\\\": \\\"munich\\\",\\n      \\\"name\\\": \\\"visit_munich\\\",\\n      \\\"address\\\": {\\n        \\\"location_id\\\": \\\"munich\\\",\\n        \\\"lon\\\": 11.57,\\n        \\\"lat\\\": 48.145\\n      }\\n    }\\n  ]}\");\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/vrp/optimize?key=api_key\")\n        .post(body)\n        .addHeader(\"content-type\", \"application/json\")\n        .build();\n\nResponse response = client.newCall(request).execute();"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A jobId you can use to retrieve your solution from the server - see solution endpoint.",
