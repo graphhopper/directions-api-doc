@@ -2834,7 +2834,7 @@ components:
 
         reason:
           type: string
-          description: Human readable reason
+          description: Human readable reason as listed above
     Route:
       type: object
       properties:
