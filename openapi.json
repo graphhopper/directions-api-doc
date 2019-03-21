@@ -2335,8 +2335,14 @@
             "description": "If this is omitted AND return_to_depot is true then the vehicle needs to return to its start_address."
           },
           "break": {
-            "$ref": "#/components/schemas/Break",
-            "decription": "Specifies the driver break."
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TimeWindowBreak"
+              },
+              {
+                "$ref": "#/components/schemas/DriveTimeBreak"
+              }
+            ]
           },
           "return_to_depot": {
             "type": "boolean",
@@ -2474,21 +2480,9 @@
           "lat"
         ]
       },
-      "Break": {
+      "DriveTimeBreak": {
         "type": "object",
         "properties": {
-          "earliest": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Specifies the earliest start time of the break in seconds.",
-            "example": 1550136467
-          },
-          "latest": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Specifies the latest start time of break in seconds.",
-            "example": 1550148467
-          },
           "duration": {
             "type": "integer",
             "format": "int64",
@@ -2521,6 +2515,35 @@
           }
         },
         "required": [
+          "duration",
+          "max_driving_time"
+        ]
+      },
+      "TimeWindowBreak": {
+        "type": "object",
+        "properties": {
+          "earliest": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Specifies the earliest start time of the break in seconds.",
+            "example": 1550136467
+          },
+          "latest": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Specifies the latest start time of break in seconds.",
+            "example": 1550148467
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Specifies the duration of the break in seconds.",
+            "example": 2700
+          }
+        },
+        "required": [
+          "earliest",
+          "latest",
           "duration"
         ]
       },
