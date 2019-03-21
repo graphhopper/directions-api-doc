@@ -1142,6 +1142,16 @@
         "tags": [
           "Route Optimization API"
         ],
+        "x-code-samples": [
+          {
+            "lang": "Curl",
+            "source": "curl -X GET \"https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key\""
+          },
+          {
+            "lang": "Java",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key\")\n        .get()\n        .addHeader(\"content-type\", \"application/json\")\n        .build();\n\nResponse response = client.newCall(request).execute();"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A response containing the solution",
