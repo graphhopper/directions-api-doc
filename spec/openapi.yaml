@@ -2007,8 +2007,9 @@ components:
           $ref: '#/components/schemas/Address'
           description: If this is omitted AND return_to_depot is true then the vehicle needs to return to its start_address.
         break:
-          $ref: '#/components/schemas/Break'
-          decription: Specifies the driver break.
+          anyOf:
+              - $ref: '#/components/schemas/TimeWindowBreak'
+              - $ref: '#/components/schemas/DriveTimeBreak'
         return_to_depot:
           type: boolean
           description: 'If it is false, the algorithm decides where to end the vehicle route. It ends in one of your customers'' locations. The end is chosen such that it contributes to the overall objective function, e.g. min transport_time. If it is true, you can either specify a specific end location (which is then regarded as end depot) or you can leave it and the driver returns to its start location.'
@@ -2115,19 +2116,9 @@ components:
         - location_id
         - lon
         - lat
-    Break:
+    DriveTimeBreak:
       type: object
       properties:
-        earliest:
-          type: integer
-          format: int64
-          description: Specifies the earliest start time of the break in seconds.
-          example: 1550136467
-        latest:
-          type: integer
-          format: int64
-          description: Specifies the latest start time of break in seconds.
-          example: 1550148467
         duration:
           type: integer
           format: int64
@@ -2153,6 +2144,29 @@ components:
             - 900
             - 1800
       required:
+        - duration
+        - max_driving_time
+    TimeWindowBreak:
+      type: object
+      properties:
+        earliest:
+          type: integer
+          format: int64
+          description: Specifies the earliest start time of the break in seconds.
+          example: 1550136467
+        latest:
+          type: integer
+          format: int64
+          description: Specifies the latest start time of break in seconds.
+          example: 1550148467
+        duration:
+          type: integer
+          format: int64
+          description: Specifies the duration of the break in seconds.
+          example: 2700
+      required:
+        - earliest
+        - latest
         - duration
     VehicleType:
       type: object
