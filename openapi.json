@@ -305,6 +305,16 @@
         "tags": [
           "Routing API"
         ],
+        "x-code-samples": [
+          {
+            "lang": "Curl",
+            "source": "curl \"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key\""
+          },
+          {
+            "lang": "Java",
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key\")\n        .get()\n        .build();\n\nResponse response = client.newCall(request).execute();"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Routing Result",
@@ -1319,7 +1329,7 @@
           },
           {
             "lang": "Java",
-            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key\")\n        .get()\n        .addHeader(\"content-type\", \"application/json\")\n        .build();\n\nResponse response = client.newCall(request).execute();"
+            "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key\")\n        .get()\n        .build();\n\nResponse response = client.newCall(request).execute();"
           }
         ],
         "responses": {
