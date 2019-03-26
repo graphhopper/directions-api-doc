@@ -5,6 +5,4 @@ theme:
   logo:
     maxHeight: '200px'
     maxWidth: '200px'
-expandResponses: "200"
-requiredPropsFirst: true
 

@@ -16,9 +16,16 @@
         padding: 0;
       }
     </style>
-    {{redocHead}}
   </head>
   <body>
-    {{redocBody}}
+  <div id="redoc_container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"></script>
+  <script>
+      Redoc.init(
+        '../spec/openapi.json',
+        {"theme":{"colors":{"primary":{"main":"#32329f"}}},"requiredPropsFirst":true,"expandResponses":"200"},
+        document.getElementById("redoc_container")
+      );
+    </script>
   </body>
 </html>
