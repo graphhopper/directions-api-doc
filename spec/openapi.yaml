@@ -40,8 +40,7 @@ info:
     To speed up development and make coding easier, we offer the following clients:
 
      * [JavaScript client](https://github.com/graphhopper/directions-api-js-client) - try the [live examples](https://graphhopper.com/api/1/examples/)
-     * [Java client](https://github.com/graphhopper/directions-api-java-client)
-     * [Others](https://github.com/graphhopper/directions-api-clients-route-optimization) like C#, Ruby, PHP, Python, ... automatically created for the Route Optimization API with our [swagger spec](https://graphhopper.com/api/1/swagger.json).
+     * [Others](https://github.com/graphhopper/directions-api-clients) like C#, Ruby, PHP, Python, ... automatically created for the Route Optimization API
 
     ### Bandwidth reduction
 
