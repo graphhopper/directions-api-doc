@@ -2662,6 +2662,9 @@ components:
       example:
         type: min
         value: vehicles
+      required:
+        - type
+        - value
     CostMatrix:
       type: object
       properties:
