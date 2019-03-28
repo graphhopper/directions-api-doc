@@ -1302,6 +1302,8 @@ paths:
                 type: integer
         '400':
           description: Error occurred on client side such as invalid input.
+        '404':
+          description: Requested solution could not be found. 
         '500':
           description: Error occurred on server side.
 components:
