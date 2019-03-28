@@ -1330,7 +1330,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadRequest'
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Invalid job_id 73314c89-ee4b-459c-aca4-0ad6d6e558da
+                  status:
+                    type: string
+                    description: status
+                    default: finished
+                    example: finished
         '500':
           description: Error occurred on server side.
 components:
