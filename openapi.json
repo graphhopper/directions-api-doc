@@ -2271,12 +2271,12 @@
         "properties": {
           "message": {
             "type": "string",
-            "description": "short error message",
+            "description": "Short error message",
             "example": "Bad Request"
           },
           "hints": {
             "type": "array",
-            "description": "Define one or more vehicles that can be employed to deliver items.",
+            "description": "More detailed information about the error.",
             "items": {
               "$ref": "#/components/schemas/ErrorMessage"
             }
