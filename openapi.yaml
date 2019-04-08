@@ -1507,21 +1507,21 @@ components:
               type: number
               format: double
           example:
-            - - 52.522112
-              - 13.424606
-            - - 52.504979
-              - 13.42392
-            - - 52.506233
-              - 13.400574
+            - - -0.11379003524780275
+              - 51.53664617804063
+            - - -0.10866165161132814
+              - 51.538621486960956
+            - - -0.11059284210205078
+              - 51.53245503603458
         point_hints:
           description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
           type: array
           items:
             type: string
           example:
-            - King St.
-            - Bedford St.
-            - Henrietta St.
+            - Copenhagen Street
+            - Richmond Avenue
+            - White Lion Street
         out_arrays:
           description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
           type: array
