@@ -665,7 +665,7 @@
           {
             "name": "point",
             "in": "query",
-            "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated. In this case the starts are identical to the destinations. If there are N points, then NxN entries will be calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with from_point or to_point. Is a string with the format latitude,longitude.",
+            "description": "Specify multiple points in `latitude,longitude` for which the weight-, route-, time- or distance-matrix should be calculated. In this case the starts are identical to the destinations. If there are N points, then NxN entries will be calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with from_point or to_point.",
             "required": false,
             "schema": {
               "type": "array",
@@ -678,7 +678,7 @@
           {
             "name": "from_point",
             "in": "query",
-            "description": "The starting points for the routes. E.g. if you want to calculate the three routes A-&gt;1, A-&gt;2, A-&gt;3 then you have one from_point parameter and three to_point parameters. Is a string with the format latitude,longitude.",
+            "description": "The starting points for the routes in `latitude,longitude`. E.g. if you want to calculate the three routes A-&gt;1, A-&gt;2, A-&gt;3 then you have one from_point parameter and three to_point parameters.",
             "required": false,
             "schema": {
               "type": "array",
@@ -691,7 +691,7 @@
           {
             "name": "to_point",
             "in": "query",
-            "description": "The destination points for the routes. Is a string with the format latitude,longitude.",
+            "description": "The destination points for the routes in `latitude,longitude`.",
             "required": false,
             "schema": {
               "type": "array",
@@ -816,7 +816,7 @@
       },
       "post": {
         "summary": "Execute a matrix request",
-        "description": "The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter\nin the URL will be the key. Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.\nAll effected parameters are: `points`, `from_points`, `to_points`, and `out_array`.\n\nFor example `point=10,11&point=20,22` will be converted to the following JSON `points` array:\n```json\n{ \"points\": [[11,10], [22,20]] }\n```\nNote that also the order changes to `[longitude,latitude]` similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).\n\nExample:\n```bash\ncurl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]\" -d '{\"elevation\":false,\"out_arrays\":[\"weights\"],\"from_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"to_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"vehicle\":\"car\"}'\n```\n",
+        "description": "The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter\nin the URL will be the key. Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.\nAll effected parameters are: `points`, `from_points`, `to_points`, and `out_array`.\n*Please note that in opposite to the GET endpoint, points are specified in `longitude, latitude`*.\n\nFor example `point=10,11&point=20,22` will be converted to the following JSON `points` array:\n```json\n{ \"points\": [[11,10], [22,20]] }\n```\nNote that also the order changes to `[longitude,latitude]` similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).\n\nExample:\n```bash\ncurl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]\" -d '{\"elevation\":false,\"out_arrays\":[\"weights\"],\"from_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"to_points\":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],\"vehicle\":\"car\"}'\n```\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1633,7 +1633,7 @@
         "type": "object",
         "properties": {
           "points": {
-            "description": "Specifiy multiple points for which the weight-, route-, time- or distance-matrix should be calculated as follows: `[longitude,latitude]`. In this case the origins are identical to the destinations. Thus, if there are N points, NxN entries are calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with `from_point` or `to_point.`.",
+            "description": "Specify multiple points for which the weight-, route-, time- or distance-matrix should be calculated as follows: `[longitude,latitude]`. In this case the origins are identical to the destinations. Thus, if there are N points, NxN entries are calculated. The order of the point parameter is important. Specify at least three points. Cannot be used together with `from_point` or `to_point.`.",
             "type": "array",
             "items": {
               "type": "array",
