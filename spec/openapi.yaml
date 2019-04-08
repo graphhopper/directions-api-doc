@@ -1311,7 +1311,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadRequest'
+                type: object
+                properties:
+                    message:
+                      type: string
+                      description: Error message
+                      example: Invalid job_id 73314c89-ee4b-459c-aca4-0ad6d6e558da
+                    status:
+                      type: string
+                      description: status
+                      default: finished
+                      example: finished
         '500':
           description: Error occurred on server side.
 components:
@@ -1924,11 +1934,11 @@ components:
       properties:
         message:
           type: string
-          description: short error message
+          description: Short error message
           example: Bad Request
         hints:
           type: array
-          description: Define one or more vehicles that can be employed to deliver items.
+          description: More detailed information about the error.
           items:
             $ref: '#/components/schemas/ErrorMessage'
         status:
