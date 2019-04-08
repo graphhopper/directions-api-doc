@@ -1063,7 +1063,7 @@ paths:
             default: false
         - name: debug
           in: query
-          description: 'If `true`, the output will be formated.'
+          description: 'If `true`, the output will be formatted.'
           schema:
             type: boolean
             default: false
