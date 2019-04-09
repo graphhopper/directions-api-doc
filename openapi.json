@@ -3380,6 +3380,9 @@
           "solution": {
             "$ref": "#/components/schemas/Solution"
           }
+        },
+        "example": {
+          "$ref": "examples/routeOptimizationResponse.json"
         }
       },
       "Solution": {

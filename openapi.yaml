@@ -2869,6 +2869,8 @@ components:
           example: 900000
         solution:
           $ref: '#/components/schemas/Solution'
+      example:
+        $ref: examples/routeOptimizationResponse.json
     Solution:
       type: object
       description: Only available if status field indicates `finished`.
