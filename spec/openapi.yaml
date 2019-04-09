@@ -1178,6 +1178,7 @@ paths:
         This way, you can learn the Optimization API just by using it. It allows you to specify simple vehicle routing problems, solve them and analyse
                 the API response visually, i.e. on a map, or as raw data.
 
+      operationId: solveVRP
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
