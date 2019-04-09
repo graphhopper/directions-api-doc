@@ -2524,6 +2524,9 @@
             "$ref": "#/components/schemas/Configuration",
             "description": "Specifies general configurations."
           }
+        },
+        "example": {
+          "$ref": "examples/routeOptimizationRequest.json"
         }
       },
       "Vehicle": {
