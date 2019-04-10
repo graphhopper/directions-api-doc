@@ -1026,15 +1026,6 @@ paths:
       summary: Execute a geocoding request
       operationId: geocode
       description: |
-        ### Endpoint
-
-        The endpoint is `https://graphhopper.com/api/[version]/geocode`
-
-        You can get an example response via:
-
-        ```
-        curl "https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=[YOUR_KEY]"
-        ```
 
         ### Introduction
 
@@ -1044,7 +1035,19 @@ paths:
         For example the conversion from `Berlin` to `52.5170365,13.3888599`.
 
         _Reverse geocoding_ converts a coordinate to a textual address representation or place name. Find out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).
+      x-code-samples:
+        - lang: Curl
+          source: "curl \"https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=api_key\""
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
 
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=api_key")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
       parameters:
         - name: q
           in: query
@@ -1388,43 +1391,8 @@ components:
           type: number
           format: int64
           description: in ms
-      example: {
-                         "hits": [
-                           {
-                             "osm_id": 240109189,
-                             "osm_type": "N",
-                             "country": "Deutschland",
-                             "osm_key": "place",
-                             "city": "Berlin",
-                             "osm_value": "city",
-                             "postcode": "10117",
-                             "name": "Berlin",
-                             "point": {
-                               "lng": 13.3888599,
-                               "lat": 52.5170365
-                             }
-                           },
-                           {
-                             "osm_id": 62422,
-                             "osm_type": "R",
-                             "extent": [
-                               13.088345,
-                               52.6755087,
-                               13.7611609,
-                               52.33826
-                             ],
-                             "country": "Deutschland",
-                             "osm_key": "place",
-                             "osm_value": "city",
-                             "name": "Berlin",
-                             "point": {
-                               "lng": 13.4385964,
-                               "lat": 52.5198535
-                             }
-                           }
-                         ],
-                         "took": 29
-                       }
+      example:
+        $ref: 'examples/geocodingResponse.json'
     GeocodingLocation:
       type: object
       properties:
