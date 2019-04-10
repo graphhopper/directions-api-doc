@@ -122,14 +122,6 @@ paths:
       summary: Execute a routing request
       operationId: getRoute
       description: |
-        ### Example
-        You get an example response via:
-        ```
-        curl "https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&key=[YOUR_KEY]"
-        ```
-
-        Don't forget to replace the placeholder with your own key.
-
         ### Introduction
 
         ![Routing screenshot](./img/routing-example.png)
