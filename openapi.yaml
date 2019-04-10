@@ -966,6 +966,7 @@ paths:
   /match:
     post:
       summary: Map-match a GPX file
+      operationId: postGPX
       description: |
         ### Example
         You get an example response for a GPX via:
