@@ -1473,13 +1473,6 @@ components:
             items:
               type: number
               format: double
-          example:
-            - - -0.11379003524780275
-              - 51.53664617804063
-            - - -0.10866165161132814
-              - 51.538621486960956
-            - - -0.11059284210205078
-              - 51.53245503603458
         to_points:
           description: 'The destination points for the routes in an array of `[longitude,latitude]`.'
           type: array
@@ -1488,41 +1481,27 @@ components:
             items:
               type: number
               format: double
-          example:
-            - - -0.09576559066772462
-              - 51.512882367963456
-            - - -0.08797645568847656
-              - 51.51317615367198
         from_point_hints:
           description: More information for the `from_points` array. See `point_hints`
           type: array
           items:
             type: string
-          example:
-            - Copenhagen Street
-            - Richmond Avenue
-            - White Lion Street
         to_point_hints:
           description: More information for the `to_points` array. See `point_hints`
           type: array
           items:
             type: string
-          example:
-            - Cannon
-            - Cornhill
         out_arrays:
           description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
           type: array
           items:
             type: string
-          example:
-            - weights
-            - times
-            - distances
         vehicle:
           allOf:
             - $ref: '#/components/schemas/VehicleProfileId'
             - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
+      example:
+        $ref: examples/asymmetricalMatrixRequest.json
     SymmetricalMatrixRequest:
       type: object
       properties:
@@ -1534,35 +1513,22 @@ components:
             items:
               type: number
               format: double
-          example:
-            - - -0.11379003524780275
-              - 51.53664617804063
-            - - -0.10866165161132814
-              - 51.538621486960956
-            - - -0.11059284210205078
-              - 51.53245503603458
         point_hints:
           description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
           type: array
           items:
             type: string
-          example:
-            - Copenhagen Street
-            - Richmond Avenue
-            - White Lion Street
         out_arrays:
           description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
           type: array
           items:
             type: string
-          example:
-            - weights
-            - times
-            - distances
         vehicle:
           allOf:
             - $ref: '#/components/schemas/VehicleProfileId'
             - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
+      example:
+        $ref: examples/symmetricalMatrixRequest.json
     MatrixResponse:
       type: object
       properties:
