@@ -624,13 +624,6 @@ paths:
       summary: Execute a matrix request
       operationId: getMatrix
       description: |
-        ### Example
-        You get an example response for a 3x3 matrix via:
-
-        ```
-        curl "https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=[YOUR_KEY]"
-        ```
-
         ### Introduction
 
         ![Matrix Example](./img/matrix-example.png)
@@ -683,6 +676,19 @@ paths:
         The cost for one request depends on the number of locations and is documented [here](https://graphhopper.com/api/1/docs/FAQ/#what-is-one-credit).
 
         One request should not exceed the Matrix API location limit depending on the package, see the pricing in our dashboard.
+      x-code-samples:
+        - lang: Curl
+          source: "curl \"https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key\""
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key")
+                    .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
       parameters:
         - name: point
           in: query
