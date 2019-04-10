@@ -625,6 +625,7 @@ paths:
   /matrix:
     get:
       summary: Execute a matrix request
+      operationId: getMatrix
       description: |
         ### Example
         You get an example response for a 3x3 matrix via:
@@ -788,6 +789,7 @@ paths:
                 $ref: '#/components/schemas/GHError'
     post:
       summary: Execute a matrix request
+      operationId: postMatrix
       description: |
         The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter
         in the URL will be the key. Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
@@ -847,6 +849,7 @@ paths:
   /matrix/calculate:
     post:
       summary: Post a matrix request in batch mode
+      operationId: calculateMatrix
       description: |
         The Batch Matrix API allows using matrices with more locations and works asynchronously - similar to our Route Optimization API:
          * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
@@ -918,7 +921,7 @@ paths:
       summary: Retrieve matrix
       description: |
         This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
-      operationId: getMatrix
+      operationId: getMatrixSolution
       parameters:
         - in: path
           name: jobId
