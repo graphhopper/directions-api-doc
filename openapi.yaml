@@ -120,6 +120,7 @@ paths:
   /route:
     get:
       summary: Execute a routing request
+      operationId: getRoute
       description: |
         ### Example
         You get an example response via:
@@ -528,6 +529,7 @@ paths:
   /isochrone:
     get:
       summary: Isochrone Request
+      operationId: getIsochrone
       description: |
         ### Example
         You can get an example response via:
@@ -1022,7 +1024,7 @@ paths:
   /geocode:
     get:
       summary: Execute a geocoding request
-      operationId: geocode
+      operationId: getGeocode
       description: |
 
         ### Introduction

@@ -55,6 +55,7 @@
     "/route": {
       "get": {
         "summary": "Execute a routing request",
+        "operationId": "getRoute",
         "description": "### Example\nYou get an example response via:\n```\ncurl \"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&key=[YOUR_KEY]\"\n```\n\nDon't forget to replace the placeholder with your own key.\n\n### Introduction\n\n![Routing screenshot](./img/routing-example.png)\n\nThe Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting\ntwo or more points, where the meaning of ''best'' depends on the vehicle and use case.\n\n### Navigation\nIf you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.\n\n### Fast\nTo get started using this API, just provide two or more points and retrieve the fastest route through the road\nnetwork that connects them. This type of request is heavily optimized for query performance, so it does not\ntake turn restrictions into account, and it does not allow for some advanced features.\n### Flexible\nEnable turn restrictions and unlock further flexible features via `ch.disable=true`.\nPlease note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.\n",
         "parameters": [
           {
@@ -559,6 +560,7 @@
     "/isochrone": {
       "get": {
         "summary": "Isochrone Request",
+        "operationId": "getIsochrone",
         "description": "### Example\nYou can get an example response via:\n\n```\ncurl \"https://graphhopper.com/api/1/isochrone?point=51.131108,12.414551&key=[YOUR_KEY]\"\n```\n\nDon't forget to replace the placeholder with your own key.\n\n### Introduction\n![Isochrone screenshot](./img/isochrone-example.png)\n\nAn isochrone of a location is ''a line connecting points at which a vehicle arrives at the same time'', see Wikipedia.\nWith the same API you can also calculate isodistances, just use the parameter distance_limit instead of time_limit`.\n\n### Use Cases\nSome possible areas in which this API may be useful to you:\n\n- real estate analysis\n- realtors\n- vehicle scheduling\n- geomarketing\n- reach of electric vehicles\n- transport planning\n- logistics (distribution and retail network planning)\n\n### API Clients and Examples\nSee the [clients](#section/API-Clients) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#isochrone).\n",
         "parameters": [
           {
@@ -1091,7 +1093,7 @@
     "/geocode": {
       "get": {
         "summary": "Execute a geocoding request",
-        "operationId": "geocode",
+        "operationId": "getGeocode",
         "description": "\n### Introduction\n\n![Geocoding Example](./img/geocoding-example.png)\n\n_Geocoding_ describes the process of transforming an textual address representation to a coordinate (`latitude,longitude`).\nFor example the conversion from `Berlin` to `52.5170365,13.3888599`.\n\n_Reverse geocoding_ converts a coordinate to a textual address representation or place name. Find out more about Geocoding itself on [Wikipedia](http://en.wikipedia.org/wiki/Geocoding).\n",
         "x-code-samples": [
           {
