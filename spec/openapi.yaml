@@ -97,8 +97,8 @@ info:
     We also offer a sophisticated `motorcycle` profile powered by the [Kurviger](https://kurviger.de/en) Routing API.
     Kurviger favors curves and slopes while avoiding cities and highways.
 
-    Also we offer vehicle profiles with different properties, different speed profiles
-    or different access options.
+    Also we offer custom vehicle profiles with different properties, different speed profiles
+    or different access options. To find out more about custom profiles, please [contact us]((https://www.graphhopper.com/contact-form/).
 
     You can try the route results for every profile with [GraphHopper Maps](https://graphhopper.com/maps/)
 
