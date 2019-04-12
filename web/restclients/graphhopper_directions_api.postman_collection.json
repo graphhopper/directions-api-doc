@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f670b7fd-1cac-4f7c-b0ac-0400b14ea17f",
+		"_postman_id": "66744992-f391-4430-8f94-b0c16d671d97",
 		"name": "GraphHopper Directions API",
 		"description": "Example requests to explore GraphHopper's Directions API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -19,7 +19,36 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": ""
+							"raw": "{{route_url}}?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key={{api_key}}",
+							"host": [
+								"{{route_url}}"
+							],
+							"query": [
+								{
+									"key": "point",
+									"value": "51.131,12.414"
+								},
+								{
+									"key": "point",
+									"value": "48.224,3.867"
+								},
+								{
+									"key": "vehicle",
+									"value": "car"
+								},
+								{
+									"key": "locale",
+									"value": "de"
+								},
+								{
+									"key": "calc_points",
+									"value": "false"
+								},
+								{
+									"key": "key",
+									"value": "{{api_key}}"
+								}
+							]
 						}
 					},
 					"response": []
@@ -287,7 +316,28 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": ""
+							"raw": "{{geocode_url}}?q=berlin&locale=de&debug=true&key={{api_key}}",
+							"host": [
+								"{{geocode_url}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "berlin"
+								},
+								{
+									"key": "locale",
+									"value": "de"
+								},
+								{
+									"key": "debug",
+									"value": "true"
+								},
+								{
+									"key": "key",
+									"value": "{{api_key}}"
+								}
+							]
 						}
 					},
 					"response": []
