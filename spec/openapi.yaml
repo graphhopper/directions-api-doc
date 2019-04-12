@@ -137,7 +137,7 @@ info:
 
     1. Open Insomnia and Import [our workspace](https://raw.githubusercontent.com/graphhopper/directions-api-doc/master/web/restclients/GraphHopper-Direction-API-Insomnia.json).
     2. Sign up [here](https://graphhopper.com/dashboard/#/register) to get an API key and specify it in your workspace: Manage Environments -> Base Environment -> "api_key": your API key
-    3. Start degugging
+    3. Start exploring
 
     ![Insomnia](./img/insomnia.png)
 
