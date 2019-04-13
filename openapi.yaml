@@ -122,7 +122,7 @@ info:
 
     # Explore our APIs
 
-    To explore our APIs, we offer a ready to use workspace for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The workspace contains all example
+    To explore our APIs, we offer a ready to use requests for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The request file contains all example
     requests from this documentation.
 
     #### Insomnia
@@ -137,7 +137,13 @@ info:
 
     #### Postman
 
-    coming soon
+    To explore our APIs with [Postman](https://www.getpostman.com/), follow these steps:
+
+    1. Import our [request collections](https://raw.githubusercontent.com/graphhopper/directions-api-doc/master/web/restclients/graphhopper_directions_api.postman_collection.json) as well as our [environment file](https://raw.githubusercontent.com/graphhopper/directions-api-doc/master/web/restclients/graphhopper_directions_api.postman_environment.json).
+    2. Sign up [here](https://graphhopper.com/dashboard/#/register) to get an API key and specify it in your environment: "api_key": your API key
+    3. Start exploring
+
+    ![Postman](./img/postman.png)
   version: 1.0.0
   termsOfService: 'https://www.graphhopper.com/terms/'
   contact:
