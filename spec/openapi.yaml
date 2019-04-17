@@ -122,7 +122,7 @@ info:
 
     # Explore our APIs
 
-    To explore our APIs, we offer a ready to use requests for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The request file contains all example
+    To explore our APIs, we offer a ready to use collection of requests for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The request file contains all example
     requests from this documentation.
 
     #### Insomnia
