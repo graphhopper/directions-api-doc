@@ -293,7 +293,7 @@ paths:
             We provide open source code in Java and JavaScript, see the clients section.
           schema:
             type: boolean
-            default: false
+            default: true
         - name: type
           in: query
           schema:
