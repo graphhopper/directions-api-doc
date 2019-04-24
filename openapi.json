@@ -163,7 +163,7 @@
             "description": "If `false`, the coordinates in `point` and `snapped_waypoints` are returned as lists of positions using the order `[lon,lat,elevation]`.\nThis format may be easier to handle, but can consume a lot of bandwidth for long routes.\nIf `true`, the coordinates will be encoded as a string. You'll need to decode this string in client code.\nWe provide open source code in Java and JavaScript, see the clients section.\n",
             "schema": {
               "type": "boolean",
-              "default": false
+              "default": true
             }
           },
           {
