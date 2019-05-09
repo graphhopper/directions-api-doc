@@ -1267,11 +1267,11 @@ paths:
 
         We offer a number of clients to make coding against the Route Optimization API easier (see the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization)).
 
-        ### Tutorials
+        ## Tutorials
 
         To make modelling your vehicle routing problem easier, we provide you with an increasing number of [tutorials](https://www.graphhopper.com/tutorial/).
 
-        ### Route Editor
+        ## Route Editor
 
         The [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) in the Directions API dashboard is a helpful tool to understand the JSON input and output format.
         This way, you can learn the Optimization API just by using it. It allows you to specify simple vehicle routing problems, solve them and analyse
@@ -2457,6 +2457,8 @@ components:
           $ref: '#/components/schemas/Address'
         duration:
           type: integer
+          minimum: 0
+          maximum: 86400
           format: int64
           description: 'Specifies the duration of the service in seconds, i.e. how long it takes at the customer site.'
           default: 0
@@ -2464,6 +2466,8 @@ components:
         preparation_time:
           type: integer
           format: int64
+          minimum: 0
+          maximum: 86400
           description: 'Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.'
           default: 0
           example: 300
@@ -2605,12 +2609,16 @@ components:
           description: Specifies pickup or delivery address.
         duration:
           type: integer
+          minimum: 0
+          maximum: 86400
           format: int64
           description: 'Specifies the duration of the pickup or delivery in seconds, e.g. how long it takes unload items at the customer site.'
           default: 0
           example: 1800
         preparation_time:
           type: integer
+          minimum: 0
+          maximum: 86400
           format: int64
           description: 'Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.'
           default: 0
