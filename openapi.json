@@ -2817,7 +2817,7 @@
           "duration": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 86400,
+            "maximum": 604800,
             "format": "int64",
             "description": "Specifies the duration of the service in seconds, i.e. how long it takes at the customer site.",
             "default": 0,
@@ -2827,7 +2827,7 @@
             "type": "integer",
             "format": "int64",
             "minimum": 0,
-            "maximum": 86400,
+            "maximum": 604800,
             "description": "Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.",
             "default": 0,
             "example": 300
@@ -3030,7 +3030,7 @@
           "duration": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 86400,
+            "maximum": 604800,
             "format": "int64",
             "description": "Specifies the duration of the pickup or delivery in seconds, e.g. how long it takes unload items at the customer site.",
             "default": 0,
@@ -3039,7 +3039,7 @@
           "preparation_time": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 86400,
+            "maximum": 604800,
             "format": "int64",
             "description": "Specifies the preparation time in seconds. It can be used to model parking lot search time since if you have 3 identical locations in a row, it only falls due once.",
             "default": 0,
