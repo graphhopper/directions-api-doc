@@ -159,7 +159,22 @@ servers:
   - url: 'https://graphhopper.com/api/1'
 tags:
   - name: Route Optimization API
-    description: Everything about route optimization
+    description: |2
+
+         ![VRP Example Screenshot](./img/vrp.png)
+
+        The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
+        of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
+        efficiently service its customers given a variety of requirements: customer requirements like time windows,
+        the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
+        and more.
+
+        Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
+        You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
+         your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.
+
+        This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
+        our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.
   - name: Routing API
     description: Everything about routing
   - name: Matrix API
@@ -1228,56 +1243,35 @@ paths:
   /vrp/optimize:
     post:
       summary: Solve vehicle routing problem
-      description: |2
-         ### Introduction
+      description: |
 
-         ![VRP Example Screenshot](./img/vrp.png)
+        ## Getting Started
 
-        The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
-        of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
-        efficiently service its customers given a variety of requirements: customer requirements like time windows,
-        the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
-        and more.
+        This tutorial, [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/), illustrates the very basic steps and building blocks to model your vehicle routing problem.
 
-        Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
-        You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
-         your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.
+        This only shows you an excerpt of what is possible with our API. You can find the entire specification of the
+        required request (Request Body Schema) as well as the response below.
+        It is an interactive documentation of nested objects. By default, you only see the root objects
+        such as "vehicles", "vehicle_types", "objectives" etc.. To unfold detailed information about
+        each root object, you just need to click on it as shown here
 
-        This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
-        our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.
+        ![Nested Doc](./img/nested-doc.gif)
 
-        ### Endpoint
+        To explore the specification, we can recommend you to extend the problem in the tutorial above
+        and either use our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
+        in the Directions API dashboard or the REST clients such as Insomnia or Postman as described [here](https://docs.graphhopper.com/#section/Explore-our-APIs).
+        Additionally, you can find a ready-to-use example in the Request Samples Panel on the right (or below).
+        You can easily unfold it by clicking the + or you can just copy it all and paste it to our route editor or
+        your REST client.
 
-        The endpoint is `https://graphhopper.com/api/[version]/vrp`
+        Furthermore, we provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use this API and how to model your vehicle routing problems.
+        Here, you can find a list of tutorials that might help you to get started quickly:
 
-        The Route Optimization API works in two steps
-        1. Post your problem json:
-
-        ```
-        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=[YOUR_KEY]" --data @your-vrp-problem.json
-        ```
-
-        2. Poll every 500ms until a solution is available: `
-
-        ```
-        curl -X GET "https://graphhopper.com/api/1/vrp/solution/[RETURNED_JOB_ID]?key=[YOUR_KEY]"
-        ```
-
-        For more details also about the format of the `your-vrp-problem.json` file you can use one of [the examples](https://github.com/graphhopper/directions-api-js-client/tree/master/route-optimization-examples).
-
-        ### API Clients and Examples
-
-        We offer a number of clients to make coding against the Route Optimization API easier (see the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#optimization)).
-
-        ## Tutorials
-
-        To make modelling your vehicle routing problem easier, we provide you with an increasing number of [tutorials](https://www.graphhopper.com/tutorial/).
-
-        ## Route Editor
-
-        The [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) in the Directions API dashboard is a helpful tool to understand the JSON input and output format.
-        This way, you can learn the Optimization API just by using it. It allows you to specify simple vehicle routing problems, solve them and analyse
-                the API response visually, i.e. on a map, or as raw data.
+        - [Getting Start with the Optimization API - Traveling Salesman Problem](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/)
+        - [How to solve a traveling salesman problem with a week-planning horizon?](https://www.graphhopper.com/blog/2016/05/30/how-to-solve-a-traveling-salesman-problem-with-a-week-planning-horizon/)
+        - [How to schedule technicians with skills and multiple dependencies between tasks?](https://www.graphhopper.com/blog/2016/06/03/how-to-route-technicians-with-skills-and-multiple-dependencies-between-tasks/)
+        - [What is the difference between the min. of completion time and min. transport time?](https://www.graphhopper.com/blog/2016/06/20/what-is-the-difference-between-the-minimization-of-completion-time-and-minimizing-transport-time/)
+        - [How to model multiple delivery routes with a single vehicle?](https://www.graphhopper.com/blog/2016/07/21/how-to-model-multiple-delivery-routes-with-a-single-vehicle/)
       operationId: solveVRP
       requestBody:
         description: Request object that contains the problem to be solved
