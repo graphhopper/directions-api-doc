@@ -1252,7 +1252,7 @@ paths:
       summary: Solve vehicle routing problem
       description: |2
 
-        ## Getting Started
+        ### Getting Started
 
         This tutorial, [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/), illustrates the very basic steps and building blocks to model your vehicle routing problem.
 
