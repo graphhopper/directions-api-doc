@@ -1247,7 +1247,7 @@ paths:
 
         ### Getting Started
 
-        This tutorial, [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/), illustrates the very basic steps and building blocks to model your vehicle routing problem.
+        This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) - illustrates the very basic steps and building blocks to model your vehicle routing problem.
 
         This only shows you an excerpt of what is possible with our API. You can find the entire specification of the
         required request (Request Body Schema) as well as the response below.
