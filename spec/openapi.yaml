@@ -2518,7 +2518,7 @@ components:
           type: array
           items:
             type: string
-          description: 'Specifies an array of allowed vehicles, i.e. array of vehicle ids.'
+          description: 'Specifies an array of disallowed vehicles, i.e. array of vehicle ids.'
           example:
             - driver-A
             - driver-B
