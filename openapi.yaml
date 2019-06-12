@@ -319,15 +319,17 @@ paths:
         - name: ch.disable
           in: query
           description: |
-            Use this parameter in combination with one or more parameters of this table
+            Use this parameter in combination with one or more parameters from below. 
           schema:
             type: boolean
+            default: false
         - name: weighting
           in: query
           description: |
-            Which kind of ''best'' route calculation you need. Other option is `shortest` (e.g. for `vehicle=foot` or `bike`), `short_fastest` if time and distance is expensive e.g. for `vehicle=truck`
+            Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`.
           schema:
             type: string
+            default: fastest
         - name: heading
           in: query
           description: |

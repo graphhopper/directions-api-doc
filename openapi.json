@@ -182,17 +182,19 @@
           {
             "name": "ch.disable",
             "in": "query",
-            "description": "Use this parameter in combination with one or more parameters of this table\n",
+            "description": "Use this parameter in combination with one or more parameters from below. \n",
             "schema": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             }
           },
           {
             "name": "weighting",
             "in": "query",
-            "description": "Which kind of ''best'' route calculation you need. Other option is `shortest` (e.g. for `vehicle=foot` or `bike`), `short_fastest` if time and distance is expensive e.g. for `vehicle=truck`\n",
+            "description": "Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`.\n",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "fastest"
             }
           },
           {
