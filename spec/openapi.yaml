@@ -228,7 +228,7 @@ paths:
         - name: point_hint
           in: query
           description: |
-            For each `point` value, a hint about the road segment it should be snapped to.
+            The point_hint is typically a road name to which the associated `point` parameter should be snapped to. Specify no `point_hint` parameter or the same number as you have `point` parameters.
           schema:
             type: array
             items:
