@@ -305,7 +305,7 @@ paths:
             If `false`, the coordinates in `point` and `snapped_waypoints` are returned as lists of positions using the order `[lon,lat,elevation]`.
             This format may be easier to handle, but can consume a lot of bandwidth for long routes.
             If `true`, the coordinates will be encoded as a string. You'll need to decode this string in client code.
-            We provide open source code in Java and JavaScript, see the clients section.
+            We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/e649aaed8d3f4378bf2d8889bbbc2318261eabb2/web-api/src/main/java/com/graphhopper/http/WebHelper.java#L54) and [JavaScript](https://github.com/graphhopper/directions-api-js-client/blob/cf43d1a5bc93a3e8007a44fcfc551117e4fa49bc/src/GHUtil.js#L27).
           schema:
             type: boolean
             default: true
