@@ -1,0 +1,27 @@
+{
+  "points": [
+    [
+      -0.11379003524780275,
+      51.53664617804063
+    ],
+    [
+      -0.10866165161132814,
+      51.538621486960956
+    ],
+    [
+      -0.11059284210205078,
+      51.53245503603458
+    ]
+  ],
+  "point_hints": [
+    "Copenhagen Street",
+    "Richmond Avenue",
+    "White Lion Street"
+  ],
+  "out_arrays": [
+    "weights",
+    "times",
+    "distances"
+  ],
+  "vehicle": "car"
+}

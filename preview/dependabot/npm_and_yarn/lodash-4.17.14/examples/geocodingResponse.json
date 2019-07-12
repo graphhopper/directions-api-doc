@@ -1,0 +1,197 @@
+{
+  "hits": [
+    {
+      "osm_id": 240109189,
+      "osm_type": "N",
+      "country": "Deutschland",
+      "osm_key": "place",
+      "city": "Berlin",
+      "osm_value": "city",
+      "postcode": "10117",
+      "name": "Berlin",
+      "point": {
+        "lng": 13.3888599,
+        "lat": 52.5170365
+      }
+    },
+    {
+      "osm_id": 62422,
+      "osm_type": "R",
+      "extent": [
+        13.088345,
+        52.6755087,
+        13.7611609,
+        52.33826
+      ],
+      "country": "Deutschland",
+      "osm_key": "place",
+      "osm_value": "city",
+      "name": "Berlin",
+      "point": {
+        "lng": 13.4385964,
+        "lat": 52.5198535
+      }
+    },
+    {
+      "osm_id": 120456814,
+      "osm_type": "W",
+      "extent": [
+        13.3906703,
+        52.5200704,
+        13.3948873,
+        52.5175007
+      ],
+      "country": "Deutschland",
+      "osm_key": "amenity",
+      "city": "Berlin",
+      "street": "Dorotheenstraße",
+      "osm_value": "university",
+      "postcode": "10117",
+      "name": "Humboldt-Universität zu Berlin",
+      "point": {
+        "lng": 13.393560493637775,
+        "lat": 52.51875685
+      }
+    },
+    {
+      "osm_id": 6647,
+      "osm_type": "R",
+      "extent": [
+        13.3924346,
+        52.5191829,
+        13.3948768,
+        52.517526
+      ],
+      "country": "Deutschland",
+      "osm_key": "building",
+      "housenumber": "6",
+      "city": "Berlin",
+      "street": "Unter den Linden",
+      "osm_value": "yes",
+      "postcode": "10117",
+      "name": "Humboldt-Universität zu Berlin",
+      "point": {
+        "lng": 13.392908021752554,
+        "lat": 52.51840935
+      }
+    },
+    {
+      "osm_id": 38862723,
+      "osm_type": "W",
+      "extent": [
+        13.2364563,
+        52.5161915,
+        13.2433375,
+        52.5129557
+      ],
+      "country": "Deutschland",
+      "osm_key": "leisure",
+      "housenumber": "3",
+      "city": "Berlin",
+      "street": "Olympischer Platz",
+      "osm_value": "stadium",
+      "postcode": "14053",
+      "name": "Olympiastadion Berlin",
+      "point": {
+        "lng": 13.239776301622072,
+        "lat": 52.5147077
+      }
+    },
+    {
+      "osm_id": 583306346,
+      "osm_type": "W",
+      "extent": [
+        13.3739245,
+        52.528547,
+        13.3818019,
+        52.5229778
+      ],
+      "country": "Deutschland",
+      "osm_key": "amenity",
+      "city": "Berlin",
+      "street": "Hufelandweg",
+      "osm_value": "hospital",
+      "postcode": "10117",
+      "name": "Charité Universitätsmedizin Berlin",
+      "point": {
+        "lng": 13.377739577932736,
+        "lat": 52.52585125
+      }
+    },
+    {
+      "osm_id": 180594,
+      "osm_type": "R",
+      "extent": [
+        13.3906159,
+        52.5190301,
+        13.3923847,
+        52.5174089
+      ],
+      "country": "Deutschland",
+      "osm_key": "amenity",
+      "housenumber": "8",
+      "city": "Berlin",
+      "street": "Unter den Linden",
+      "osm_value": "library",
+      "postcode": "10117",
+      "name": "Staatsbibliothek zu Berlin",
+      "point": {
+        "lng": 13.391516532100738,
+        "lat": 52.5182233
+      }
+    },
+    {
+      "osm_id": 3856100103,
+      "osm_type": "N",
+      "country": "Deutschland",
+      "osm_key": "railway",
+      "city": "Berlin",
+      "street": "Washingtonplatz",
+      "osm_value": "station",
+      "postcode": "10557",
+      "name": "Berlin Hauptbahnhof",
+      "point": {
+        "lng": 13.3696614,
+        "lat": 52.5249451
+      }
+    },
+    {
+      "osm_id": 1078631331,
+      "osm_type": "N",
+      "country": "Deutschland",
+      "osm_key": "historic",
+      "city": "Berlin",
+      "street": "Gertrud-Kolmar-Straße",
+      "osm_value": "battlefield",
+      "postcode": "10117",
+      "name": "Schlacht um Berlin",
+      "point": {
+        "lng": 13.3814231,
+        "lat": 52.5127537
+      }
+    },
+    {
+      "osm_id": 1154556,
+      "osm_type": "R",
+      "extent": [
+        13.3807495,
+        52.5083344,
+        13.3822459,
+        52.5074359
+      ],
+      "country": "Deutschland",
+      "osm_key": "office",
+      "housenumber": "5",
+      "city": "Berlin",
+      "street": "Niederkirchnerstraße",
+      "osm_value": "government",
+      "postcode": "10117",
+      "name": "Abgeordnetenhaus von Berlin",
+      "point": {
+        "lng": 13.381504320489928,
+        "lat": 52.50786655
+      }
+    }
+  ],
+  "took": 37
+}
