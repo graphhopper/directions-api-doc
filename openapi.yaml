@@ -1257,7 +1257,7 @@ paths:
         ![Nested Doc](./img/nested-doc.gif)
 
         To explore the specification, we can recommend you to extend the problem in the tutorial above
-        and either use our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
+        and either use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
         in the Directions API dashboard or the REST clients such as Insomnia or Postman as described [here](https://docs.graphhopper.com/#section/Explore-our-APIs).
         Additionally, you can find a ready-to-use example in the Request Samples Panel on the right (or below).
         You can easily unfold it by clicking the + or you can just copy it all and paste it to our route editor or
