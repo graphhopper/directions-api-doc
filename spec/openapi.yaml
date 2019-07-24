@@ -327,7 +327,7 @@ paths:
         - name: ch.disable
           in: query
           description: |
-            Use this parameter in combination with one or more parameters from below. 
+            Use this parameter in combination with one or more parameters from below.
           schema:
             type: boolean
             default: false
@@ -2325,6 +2325,47 @@ components:
         - location_id
         - lon
         - lat
+    ResponseAddress:
+      type: object
+      properties:
+        location_id:
+          type: string
+          description: Specifies the id of the location.
+          example: 550e8400-e29b-11d4-a716-446655440000
+        name:
+          type: string
+          description: Name of location.
+          example: 'Queens Victoria Street 70, Second Floor, Flat 245'
+        lon:
+          format: double
+          type: number
+          description: Longitude of location.
+          example: -0.092869
+        lat:
+          format: double
+          type: number
+          description: Latitude of location.
+          example: 51.512665
+        street_hint:
+          type: string
+          description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
+          example: Queens Victoria Street 70
+        snapped_waypoint:
+          $ref: '#/components/schemas/SnappedWaypoint'
+    SnappedWaypoint:
+      type: object
+      description: Access point to the (road)network. It is only available if `return_snapped_waypoints` is true (be default it is false).
+      properties:
+        lon:
+          format: double
+          type: number
+          description: Longitude of location.
+          example: -0.092869
+        lat:
+          format: double
+          type: number
+          description: Latitude of location.
+          example: 51.512665
     DriveTimeBreak:
       type: object
       properties:
@@ -2685,6 +2726,10 @@ components:
           type: boolean
           description: indicates whether matrix calculation should fail fast when points cannot be connected
           default: true
+        return_snapped_waypoints:
+          type: boolean
+          description: Indicates whether a solution includes snapped waypoints. In contrary to the address coordinate a snapped waypoint is the access point to the (road) network.
+          default: false
     Objective:
       type: object
       properties:
@@ -3497,8 +3542,7 @@ components:
           type: string
           description: Id that refers to address
         address:
-          $ref: '#/components/schemas/Address'
-          description: address of activity
+          $ref: '#/components/schemas/ResponseAddress'
         arr_time:
           type: integer
           format: int64
