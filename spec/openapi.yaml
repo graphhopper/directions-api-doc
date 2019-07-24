@@ -2703,6 +2703,7 @@ components:
           $ref: '#/components/schemas/Routing'
     Routing:
       type: object
+      description: This contains all routing specific configurations.
       properties:
         calc_points:
           type: boolean
