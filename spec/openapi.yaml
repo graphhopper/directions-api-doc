@@ -2324,6 +2324,7 @@ components:
         - lat
     ResponseAddress:
       type: object
+      description: Address of activity
       properties:
         location_id:
           type: string
