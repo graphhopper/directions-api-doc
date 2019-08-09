@@ -775,6 +775,16 @@
             "schema": {
               "$ref": "#/components/schemas/VehicleProfileId"
             }
+          },
+          {
+            "name": "fail_fast",
+            "in": "query",
+            "description": "Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "tags": [
@@ -1584,6 +1594,11 @@
                 "description": "The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details."
               }
             ]
+          },
+          "fail_fast": {
+            "description": "Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).",
+            "type": "boolean",
+            "default": true
           }
         },
         "example": {
@@ -1627,6 +1642,11 @@
                 "description": "The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details."
               }
             ]
+          },
+          "fail_fast": {
+            "description": "Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).",
+            "type": "boolean",
+            "default": true
           }
         },
         "example": {
@@ -1637,7 +1657,7 @@
         "type": "object",
         "properties": {
           "distances": {
-            "description": "The distance matrix for the specified points in the same order as the time matrix. The distances are in meters.",
+            "description": "The distance matrix for the specified points in the same order as the time matrix. The distances are in meters. If `fail_fast=false` the matrix will contain `null` for connections that could not be found.",
             "type": "array",
             "items": {
               "type": "array",
@@ -1648,7 +1668,7 @@
             }
           },
           "times": {
-            "description": "The time matrix for the specified points in the order [[from1->to1, from1->to2, ...], [from2->to1, from2->to2, ...], ...]. The times are in seconds.",
+            "description": "The time matrix for the specified points in the order [[from1->to1, from1->to2, ...], [from2->to1, from2->to2, ...], ...]. The times are in seconds. If `fail_fast=false` the matrix will contain `null` for connections that could not be found.",
             "type": "array",
             "items": {
               "type": "array",
@@ -1659,7 +1679,7 @@
             }
           },
           "weights": {
-            "description": "The weight matrix for the specified points in the same order as the time matrix. The weights for different vehicles can have a different unit but the weights array is perfectly suited as input for Vehicle Routing Problems as it is currently faster to calculate.",
+            "description": "The weight matrix for the specified points in the same order as the time matrix. The weights for different vehicles can have a different unit but the weights array is perfectly suited as input for Vehicle Routing Problems as it is currently faster to calculate. If `fail_fast=false` the matrix will contain `null` for connections that could not be found.",
             "type": "array",
             "items": {
               "type": "array",
@@ -1671,6 +1691,50 @@
           },
           "info": {
             "$ref": "#/components/schemas/ResponseInfo"
+          },
+          "hints": {
+            "description": "Optional. Additional response data",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Short description of this hint",
+                  "type": "string"
+                },
+                "details": {
+                  "description": "Details of this hint",
+                  "type": "string"
+                },
+                "invalid_from_points": {
+                  "description": "Optional. An array of from_point indices of points that could not be found. Will only be added if `fail_fast=false` and some `from_point`s were not found.`",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "int32"
+                  }
+                },
+                "invalid_to_points": {
+                  "description": "Optional. An array of to_point indices of points that could not be found. Will only be added if `fail_fast=false` and some `to_point`s were not found.`",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "int32"
+                  }
+                },
+                "point_pairs": {
+                  "description": "Optional. An array of two-element arrays representing the from/to_point indices of points for which no connection could be found. Will only be added if `fail_fast=false` and some connections were not found.",
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "example": {
