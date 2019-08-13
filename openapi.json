@@ -240,7 +240,7 @@
           {
             "name": "avoid",
             "in": "query",
-            "description": "Specify which road classes you would like to avoid (currently only\nsupported for motor vehicles like `car`). Possible values are `ferry`, `motorway`, `toll`, `tunnel` and `ford`.\nSeparate several values with `;`.\n",
+            "description": "Specify which road classes and environments you would like to avoid. \nPossible values are `motorway`, `primary`, `secondary`, `tertiary`, `trunk`, `residential`, `steps`, `bridleway`, `living_street`, `track`, `toll`, `ferry`, `tunnel`, `bridge` and `ford`.\nSeparate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`.\n",
             "schema": {
               "type": "string"
             }
