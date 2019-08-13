@@ -373,9 +373,9 @@ paths:
         - name: avoid
           in: query
           description: |
-            Specify which road classes you would like to avoid (currently only
-            supported for motor vehicles like `car`). Possible values are `ferry`, `motorway`, `toll`, `tunnel` and `ford`.
-            Separate several values with `;`.
+            Specify which road classes and environments you would like to avoid. 
+            Possible values are `motorway`, `primary`, `secondary`, `tertiary`, `trunk`, `residential`, `steps`, `bridleway`, `living_street`, `track`, `toll`, `ferry`, `tunnel`, `bridge` and `ford`.
+            Separate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`.
           schema:
             type: string
         - name: algorithm
