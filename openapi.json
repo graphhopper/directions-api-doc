@@ -203,7 +203,7 @@
           {
             "name": "weighting",
             "in": "query",
-            "description": "Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`.\n",
+            "description": "Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "string",
               "default": "fastest"
@@ -212,7 +212,7 @@
           {
             "name": "heading",
             "in": "query",
-            "description": "Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points.\nIn this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree.\nThis parameter also influences the tour generated with `algorithm=round_trip` and forces the initial direction.\n",
+            "description": "Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points.\nIn this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree.\nThis parameter also influences the tour generated with `algorithm=round_trip` and forces the initial direction.  Requires `ch.disable=true`.\n",
             "schema": {
               "type": "array",
               "items": {
@@ -225,7 +225,7 @@
           {
             "name": "heading_penalty",
             "in": "query",
-            "description": "Time penalty in seconds for not obeying a specified heading.\n",
+            "description": "Time penalty in seconds for not obeying a specified heading. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -235,7 +235,7 @@
           {
             "name": "pass_through",
             "in": "query",
-            "description": "If `true`, u-turns are avoided at via-points with regard to the `heading_penalty`.\n",
+            "description": "If `true`, u-turns are avoided at via-points with regard to the `heading_penalty`. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "boolean",
               "default": false
@@ -244,7 +244,7 @@
           {
             "name": "block_area",
             "in": "query",
-            "description": "Block road access via a point with the format `latitude,longitude`\nor an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.\nSeparate several values with `;`.\n",
+            "description": "Block road access via a point with the format `latitude,longitude`\nor an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.\nSeparate several values with `;`. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "string"
             }
@@ -252,7 +252,7 @@
           {
             "name": "avoid",
             "in": "query",
-            "description": "Specify which road classes and environments you would like to avoid. \nPossible values are `motorway`, `primary`, `secondary`, `tertiary`, `trunk`, `residential`, `steps`, `living_street`, `track`, `toll`, `ferry`, `tunnel`, `bridge` and `ford`.\nSeparate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`.\n",
+            "description": "Specify which road classes and environments you would like to avoid. \nPossible values are `motorway`, `primary`, `secondary`, `tertiary`, `trunk`, `residential`, `steps`, `living_street`, `track`, `toll`, `ferry`, `tunnel`, `bridge` and `ford`.\nSeparate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "string"
             }
@@ -267,12 +267,12 @@
                 "alternative_route"
               ]
             },
-            "description": "Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:\nWith `round_trip`, the route will get you back to where you started. This is meant for fun (think of\na bike trip), so we will add some randomness.\nWith `alternative_route`, we give you not one but several routes that are close to optimal, but\nnot too similar to each other. You can control both of these features with additional parameters, see below.\n"
+            "description": "Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:\nWith `round_trip`, the route will get you back to where you started. This is meant for fun (think of\na bike trip), so we will add some randomness.\nWith `alternative_route`, we give you not one but several routes that are close to optimal, but\nnot too similar to each other. You can control both of these features with additional parameters, see below. Requires `ch.disable=true`.\n"
           },
           {
             "name": "round_trip.distance",
             "in": "query",
-            "description": "If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip.\n",
+            "description": "If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip. Requires `ch.disable=true`.\n",
             "schema": {
               "type": "integer",
               "format": "int32",

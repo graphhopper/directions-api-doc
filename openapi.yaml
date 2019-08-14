@@ -332,7 +332,7 @@ paths:
         - name: weighting
           in: query
           description: |
-            Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`.
+            Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`. Requires `ch.disable=true`.
           schema:
             type: string
             default: fastest
@@ -341,7 +341,7 @@ paths:
           description: |
             Favour a heading direction for a certain point. Specify either one heading for the start point or as many as there are points.
             In this case headings are associated by their order to the specific points. Headings are given as north based clockwise angle between 0 and 360 degree.
-            This parameter also influences the tour generated with `algorithm=round_trip` and forces the initial direction.
+            This parameter also influences the tour generated with `algorithm=round_trip` and forces the initial direction.  Requires `ch.disable=true`.
           schema:
             type: array
             items:
@@ -351,7 +351,7 @@ paths:
         - name: heading_penalty
           in: query
           description: |
-            Time penalty in seconds for not obeying a specified heading.
+            Time penalty in seconds for not obeying a specified heading. Requires `ch.disable=true`.
           schema:
             type: integer
             format: int32
@@ -359,7 +359,7 @@ paths:
         - name: pass_through
           in: query
           description: |
-            If `true`, u-turns are avoided at via-points with regard to the `heading_penalty`.
+            If `true`, u-turns are avoided at via-points with regard to the `heading_penalty`. Requires `ch.disable=true`.
           schema:
             type: boolean
             default: false
@@ -368,7 +368,7 @@ paths:
           description: |
             Block road access via a point with the format `latitude,longitude`
             or an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.
-            Separate several values with `;`.
+            Separate several values with `;`. Requires `ch.disable=true`.
           schema:
             type: string
         - name: avoid
@@ -376,7 +376,7 @@ paths:
           description: |
             Specify which road classes and environments you would like to avoid. 
             Possible values are `motorway`, `primary`, `secondary`, `tertiary`, `trunk`, `residential`, `steps`, `living_street`, `track`, `toll`, `ferry`, `tunnel`, `bridge` and `ford`.
-            Separate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`.
+            Separate several values with `;`. Obviously not all the values make sense for all vehicle profiles e.g. `bike` is already forbidden on a `motorway`. Requires `ch.disable=true`.
           schema:
             type: string
         - name: algorithm
@@ -391,11 +391,11 @@ paths:
             With `round_trip`, the route will get you back to where you started. This is meant for fun (think of
             a bike trip), so we will add some randomness.
             With `alternative_route`, we give you not one but several routes that are close to optimal, but
-            not too similar to each other. You can control both of these features with additional parameters, see below.
+            not too similar to each other. You can control both of these features with additional parameters, see below. Requires `ch.disable=true`.
         - name: round_trip.distance
           in: query
           description: |
-            If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip.
+            If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip. Requires `ch.disable=true`.
           schema:
             type: integer
             format: int32
