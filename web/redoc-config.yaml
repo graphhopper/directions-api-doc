@@ -7,4 +7,5 @@ theme:
     maxWidth: '200px'
 expandResponses: '200'
 requiredPropsFirst: true
+redocURL: 'redoc.standalone.js'
 
