@@ -130,7 +130,7 @@ info:
 
     We offer
 
-    - Europe
+    - Europe including Russia
     - North, Central and South America
     - Saudi Arabia
     - United Arab Emirates
@@ -223,6 +223,15 @@ paths:
           in: query
           description: |
             The point_hint is typically a road name to which the associated `point` parameter should be snapped to. Specify no `point_hint` parameter or the same number as you have `point` parameters.
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: snap_prevention
+          in: query
+          description: |
+            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
           schema:
             type: array
             items:
@@ -806,6 +815,15 @@ paths:
           in: query
           description: For the to_point parameter. See point_hint
           required: false
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: snap_prevention
+          in: query
+          description: |
+            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
           schema:
             type: array
             items:
@@ -1539,12 +1557,12 @@ components:
               type: number
               format: double
         from_point_hints:
-          description: More information for the `from_points` array. See `point_hints`
+          description: See `point_hints`
           type: array
           items:
             type: string
         to_point_hints:
-          description: More information for the `to_points` array. See `point_hints`
+          description: See `point_hints`
           type: array
           items:
             type: string
@@ -1576,6 +1594,11 @@ components:
               format: double
         point_hints:
           description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
+          type: array
+          items:
+            type: string
+        snap_preventions:
+          description: 'Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`'
           type: array
           items:
             type: string
