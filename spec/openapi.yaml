@@ -234,7 +234,7 @@ paths:
         - name: snap_prevention
           in: query
           description: |
-            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values: `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
+            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
           schema:
             type: array
             items:
@@ -827,7 +827,7 @@ paths:
         - name: snap_prevention
           in: query
           description: |
-            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values: `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
+            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
           schema:
             type: array
             items:
@@ -1579,7 +1579,7 @@ components:
           items:
             type: string
         snap_preventions:
-          description: Optional parameter to avoid snapping to a certain road class or road environment. Current supported values: `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`
+          description: Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`
           type: array
           items:
             type: string
