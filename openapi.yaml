@@ -120,11 +120,9 @@ info:
 
     ## TomTom
 
-    If you need to consider traffic, we offer TomTom data. Currently, we only offer TomTom for our [Route Optimization API](#tag/Route-Optimization-API).
-    It is important to note that here we use historical traffic information only. We do not consider live traffic yet.
-    Please find more information about how this actually works [here](https://www.graphhopper.com/blog/2017/11/06/time-dependent-optimization/).
-
-    [Please contact us](https://www.graphhopper.com/contact-form/) for more details.
+    If you need to consider traffic, you can purchase the TomTom add-on. Currently, we offer this only for our [Route Optimization API](#tag/Route-Optimization-API).
+    This add-on uses the TomTom road network and historical traffic information only. Live traffic is not yet considered.
+    Please find more information about how this works [here](https://www.graphhopper.com/blog/2017/11/06/time-dependent-optimization/) and [contact us](https://www.graphhopper.com/contact-form/) for more details.
 
     #### Geographical Coverage
 
