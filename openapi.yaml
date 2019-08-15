@@ -2525,7 +2525,7 @@ components:
           default: false
         network_data_provider:
           type: string
-          description: Specifies network data provider. Either use "openstreetmap" or "tomtom".
+          description: 'Specifies the network data provider. Either use [`openstreetmap`](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) (default) or [`tomtom`](#section/Map-Data-and-Routing-Profiles/TomTom) (add-on required).'
           enum:
             - openstreetmap
             - tomtom
@@ -2775,7 +2775,7 @@ components:
           default: false
         network_data_provider:
           type: string
-          description: specifies the data provider
+          description: 'specifies the data provider, read more about it [here](#section/Map-Data-and-Routing-Profiles).'
           enum:
             - openstreetmap
             - tomtom
