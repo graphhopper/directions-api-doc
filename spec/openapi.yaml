@@ -108,7 +108,8 @@ info:
     mtb        | Mountainbike          | bike access         | ![Mountainbike image](https://graphhopper.com/maps/img/mtb.png)
     racingbike| Bike preferring roads | bike access         | ![racingbike image](https://graphhopper.com/maps/img/racingbike.png)
 
-    **Please note, that turn restrictions are considered only with `ch.disable=true`.**
+    **Please note, that turn restrictions for motor vehicles such as `car` or `truck` are only considered with `edge_based=true` for the Routing API (other APIs will follow).**
+    Or if you already use `ch.disable=true` no additional parameter is required to consider turn restrictions for motor vehicles.
     
     For the free package you can only choose from `car`, `bike` or `foot`.
 
