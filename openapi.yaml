@@ -2133,6 +2133,7 @@ components:
           type: array
           description: Specifies the available vehicles.
           items:
+            minItems: 1
             $ref: '#/components/schemas/Vehicle'
         vehicle_types:
           type: array
@@ -2331,7 +2332,6 @@ components:
       required:
         - vehicle_id
         - start_address
-      minItems: 1
     VehicleProfileId:
       type: string
       enum:
