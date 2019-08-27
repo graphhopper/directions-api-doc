@@ -2374,8 +2374,8 @@
           "vehicles": {
             "type": "array",
             "description": "Specifies the available vehicles.",
+            "minItems": 1,
             "items": {
-              "minItems": 1,
               "$ref": "#/components/schemas/Vehicle"
             }
           },
