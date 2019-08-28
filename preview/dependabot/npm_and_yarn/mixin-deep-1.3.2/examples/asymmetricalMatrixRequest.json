@@ -1,0 +1,41 @@
+{
+  "from_points": [
+    [
+      -0.11379003524780275,
+      51.53664617804063
+    ],
+    [
+      -0.10866165161132814,
+      51.538621486960956
+    ],
+    [
+      -0.11059284210205078,
+      51.53245503603458
+    ]
+  ],
+  "to_points": [
+    [
+      -0.09576559066772462,
+      51.512882367963456
+    ],
+    [
+      -0.08797645568847656,
+      51.51317615367198
+    ]
+  ],
+  "from_point_hints": [
+    "Copenhagen Street",
+    "Richmond Avenue",
+    "White Lion Street"
+  ],
+  "to_point_hints": [
+    "Cannon",
+    "Cornhill"
+  ],
+  "out_arrays": [
+    "weights",
+    "times",
+    "distances"
+  ],
+  "vehicle": "car"
+}
