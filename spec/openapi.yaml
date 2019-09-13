@@ -41,9 +41,9 @@ info:
     To get informed about the newest features and development follow us at [twitter](https://twitter.com/graphhopper/) or [our blog](https://graphhopper.com/blog/). 
     Furthermore you can watch [this git repository](https://github.com/graphhopper/directions-api-doc) of this documentation, sign up at our [dashboard](https://graphhopper.com/dashboard/) to get the newsletter or sign up at [our forum](https://discuss.graphhopper.com/c/directions-api). Pick the channel you like most.
 
-    ## API Clients
+    ## API Client Libraries
 
-    To speed up development and make coding easier, we offer the following clients:
+    To speed up development and make coding easier, we offer the following client libraries:
 
      * [JavaScript client](https://github.com/graphhopper/directions-api-js-client) - try the [live examples](https://graphhopper.com/api/1/examples/)
      * [Others](https://github.com/graphhopper/directions-api-clients) like C#, Ruby, PHP, Python, ... automatically created for the Route Optimization API
@@ -230,7 +230,7 @@ paths:
         - name: point_hint
           in: query
           description: |
-            The point_hint is typically a road name to which the associated `point` parameter should be snapped to. Specify no `point_hint` parameter or the same number as you have `point` parameters.
+            The `point_hint` is typically a road name to which the associated `point` parameter should be snapped to. Specify no `point_hint` parameter or the same number as you have `point` parameters.
           schema:
             type: array
             items:
@@ -239,7 +239,7 @@ paths:
         - name: snap_prevention
           in: query
           description: |
-            Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`
+            Optional parameter to avoid snapping to a certain road class or road environment. Currently supported values are `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`. Multiple values are specified like `snap_prevention=ferry&snap_prevention=motorway`.
           schema:
             type: array
             items:
@@ -262,10 +262,10 @@ paths:
         - name: elevation
           in: query
           description: |
-            If `true`, a third coordinate, the altitude, is included to all positions in the response.
+            If `true`, a third coordinate, the altitude, is included with all positions in the response.
             This changes the format of the `points` and `snapped_waypoints` fields of the response, in both their
             encodings. Unless you switch off the `points_encoded` parameter, you need special code on the
-            client side that can handle triple coordinates.
+            client side that can handle three-dimensional coordinates.
             A request can fail if the vehicle profile does not support elevation. See the features object for every vehicle profile.
           schema:
             type: boolean
@@ -316,10 +316,10 @@ paths:
         - name: points_encoded
           in: query
           description: |
-            If `false`, the coordinates in `point` and `snapped_waypoints` are returned as lists of positions using the order `[lon,lat,elevation]`.
-            This format may be easier to handle, but can consume a lot of bandwidth for long routes.
-            If `true`, the coordinates will be encoded as a string. You'll need to decode this string in client code.
-            We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/e649aaed8d3f4378bf2d8889bbbc2318261eabb2/web-api/src/main/java/com/graphhopper/http/WebHelper.java#L54) and [JavaScript](https://github.com/graphhopper/directions-api-js-client/blob/cf43d1a5bc93a3e8007a44fcfc551117e4fa49bc/src/GHUtil.js#L27).
+            Allows changing the encoding of location data in the response. The default is polyline encoding, which is compact
+            but requires special client code to unpack. (We provide it in our JavaScript client library!)
+            Set this parameter to `false` to switch the encoding to simple coordinate pairs like `[lon,lat]`, or `[lon,lat,elevation]`.
+            See the description of the response format for more information.
           schema:
             type: boolean
             default: true
@@ -1086,6 +1086,8 @@ paths:
 
         In the example screenshot above and demo you see the Map Matching API in action where the black line is the GPS track and the green one is matched result.
 
+        Most of the times, you can simply POST a GPX file, but some of the request parameters of the [Routing API](#tag/Routing-API) apply here, too.
+
         ### API Clients and Examples
         See the [clients](#section/API-Clients) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).
 
@@ -1813,7 +1815,9 @@ components:
       }
     EncodedLineString:
       type: string
-      description: An encoded list of positions.
+      description: A polyline-encoded list of positions. You'll need to decode this string in client code.
+        We provide open source code in [Java](https://github.com/graphhopper/graphhopper/blob/e649aaed8d3f4378bf2d8889bbbc2318261eabb2/web-api/src/main/java/com/graphhopper/http/WebHelper.java#L54) and [JavaScript](https://github.com/graphhopper/directions-api-js-client/blob/cf43d1a5bc93a3e8007a44fcfc551117e4fa49bc/src/GHUtil.js#L27).
+
     RouteResponsePath:
       type: object
       properties:
@@ -1855,7 +1859,8 @@ components:
                 - $ref: '#/components/schemas/LineString'
         points_encoded:
           description: |
-            Whether the `points` and `snapped_waypoints` fields are encoded strings rather than GeoJSON LineStrings.
+            Whether the `points` and `snapped_waypoints` fields are polyline-encoded strings rather than JSON arrays
+            of coordinates. See the field description for more information on the two formats.
           type: boolean
         bbox:
           description: |
@@ -2033,6 +2038,8 @@ components:
           type: string
         coordinates:
           type: array
+          description: |
+            A list of coordinate pairs or triples, `[lon,lat]` or `[lon,lat,elevation]`.
           items:
             type: array
             items:
