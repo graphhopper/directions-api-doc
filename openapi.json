@@ -3092,7 +3092,9 @@
             "$ref": "#/components/schemas/Stop"
           },
           "delivery": {
-            "$ref": "#/components/schemas/Stop",
+            "$ref": "#/components/schemas/Stop"
+          },
+          "size": {
             "type": "array",
             "description": "Size can have multiple dimensions and should be in line with the capacity dimension array of the vehicle type. For example, if the item that needs to be delivered has two size dimension, volume and weight, then specify it as follow [ 20, 5 ] assuming a volume of 20 and a weight of 5.",
             "items": {
