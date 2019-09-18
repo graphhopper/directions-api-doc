@@ -1222,20 +1222,11 @@ paths:
             * viewboxlbrt
             * bounded
 
-            #### OpenCage Data (`provider=opencagedata`)
-
-            This provider returns results from the OpenCageData geocoder which you can try [here](https://geocoder.opencagedata.com/demo).
-
-            In addition to the above documented parameters OpenCage Data allows to use the following parameters, which can be used as documented [here](https://geocoder.opencagedata.com/api#forward-opt):
-
-            * countrycode
-            * bounds
-
             #### Gisgraphy (`provider=gisgraphy`)
 
             This provider returns results from the Gisgraphy geocoder which you can try [here](https://services.gisgraphy.com/static/leaflet/index.html).
 
-            **Limitations:** Gisgraphy does not return tags from OSM nor an extent. The locale parameter is currently not supported for Gisgraphy.
+            **Limitations:** The `locale` parameter is not supported. Gisgraphy does not return OSM tags or an extent.
 
             Gisgraphy has a special autocomplete API, which you can use by adding `autocomplete=true` (does not work with `reverse=true`). The autocomplete API is optimized on predicting text input, but returns less information.
 
@@ -1243,6 +1234,25 @@ paths:
 
             * radius
             * country
+
+            #### NetToolKit (`provider=nettoolkit`)
+
+            This provider returns results from the NetToolKit provider which is specialized for US addresses and provides a wrapper around Nominatim for other addresses. You can try it [here](https://www.nettoolkit.com/geo/demo).
+
+            The following additional NetToolKit parameters are supported (read [here](https://www.nettoolkit.com/docs/geo) for more details):
+            - `source`: User can choose which source provider to geocode the address, this value is "NetToolKit" by default
+            - `country_code`: an iso-3166-2 country code (e.g : US) filter the results to the specify country code
+
+            **Limitations:** NetToolKit does not support the `locale` parameter. NetToolKit does not return OSM tags (e.g. osm_id, osm_type, osm_value).
+
+            #### OpenCage Data (`provider=opencagedata`)
+
+            This provider returns results from the OpenCageData geocoder which you can try [here](https://geocoder.opencagedata.com/demo).
+
+            In addition to the above documented parameters OpenCage Data allows to use the following parameters, which can be used as documented [here](https://geocoder.opencagedata.com/api#forward-opt):
+
+            * countrycode
+            * bounds            
           schema:
             type: string
             default: default
