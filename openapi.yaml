@@ -269,8 +269,8 @@ paths:
         - name: details
           in: query
           description: |
-            Optional parameter to retrieve path details. You can request additional details for the route: `street_name` and `time`.
-            For all motor vehicle profiles, we additionally support `max_speed`, `toll`, `road_class`, `road_environment`, and `surface`.
+            Optional parameter to retrieve path details. You can request additional details for the route: `street_name`, 
+            `time`, `distance`, `max_speed`, `toll`, `road_class`, `road_class_link`, `road_access`, `road_environment`, `lanes`, and `surface`. Read more about the usage of path details [here](https://discuss.graphhopper.com/t/2539).
           schema:
             type: array
             items:
