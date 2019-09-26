@@ -1077,6 +1077,19 @@ paths:
         ```
         curl -XPOST -H "Content-Type: application/gpx+xml" "https://graphhopper.com/api/1/match?vehicle=car&key=[YOUR_KEY]" --data @/path/to/some.gpx
         ```
+        
+        A minimal working GPX file looks like
+        ```gpx
+        <gpx>
+         <trk>
+          <trkseg>
+           <trkpt lat="51.343657" lon="12.360708"></trkpt>
+           <trkpt lat="51.343796" lon="12.361337"></trkpt>
+           <trkpt lat="51.342784" lon="12.361882"></trkpt>
+          </trkseg>
+         </trk>
+        </gpx>
+        ```
 
         ### Introduction
         ![Map Matching screenshot](./img/map-matching-example.gif)
