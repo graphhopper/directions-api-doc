@@ -1308,7 +1308,7 @@ paths:
         ![Nested Doc](./img/nested-doc.gif)
 
         To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
-        that you will find our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
+        that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
         Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
         You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
 
@@ -1328,8 +1328,8 @@ paths:
         The basic procedure to query the Route Optimization API is to:
 
         - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
-        - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request towards 
-          `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
+        - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
+          towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
       operationId: solveVRP
       requestBody:
         description: Request object that contains the problem to be solved
