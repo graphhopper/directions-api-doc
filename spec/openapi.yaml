@@ -957,7 +957,7 @@ paths:
       description: |
         The Batch Matrix API allows using matrices with more locations and works asynchronously - similar to our Route Optimization API:
          * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
-         * Poll via HTTP GET requests every second against `/matrix/solution/[job_id]`
+         * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`
 
         Here are some full examples via curl:
         ```bash
@@ -1308,31 +1308,37 @@ paths:
 
         ### Getting Started
 
-        This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) - illustrates the very basic steps and building blocks to model your vehicle routing problem.
+        This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/)
+        - illustrates the very basic steps and building blocks to model your vehicle routing problem. This only shows you an excerpt of 
+        what is possible with our API, read more about it below.
 
-        This only shows you an excerpt of what is possible with our API. You can find the entire specification of the
-        required request (Request Body Schema) as well as the response below.
-        It is an interactive documentation of nested objects. By default, you only see the root objects
-        such as "vehicles", "vehicle_types", "objectives" etc.. To unfold detailed information about
-        each root object, you just need to click on it as shown here
+        To unfold detailed information about each object, you just need to click on e.g. `services` or `relations` as shown here
 
         ![Nested Doc](./img/nested-doc.gif)
 
-        To explore the specification, we can recommend you to extend the problem in the tutorial above
-        and either use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
-        in the Directions API dashboard or the REST clients such as Insomnia or Postman as described [here](https://docs.graphhopper.com/#section/Explore-our-APIs).
-        Additionally, you can find a ready-to-use example in the Request Samples Panel on the right (or below).
-        You can easily unfold it by clicking the + or you can just copy it all and paste it to our route editor or
-        your REST client.
+        To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
+        that you will find our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
+        Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
+        You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
+        
+        ### Tutorials
 
-        Furthermore, we provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use this API and how to model your vehicle routing problems.
-        Here, you can find a list of tutorials that might help you to get started quickly:
+        We provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use the Route Optimization API and
+        how to model your vehicle routing problems:
 
         - [Getting Start with the Optimization API - Traveling Salesman Problem](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/)
         - [How to solve a traveling salesman problem with a week-planning horizon?](https://www.graphhopper.com/blog/2016/05/30/how-to-solve-a-traveling-salesman-problem-with-a-week-planning-horizon/)
         - [How to schedule technicians with skills and multiple dependencies between tasks?](https://www.graphhopper.com/blog/2016/06/03/how-to-route-technicians-with-skills-and-multiple-dependencies-between-tasks/)
         - [What is the difference between the min. of completion time and min. transport time?](https://www.graphhopper.com/blog/2016/06/20/what-is-the-difference-between-the-minimization-of-completion-time-and-minimizing-transport-time/)
         - [How to model multiple delivery routes with a single vehicle?](https://www.graphhopper.com/blog/2016/07/21/how-to-model-multiple-delivery-routes-with-a-single-vehicle/)
+        
+        ### Http Requests
+        
+        The basic procedure to query the Route Optimization API is to:
+        
+        - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
+        - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.
+        
 
       operationId: solveVRP
       requestBody:
