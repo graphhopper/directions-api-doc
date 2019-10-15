@@ -2340,12 +2340,12 @@ components:
         max_distance:
           type: integer
           format: int64
-          description: Specifies the maximum distance a vehicle can go.
+          description: Specifies the maximum distance (in meters) a vehicle can go.
           example: 400000
         max_driving_time:
           type: integer
           format: int64
-          description: 'Specifies the maximum drive time a vehicle/driver can go, i.e. the maximum time on the road (service and waiting times are not included here)'
+          description: 'Specifies the maximum drive time (in seconds) a vehicle/driver can go, i.e. the maximum time on the road (service and waiting times are not included here)'
           example: 28800
         max_jobs:
           type: integer
