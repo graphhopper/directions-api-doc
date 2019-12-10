@@ -110,7 +110,7 @@ info:
 
     Please note:
     
-     * all motor vehicles like car support turn restrictions via turn_costs=true
+     * all motor vehicles like car can consider turn restrictions. Enable this via `turn_costs=true`.
      * the free package supports only the vehicle profiles `car`, `bike` or `foot`
      * up to 2 different vehicle profiles can be used in a single optimization request. The number of vehicles is unaffected and depends on your subscription.
      * we offer custom vehicle profiles with different properties, different speed profiles or different access options. To find out more about custom profiles, please [contact us](https://www.graphhopper.com/contact-form/).
@@ -954,18 +954,18 @@ paths:
       operationId: postMatrix
       description: |
         You should prefer the Http POST request over the GET request as the GET request has an URL length limitation. The only parameter
-        in the URL for a POST request will be the `key`. Both request scenarios use the same parameter names except for some parameters
-        their plural name is used: `points`, `from_points`, `to_points`, `point_hints`, `from_point_hints`, `to_point_hints`,
+        in the URL for a POST request will be the `key`. Both request methods use the same parameter names except for some parameters where
+        their plural is used: `points`, `from_points`, `to_points`, `point_hints`, `from_point_hints`, `to_point_hints`,
         `curbsides`, `from_curbsides`, `to_curbsides` and `out_arrays`.
 
-        *Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`* similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
+        *Please note that unlike the GET endpoint the points have to be in the order of `longitude, latitude`* similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
 
         For example the query `point=10,11&point=20,22&vehicle=car` will be converted to the following JSON:
         ```json
         { "points": [[11,10], [22,20]], "vehicle": "car" }
         ```
 
-        Curl Example:
+        A complete curl Example:
         ```bash
         curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]" -d '{"elevation":false,"out_arrays":["weights", "times"],"from_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"to_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"vehicle":"car"}'
         ```
