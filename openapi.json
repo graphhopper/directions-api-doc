@@ -1996,12 +1996,12 @@
         "type": "object",
         "properties": {
           "distance": {
-            "description": "The total distance, in meters.\n",
+            "description": "The total distance, in meters. To get this information for one 'leg' please read [this blog post](https://www.graphhopper.com/blog/2019/11/28/routing-api-using-path-details/).\n",
             "type": "number",
             "format": "double"
           },
           "time": {
-            "description": "The total travel time, in milliseconds.\n",
+            "description": "The total travel time, in milliseconds. To get this information for one 'leg' please read [this blog post](https://www.graphhopper.com/blog/2019/11/28/routing-api-using-path-details/).\n",
             "type": "integer",
             "format": "int64"
           },

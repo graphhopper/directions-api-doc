@@ -1858,12 +1858,12 @@ components:
       properties:
         distance:
           description: |
-            The total distance, in meters.
+            The total distance, in meters. To get this information for one 'leg' please read [this blog post](https://www.graphhopper.com/blog/2019/11/28/routing-api-using-path-details/).
           type: number
           format: double
         time:
           description: |
-            The total travel time, in milliseconds.
+            The total travel time, in milliseconds. To get this information for one 'leg' please read [this blog post](https://www.graphhopper.com/blog/2019/11/28/routing-api-using-path-details/).
           type: integer
           format: int64
         ascend:
