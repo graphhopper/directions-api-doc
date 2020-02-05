@@ -17,6 +17,11 @@ info:
 
     # Explore our APIs
 
+    Read through this documentation and search for key words on the left side. To unfold detailed information
+    about each object in the documentation, you click on e.g. `services` in the [Route Optimization documentation](#operation/solveVRP) as shown here:
+
+    ![Nested Doc](./img/nested-doc.gif)
+
     To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) 
     which available in the [dashboard](https://graphhopper.com/dashboard/). See how the Routing and Geocoding API is integrated in 
     our route planner website [GraphHopper Maps](https://graphhopper.com/maps) ([sources](https://github.com/graphhopper/graphhopper/tree/0.12/web/src/main/resources/assets)). 
@@ -164,6 +169,8 @@ tags:
   - name: Route Optimization API
     description: |
 
+      ### Introduction
+
       ![VRP Example Screenshot](./img/vrp.png)
 
       The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
@@ -183,9 +190,7 @@ tags:
 
       This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) -
       illustrates the very basic steps and building blocks to model your vehicle routing problem. This only shows you an excerpt of
-      what is possible with our API, read more about it below. To unfold detailed information about each object, you just need to click on e.g. `services` or `relations` as shown here:
-
-      ![Nested Doc](./img/nested-doc.gif)
+      what is possible with our API, read more about it below.
 
       To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
       that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
@@ -206,26 +211,87 @@ tags:
   - name: Routing API
     description: |
 
-            ### Introduction
+      ### Introduction
 
-            ![Routing screenshot](./img/routing-example.png)
+      ![Routing screenshot](./img/routing-example.png)
 
-            The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
-            two or more points, where the meaning of ''best'' depends on the vehicle and use case.
+      The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
+      two or more points, where the meaning of ''best'' depends on the vehicle and use case.
 
-            ### Navigation
-            If you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.
+      ### Navigation
+      If you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.
 
-            ### Fast
-            To get started using this API, just provide two or more points and retrieve the fastest route through the road
-            network that connects them. This type of request is heavily optimized for query performance, so it does not
-            take turn restrictions into account, and it does not allow for some advanced features.
-            ### Flexible
-            Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
-            Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
+      ### Fast
+      To get started using this API, just provide two or more points and retrieve the fastest route through the road
+      network that connects them. This type of request is heavily optimized for query performance, so it does not
+      take turn restrictions into account, and it does not allow for some advanced features.
+      ### Flexible
+      Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
+      Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
 
   - name: Matrix API
-    description: Everything about matrices
+    description: |
+
+      ### Introduction
+
+      ![Matrix Example](./img/matrix-example.png)
+
+      The Matrix API is part of the [GraphHopper Directions API](https://graphhopper.com/#directions-api) and with
+      it you can calculate many-to-many distances and times a lot more efficient than calling the
+      Routing API multiple times.
+
+      In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
+      route being calculated. The Matrix API results in NxM routes, or more precise NxM distances or times being calculated
+      but a lot faster compared to NxM single requests.
+
+      The most simple example is a tourist trying to decide
+      which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
+      often in the need of big NxN matrices to solve vehicle routing problems. For example the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
+      uses the Matrix API under the hood to achieve this.
+
+      Some other use cases for the Matrix API:
+
+      * Logistic problems often pick up many items from and deliver them to many locations.
+      * Calculating detours with many possible points in-between and selecting the best e.g. interesting for ridesharing or taxi applications. For this 1-to-many requests are necessary.
+      * Finding the best tour for a tourist in the need to visit as many points of interests as possible.
+      * ...
+
+      ### API Clients and Examples
+
+      See the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
+
+      ### Description
+
+      The Matrix API calculates the well known distance-matrix for a set of points, i.e. it calculates all the distances
+      between every point combination. But we do not stop there, we also offer a time-, weight- and route-matrix.
+      The weight-matrix can be used as raw input for e.g. a vehicle routing problem ([VRP](http://en.wikipedia.org/wiki/Vehicle_routing_problem))
+      and is more precise than a time- or distance-matrix. E.g. for bike routes the actual weight of a route (e.g. the "beauty")
+      is what you want to decide if a route is 'better' and not always the taken time or distance.
+
+      A simple illustration for a 3x3 matrix with identical from and to points:
+
+      -          |to_point1|to_point2|to_point3
+      :-----------|:--------|:--------|:--------
+      from_point1 |0        |1->2     | 1->3
+      from_point2 |2->1     |0        | 2->3
+      from_point3 |3->1     |3->2     | 0
+
+      A simple illustration for a 1x3 matrix with different start- and end-points:
+
+      -          | to_point1  | to_point2 | t_point3
+      :-----------|:-----------|:----------|:--------
+      from_pointA |A->1        |A->2       |A->3
+
+
+      For every route 1->2, 1-3, ... or A->1,A->2,A->3 you can return only the weight, the time and the distance.
+      To calculate full routes you can use the [Routing API](#tag/Routing-API).
+
+      ### Limits and Counts
+
+      The cost for one request depends on the number of locations and is documented [here](https://support.graphhopper.com/support/solutions/44000303787#what-is-one-credit).
+
+      One request should not exceed the Matrix API location limit, which depends on the subscription, see the
+      pricing tab in our dashboard.
   - name: Geocoding API
     description: Everything about geocoding
   - name: Isochrone API
@@ -476,7 +542,6 @@ paths:
             - lang: Java
               source: |-
                 OkHttpClient client = new OkHttpClient();
-
                 Request request = new Request.Builder()
                         .url("https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key")
                         .get()
@@ -626,23 +691,26 @@ paths:
       summary: POST Route Endpoint
       operationId: postRoute
       description: |
-        Please see the GET endpoint for a simpler method on how to get started. If you are familiar with POST requests
-        and JSON do not hesitate to continue reading.
+        Please see the [GET endpoint](#operation/getRoute) for a simpler method on how to get started.
+        If you are familiar with POST requests and JSON then do not hesitate to continue here.
 
-        The GET request has an URL length limitation, which hurts for many locations per request. In those cases using a
-        HTTP POST request with JSON data can be done instead. The only parameter in the URL will be the key.
-        Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
+        Especially when you use many locations you should get familiar with this POST endpoint as the GET endpoint
+        has an URL length limitation. Additionally the request of this POST endpoint can be compressed and can slightly
+        speed up the request.
 
+        To do a request you send JSON data and the only URL parameter will be the key. Both request scenarios GET and
+        POST are identical except that all singular parameter names are named as their plural for a POST request.
         The effected parameters are: `points`, `point_hints` and `snap_preventions`. For the remaining parameters please refer to
         the [GET request guide](#operation/getRoute).
 
         **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
 
-        For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
+        For example `point=10,11&point=20,22` will be converted to the `points` array (plural):
         ```json
         { "points": [[11,10], [22,20]] }
         ```
-        Note that also the order changes to `[longitude,latitude]` similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
+        Note again that also the order changes from `[latitude,longitude]` to `[longitude,latitude]`
+        similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
 
         Example:
         ```bash
@@ -909,65 +977,17 @@ paths:
       summary: GET Matrix Endpoint
       operationId: getMatrix
       description: |
-        ### Introduction
+        With this Matrix Endpoint you submit the points and parameters via URL parameters and is the most convenient
+        as it works out-of-the-box in the browser. If possible you should
+        prefer using the [POST Matrix Endpoint](#operation/postMatrix) that avoids problems with many locations
+        and automatically gzipps the request (note that all endpoints return gzipped results).
 
-        ![Matrix Example](./img/matrix-example.png)
-
-        The Matrix API is part of the [GraphHopper Directions API](https://graphhopper.com/#directions-api) and with
-        this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the
-        Routing API multiple times.
-
-        In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
-        route being calculated. The Matrix API results in NxM routes or more precise NxM weights, distances or times being calculated
-        but is a lot faster compared to NxM single requests. The most simple example is a tourist trying to decide
-        which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service in the
-        need of often big NxN matrices to solve vehicle routing problems. E.g. the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
-        uses the Matrix API under the hood to achieve this.
-
-        Some other use case scenarios for the Matrix API:
-
-         * Logistic problems often pick up many items from and deliver them to many locations.
-         * Calculating detours with many possible points in-between and selecting the best e.g. interesting for ridesharing or taxi applications. For this 1-to-many requests are necessary.
-         * Finding the best tour for a tourist in the need to visit as many points of interests as possible.
-         * ...
-
-        ### API Clients and Examples
-
-        See the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
-
-        ### Description
-
-        The Matrix API calculates the well known distance-matrix for a set of points, i.e. it calculates all the distances between every point combination. But we do not stop there, we also offer a time-, weight- and route-matrix. The weight-matrix can be used as raw input for e.g. a vehicle routing problem ([VRP](http://en.wikipedia.org/wiki/Vehicle_routing_problem)) and is more precise than a time- or distance-matrix. E.g. for bike routes the actual weight of a route (e.g. the "beauty") is what you want to decide if a route is 'better' and not always the taken time or distance.
-
-        A simple illustration for a 3x3 matrix with identical from and to points:
-
-         -          |to_point1|to_point2|to_point3
-        :-----------|:--------|:--------|:--------
-        from_point1 |0        |1->2     | 1->3
-        from_point2 |2->1     |0        | 2->3
-        from_point3 |3->1     |3->2     | 0
-
-        A simple illustration for a 1x3 matrix with different start- and end-points:
-
-         -          | to_point1  | to_point2 | t_point3
-        :-----------|:-----------|:----------|:--------
-        from_pointA |A->1        |A->2       |A->3
-
-
-        For every route 1->2, 1-3, ... or A->1,A->2,A->3 you can return only the weight, the time and the distance. To calculate full routes you can use the [Routing API](#tag/Routing-API) which also has a lot of different parameters.
-
-        ### Limits and Counts
-
-        The cost for one request depends on the number of locations and is documented [here](https://graphhopper.com/api/1/docs/FAQ/#what-is-one-credit).
-
-        One request should not exceed the Matrix API location limit depending on the package, see the pricing in our dashboard.
       x-code-samples:
         - lang: Curl
           source: "curl \"https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key\""
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key")
                     .get()
@@ -1095,9 +1115,10 @@ paths:
       summary: POST Matrix Endpoint
       operationId: postMatrix
       description: |
-        The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a
-        HTTP POST request with JSON data as input. The only parameter
-        in the URL will be the key. Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
+
+        The [GET endpoint](#operation/getMatrix) has an URL length limitation, which hurts for many locations per request.
+        In those cases use this POST endpoint with a JSON as input. The only parameter in the URL will be the key.
+        Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
         The effected parameters are: `points`, `from_points`, `to_points`, and `out_arrays`. For the remaining parameters
         please refer to the [guide of the GET endpoint](#operation/getMatrix).
 
@@ -1157,6 +1178,8 @@ paths:
       summary: Batch Matrix Endpoint
       operationId: calculateMatrix
       description: |
+        Prefer the [synchronous endpoint](#operation/postMatrix) and use this Batch endpoint for long running problems only.
+
         The Batch Matrix endpoint allows using matrices with more locations and works asynchronously - similar to the [Batch Route Optimization endpoint](#operation/asyncVRP):
          * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
          * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`
@@ -1227,7 +1250,7 @@ paths:
     get:
       summary: GET Batch Matrix Endpoint
       description: |
-        This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
+        This endpoint returns the solution of a JSON submitted to the Batch Matrix endpoint. You can fetch it with the job_id, you have been sent.
       operationId: getMatrixSolution
       parameters:
         - in: path
@@ -1363,7 +1386,6 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=api_key")
                     .get()
@@ -1509,6 +1531,8 @@ paths:
       summary: POST Route Optimization Endpoint
       description: |
 
+        To get started with the Route Optimization API see the [introduction](#tag/Route-Optimization-API).
+
         The Route Optimization endpoint is used with a POST request towards
         `https://graphhopper.com/api/1/vrp?key=<your_key>`. Then you'll find the solution in the JSON response.
         Please note that for problems that take longer than 10 seconds a bad request error is returned.
@@ -1532,7 +1556,6 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
             Request request = new Request.Builder()
@@ -1609,7 +1632,6 @@ paths:
             - lang: Java
               source: |-
                 OkHttpClient client = new OkHttpClient();
-
                 MediaType mediaType = MediaType.parse("application/json");
                 RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
                 Request request = new Request.Builder()
@@ -1685,7 +1707,6 @@ paths:
             - lang: Java
               source: |-
                 OkHttpClient client = new OkHttpClient();
-
                 Request request = new Request.Builder()
                         .url("https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key")
                         .get()
