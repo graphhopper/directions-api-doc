@@ -237,7 +237,7 @@ security:
 paths:
   /route:
     get:
-      summary: GET a Route Request
+      summary: GET Route Endpoint
       operationId: getRoute
       description: |
         The GET request is the most simple one: just specify the parameter in the URL and you are done.
@@ -623,19 +623,20 @@ paths:
                schema:
                  type: integer
     post:
-      summary: POST a Route Request
+      summary: POST Route Endpoint
       operationId: postRoute
       description: |
-        Please see the GET request for a simpler method on how to get started. If you are familiar with POST requests
+        Please see the GET endpoint for a simpler method on how to get started. If you are familiar with POST requests
         and JSON do not hesitate to continue reading.
 
         The GET request has an URL length limitation, which hurts for many locations per request. In those cases using a
         HTTP POST request with JSON data can be done instead. The only parameter in the URL will be the key.
         Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
+
         The effected parameters are: `points`, `point_hints` and `snap_preventions`. For the remaining parameters please refer to
         the [GET request guide](#operation/getRoute).
 
-        *Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`*.
+        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
 
         For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
         ```json
@@ -809,7 +810,7 @@ paths:
                 $ref: '#/components/schemas/InfoResponse'
   /isochrone:
     get:
-      summary: Isochrone Request
+      summary: Isochrone Endpoint
       operationId: getIsochrone
       description: |
         ### Example
@@ -905,7 +906,7 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /matrix:
     get:
-      summary: Execute a matrix request
+      summary: GET Matrix Endpoint
       operationId: getMatrix
       description: |
         ### Introduction
@@ -1091,7 +1092,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GHError'
     post:
-      summary: Execute a matrix request
+      summary: POST Matrix Endpoint
       operationId: postMatrix
       description: |
         The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a
@@ -1100,7 +1101,7 @@ paths:
         The effected parameters are: `points`, `from_points`, `to_points`, and `out_arrays`. For the remaining parameters
         please refer to the [guide of the GET endpoint](#operation/getMatrix).
 
-        *Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`*.
+        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
 
         For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
         ```json
@@ -1153,10 +1154,10 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /matrix/calculate:
     post:
-      summary: Asynchronous Matrix Request
+      summary: Batch Matrix Endpoint
       operationId: calculateMatrix
       description: |
-        The Batch Matrix API allows using matrices with more locations and works asynchronously - similar to our Route Optimization API:
+        The Batch Matrix endpoint allows using matrices with more locations and works asynchronously - similar to the [Batch Route Optimization endpoint](#operation/asyncVRP):
          * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
          * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`
 
@@ -1224,7 +1225,7 @@ paths:
                 $ref: '#/components/schemas/GHError'
   '/matrix/solution/{jobId}':
     get:
-      summary: Retrieve matrix
+      summary: GET Batch Matrix Endpoint
       description: |
         This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
       operationId: getMatrixSolution
@@ -1344,7 +1345,7 @@ paths:
 
   /geocode:
     get:
-      summary: Execute a geocoding request
+      summary: Geocoding Endpoint
       operationId: getGeocode
       description: |
 
@@ -1502,17 +1503,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
+
   /vrp:
     post:
-      summary: POST route optimization request
+      summary: POST Route Optimization Endpoint
       description: |
 
-        The Route Optimization API can be used with a POST request towards
-        `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>`. Then you'll directly get the solution.
-        Please note that for problems that take longer than 10 seconds you'll get a BAD REQUEST as response.
-        In that case please use the asynchronous Batch Route Optimization API instead.
+        The Route Optimization endpoint is used with a POST request towards
+        `https://graphhopper.com/api/1/vrp?key=<your_key>`. Then you'll find the solution in the JSON response.
+        Please note that for problems that take longer than 10 seconds a bad request error is returned.
+        In this case please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.
 
-      operationId: syncVRP
+      operationId: solveVRP
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
@@ -1520,6 +1522,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
+      tags:
+        - Route Optimization API
+      x-code-samples:
+        - lang: Curl
+          source: "curl -X POST -H \"Content-Type: application/json\" \
+                      \  \"https://graphhopper.com/api/1/vrp?key=api_key\" \
+                      \  -d '{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}'"
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/vrp?key=api_key")
+                    .post(body)
+                    .addHeader("content-type", "application/json")
+                    .build();
+
+            Response response = client.newCall(request).execute();
       responses:
         '200':
           description: A response containing the solution
@@ -1559,17 +1581,17 @@ paths:
 
   /vrp/optimize:
     post:
-      summary: Asynchronous POST request
+      summary: Batch Route Optimization Endpoint
       description: |
 
-        Use the Batch Route Optimization API if you have long running problems that cannot be solved with the
-        synchronous Route Optimization API. It works as follows:
+        Prefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for
+        long running problems only. The work flow is asynchronous:
         
         - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
         - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
           towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
 
-      operationId: solveVRP
+      operationId: asyncVRP
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
@@ -1643,9 +1665,10 @@ paths:
                 $ref: '#/components/schemas/InternalErrorMessage'
   '/vrp/solution/{jobId}':
     get:
-      summary: Retrieve solution
+      summary: GET Batch Solution Endpoint
       description: |
-        This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.
+        This endpoint returns the solution of a vehicle routing problems submitted to the [Batch Route Optimization endpoint](#operation/asyncVRP).
+        You can fetch it with the job_id, you have been sent.
       operationId: getSolution
       parameters:
         - in: path
