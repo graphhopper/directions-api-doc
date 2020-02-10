@@ -3394,11 +3394,6 @@ components:
           example:
             - GraphHopper
             - OpenStreetMap contributors
-        job_id:
-          type: string
-          format: uuid
-          description: UUID. Unique identifier of job - which you get when posting your request to the large problem solver
-          example: 8a78c515-3b87-4e2f-b0b3-3fef8f42a183
         status:
           type: string
           enum:
