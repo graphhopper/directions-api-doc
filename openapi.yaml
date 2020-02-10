@@ -17,6 +17,11 @@ info:
 
     # Explore our APIs
 
+    Read through this documentation and search for key words on the left side. To unfold detailed information
+    about each object in the documentation, you click on e.g. `services` in the [Route Optimization documentation](#operation/solveVRP) as shown here:
+
+    ![Nested Doc](./img/nested-doc.gif)
+
     To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) 
     which available in the [dashboard](https://graphhopper.com/dashboard/). See how the Routing and Geocoding API is integrated in 
     our route planner website [GraphHopper Maps](https://graphhopper.com/maps) ([sources](https://github.com/graphhopper/graphhopper/tree/0.12/web/src/main/resources/assets)). 
@@ -160,26 +165,129 @@ servers:
   - url: 'https://graphhopper.com/api/1'
 tags:
   - name: Route Optimization API
-    description: |2
+    description: |
 
-         ![VRP Example Screenshot](./img/vrp.png)
+      ### Introduction
 
-        The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
-        of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
-        efficiently service its customers given a variety of requirements: customer requirements like time windows,
-        the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
-        and more.
+      ![VRP Example Screenshot](./img/vrp.png)
 
-        Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
-        You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
-         your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.
+      The Route Optimization API can be used to solve traveling salesman or vehicle routing problems. These problems occur almost everywhere in the world
+      of moving things and people. For example, every company dealing with last-mile deliveries faces a vehicle routing problem, i.e. it must find ways to
+      efficiently service its customers given a variety of requirements: customer requirements like time windows,
+      the product's transport requirements e.g. that items need to be refrigerated, must be picked up first, driver skills, vehicles/capacities available
+      and more.
 
-        This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
-        our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.
+      Even though these problems are relatively easy to understand, finding reasonable solutions is way more difficult.
+      You need to calculate travel times and distances on large road networks, you need to formalize your vehicle routing problem and to specify
+      your manifold business constraints, you need fast and efficient algorithms and quite a significant amount of computational power.
+
+      This is where <b>GraphHopper Route Optimization API</b> comes into play. Just learn how to put your problem into our easy-to-understand json format, post it and
+      our services will do the heavy work. To make it even easier for you, we provide you with API clients for the different programming languages.
+
+      ### Getting Started
+
+      This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) -
+      illustrates the very basic steps and building blocks to model your vehicle routing problem. This only shows you an excerpt of
+      what is possible with our API, read more about it below.
+
+      To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
+      that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
+      Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
+      You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
+
+      ### Tutorials
+
+      We provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use the Route Optimization API and
+      how to model your vehicle routing problems:
+
+      - [Getting Start with the Optimization API - Traveling Salesman Problem](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/)
+      - [How to solve a traveling salesman problem with a week-planning horizon?](https://www.graphhopper.com/blog/2016/05/30/how-to-solve-a-traveling-salesman-problem-with-a-week-planning-horizon/)
+      - [How to schedule technicians with skills and multiple dependencies between tasks?](https://www.graphhopper.com/blog/2016/06/03/how-to-route-technicians-with-skills-and-multiple-dependencies-between-tasks/)
+      - [What is the difference between the min. of completion time and min. transport time?](https://www.graphhopper.com/blog/2016/06/20/what-is-the-difference-between-the-minimization-of-completion-time-and-minimizing-transport-time/)
+      - [How to model multiple delivery routes with a single vehicle?](https://www.graphhopper.com/blog/2016/07/21/how-to-model-multiple-delivery-routes-with-a-single-vehicle/)
   - name: Routing API
-    description: Everything about routing
+    description: |
+
+      ### Introduction
+
+      ![Routing screenshot](./img/routing-example.png)
+
+      The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
+      two or more points, where the meaning of ''best'' depends on the vehicle and use case.
+
+      ### Navigation
+      If you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.
+
+      ### Fast
+      To get started using this API, just provide two or more points and retrieve the fastest route through the road
+      network that connects them. This type of request is heavily optimized for query performance, so it does not
+      take turn restrictions into account, and it does not allow for some advanced features.
+      ### Flexible
+      Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
+      Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
   - name: Matrix API
-    description: Everything about matrices
+    description: |
+
+      ### Introduction
+
+      ![Matrix Example](./img/matrix-example.png)
+
+      The Matrix API is part of the [GraphHopper Directions API](https://graphhopper.com/#directions-api) and with
+      it you can calculate many-to-many distances and times a lot more efficient than calling the
+      Routing API multiple times.
+
+      In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
+      route being calculated. The Matrix API results in NxM routes, or more precise NxM distances or times being calculated
+      but a lot faster compared to NxM single requests.
+
+      The most simple example is a tourist trying to decide
+      which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
+      often in the need of big NxN matrices to solve vehicle routing problems. For example the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
+      uses the Matrix API under the hood to achieve this.
+
+      Some other use cases for the Matrix API:
+
+      * Logistic problems often pick up many items from and deliver them to many locations.
+      * Calculating detours with many possible points in-between and selecting the best e.g. interesting for ridesharing or taxi applications. For this 1-to-many requests are necessary.
+      * Finding the best tour for a tourist in the need to visit as many points of interests as possible.
+      * ...
+
+      ### API Clients and Examples
+
+      See the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
+
+      ### Description
+
+      The Matrix API calculates the well known distance-matrix for a set of points, i.e. it calculates all the distances
+      between every point combination. But we do not stop there, we also offer a time-, weight- and route-matrix.
+      The weight-matrix can be used as raw input for e.g. a vehicle routing problem ([VRP](http://en.wikipedia.org/wiki/Vehicle_routing_problem))
+      and is more precise than a time- or distance-matrix. E.g. for bike routes the actual weight of a route (e.g. the "beauty")
+      is what you want to decide if a route is 'better' and not always the taken time or distance.
+
+      A simple illustration for a 3x3 matrix with identical from and to points:
+
+      -          |to_point1|to_point2|to_point3
+      :-----------|:--------|:--------|:--------
+      from_point1 |0        |1->2     | 1->3
+      from_point2 |2->1     |0        | 2->3
+      from_point3 |3->1     |3->2     | 0
+
+      A simple illustration for a 1x3 matrix with different start- and end-points:
+
+      -          | to_point1  | to_point2 | t_point3
+      :-----------|:-----------|:----------|:--------
+      from_pointA |A->1        |A->2       |A->3
+
+
+      For every route 1->2, 1-3, ... or A->1,A->2,A->3 you can return only the weight, the time and the distance.
+      To calculate full routes you can use the [Routing API](#tag/Routing-API).
+
+      ### Limits and Counts
+
+      The cost for one request depends on the number of locations and is documented [here](https://support.graphhopper.com/support/solutions/44000303787#what-is-one-credit).
+
+      One request should not exceed the Matrix API location limit, which depends on the subscription, see the
+      pricing tab in our dashboard.
   - name: Geocoding API
     description: Everything about geocoding
   - name: Isochrone API
@@ -191,26 +299,11 @@ security:
 paths:
   /route:
     get:
-      summary: Execute a routing request
+      summary: GET Route Endpoint
       operationId: getRoute
       description: |
-        ### Introduction
-
-        ![Routing screenshot](./img/routing-example.png)
-
-        The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
-        two or more points, where the meaning of ''best'' depends on the vehicle and use case.
-
-        ### Navigation
-        If you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.
-
-        ### Fast
-        To get started using this API, just provide two or more points and retrieve the fastest route through the road
-        network that connects them. This type of request is heavily optimized for query performance, so it does not
-        take turn restrictions into account, and it does not allow for some advanced features.
-        ### Flexible
-        Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
-        Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
+        The GET request is the most simple one: just specify the parameter in the URL and you are done.
+        Can be tried directly in every browser.
       parameters:
         - name: point
           in: query
@@ -441,13 +534,187 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key")
                     .get()
                     .build();
 
             Response response = client.newCall(request).execute();
+      responses:
+        '200':
+          description: Routing Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '400':
+          description: 'Your request is not valid. For example, you specified too few or too many points.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GHError'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '401':
+          description: Authentication necessary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GHError'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '429':
+          description: API limit reached.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GHError'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '500':
+          description: Internal server error. We get notified automatically and fix this asap.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GHError'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '501':
+          description: Only a special list of vehicles is supported.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GHError'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+    post:
+      summary: POST Route Endpoint
+      operationId: postRoute
+      description: |
+        Please see the [GET endpoint](#operation/getRoute) for a simpler method on how to get started.
+        If you are familiar with POST requests and JSON then do not hesitate to continue here.
+
+        Especially when you use many locations you should get familiar with this POST endpoint as the GET endpoint
+        has an URL length limitation. Additionally the request of this POST endpoint can be compressed and can slightly
+        speed up the request.
+
+        To do a request you send JSON data and the only URL parameter will be the key. Both request scenarios GET and
+        POST are identical except that all singular parameter names are named as their plural for a POST request.
+        The effected parameters are: `points`, `point_hints` and `snap_preventions`. For the remaining parameters please refer to
+        the [GET request guide](#operation/getRoute).
+
+        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
+
+        For example `point=10,11&point=20,22` will be converted to the `points` array (plural):
+        ```json
+        { "points": [[11,10], [22,20]] }
+        ```
+        Note again that also the order changes from `[latitude,longitude]` to `[longitude,latitude]`
+        similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
+
+        Example:
+        ```bash
+        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/route?key=[YOUR_KEY]" -d '{"elevation":false,"points":[[-0.087891,51.534377],[-0.090637,51.467697]],"vehicle":"car"}'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteRequest'
+      tags:
+        - Routing API
       responses:
         '200':
           description: Routing Result
@@ -603,7 +870,7 @@ paths:
                 $ref: '#/components/schemas/InfoResponse'
   /isochrone:
     get:
-      summary: Isochrone Request
+      summary: Isochrone Endpoint
       operationId: getIsochrone
       description: |
         ### Example
@@ -701,68 +968,19 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /matrix:
     get:
-      summary: Execute a matrix request
+      summary: GET Matrix Endpoint
       operationId: getMatrix
       description: |
-        ### Introduction
-
-        ![Matrix Example](./img/matrix-example.png)
-
-        The Matrix API is part of the [GraphHopper Directions API](https://graphhopper.com/#directions-api) and with
-        this API you can calculate many-to-many distances, times or routes a lot more efficient than calling the
-        Routing API multiple times.
-
-        In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
-        route being calculated. The Matrix API results in NxM routes or more precise NxM weights, distances or times being calculated
-        but is a lot faster compared to NxM single requests. The most simple example is a tourist trying to decide
-        which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service in the
-        need of often big NxN matrices to solve vehicle routing problems. E.g. the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
-        uses the Matrix API under the hood to achieve this.
-
-        Some other use case scenarios for the Matrix API:
-
-         * Logistic problems often pick up many items from and deliver them to many locations.
-         * Calculating detours with many possible points in-between and selecting the best e.g. interesting for ridesharing or taxi applications. For this 1-to-many requests are necessary.
-         * Finding the best tour for a tourist in the need to visit as many points of interests as possible.
-         * ...
-
-        ### API Clients and Examples
-
-        See the [clients](#section/API-Clients) section in the main document and [live examples](https://graphhopper.com/api/1/examples/#matrix).
-
-        ### Description
-
-        The Matrix API calculates the well known distance-matrix for a set of points, i.e. it calculates all the distances between every point combination. But we do not stop there, we also offer a time-, weight- and route-matrix. The weight-matrix can be used as raw input for e.g. a vehicle routing problem ([VRP](http://en.wikipedia.org/wiki/Vehicle_routing_problem)) and is more precise than a time- or distance-matrix. E.g. for bike routes the actual weight of a route (e.g. the "beauty") is what you want to decide if a route is 'better' and not always the taken time or distance.
-
-        A simple illustration for a 3x3 matrix with identical from and to points:
-
-         -          |to_point1|to_point2|to_point3
-        :-----------|:--------|:--------|:--------
-        from_point1 |0        |1->2     | 1->3
-        from_point2 |2->1     |0        | 2->3
-        from_point3 |3->1     |3->2     | 0
-
-        A simple illustration for a 1x3 matrix with different start- and end-points:
-
-         -          | to_point1  | to_point2 | t_point3
-        :-----------|:-----------|:----------|:--------
-        from_pointA |A->1        |A->2       |A->3
-
-
-        For every route 1->2, 1-3, ... or A->1,A->2,A->3 you can return only the weight, the time and the distance. To calculate full routes you can use the [Routing API](#tag/Routing-API) which also has a lot of different parameters.
-
-        ### Limits and Counts
-
-        The cost for one request depends on the number of locations and is documented [here](https://graphhopper.com/api/1/docs/FAQ/#what-is-one-credit).
-
-        One request should not exceed the Matrix API location limit depending on the package, see the pricing in our dashboard.
+        With this Matrix Endpoint you submit the points and parameters via URL parameters and is the most convenient
+        as it works out-of-the-box in the browser. If possible you should
+        prefer using the [POST Matrix Endpoint](#operation/postMatrix) that avoids problems with many locations
+        and automatically gzipps the request (note that all endpoints return gzipped results).
       x-code-samples:
         - lang: Curl
           source: 'curl "https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key"'
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key")
                     .get()
@@ -887,14 +1105,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/GHError'
     post:
-      summary: Execute a matrix request
+      summary: POST Matrix Endpoint
       operationId: postMatrix
       description: |
-        The GET request has an URL length limitation, which hurts for many locations per request. In those cases use a HTTP POST request with JSON data as input. The only parameter
-        in the URL will be the key. Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
-        All effected parameters are: `points`, `from_points`, `to_points`, and `out_array`.
 
-        *Please note that in opposite to the GET endpoint, points are specified in `longitude, latitude`*.
+        The [GET endpoint](#operation/getMatrix) has an URL length limitation, which hurts for many locations per request.
+        In those cases use this POST endpoint with a JSON as input. The only parameter in the URL will be the key.
+        Both request scenarios are identical except that all singular parameter names are named as their plural for a POST request.
+        The effected parameters are: `points`, `from_points`, `to_points`, and `out_arrays`. For the remaining parameters
+        please refer to the [guide of the GET endpoint](#operation/getMatrix).
+
+        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
 
         For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
         ```json
@@ -947,10 +1168,12 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /matrix/calculate:
     post:
-      summary: Post a matrix request in batch mode
+      summary: Batch Matrix Endpoint
       operationId: calculateMatrix
       description: |
-        The Batch Matrix API allows using matrices with more locations and works asynchronously - similar to our Route Optimization API:
+        Prefer the [synchronous endpoint](#operation/postMatrix) and use this Batch endpoint for long running problems only.
+
+        The Batch Matrix endpoint allows using matrices with more locations and works asynchronously - similar to the [Batch Route Optimization endpoint](#operation/asyncVRP):
          * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ "job_id": "7ac65787-fb99-4e02-a832-2c3010c70097" }`
          * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`
 
@@ -1017,9 +1240,9 @@ paths:
                 $ref: '#/components/schemas/GHError'
   '/matrix/solution/{jobId}':
     get:
-      summary: Retrieve matrix
+      summary: GET Batch Matrix Endpoint
       description: |
-        This endpoint returns the solution of posted matrix request. You can fetch it with the job_id, you have been sent.
+        This endpoint returns the solution of a JSON submitted to the Batch Matrix endpoint. You can fetch it with the job_id, you have been sent.
       operationId: getMatrixSolution
       parameters:
         - in: path
@@ -1136,7 +1359,7 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /geocode:
     get:
-      summary: Execute a geocoding request
+      summary: Geocoding Endpoint
       operationId: getGeocode
       description: |
 
@@ -1154,7 +1377,6 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/geocode?q=berlin&locale=de&debug=true&key=api_key")
                     .get()
@@ -1293,43 +1515,121 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-  /vrp/optimize:
+  /vrp:
     post:
-      summary: Solve vehicle routing problem
+      summary: POST Route Optimization Endpoint
       description: |
 
-        ### Getting Started
+        To get started with the Route Optimization API see the [introduction](#tag/Route-Optimization-API).
 
-        This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) - 
-        illustrates the very basic steps and building blocks to model your vehicle routing problem. This only shows you an excerpt of 
-        what is possible with our API, read more about it below. To unfold detailed information about each object, you just need to click on e.g. `services` or `relations` as shown here:
+        The Route Optimization endpoint is used with a POST request towards
+        `https://graphhopper.com/api/1/vrp?key=<your_key>`. Then you'll find the solution in the JSON response.
+        Please note that for problems that take longer than 10 seconds a bad request error is returned.
+        In this case please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.
+      operationId: solveVRP
+      requestBody:
+        description: Request object that contains the problem to be solved
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+      tags:
+        - Route Optimization API
+      x-code-samples:
+        - lang: Curl
+          source: |-
+            curl -X POST -H "Content-Type: application/json"   "https://graphhopper.com/api/1/vrp?key=api_key"   -d '{
+              "vehicles": [
+                {
+                  "vehicle_id": "my_vehicle",
+                  "start_address": {
+                    "location_id": "berlin",
+                    "lon": 13.406,
+                    "lat": 52.537
+                  }
+                }
+              ],
+              "services": [
+                {
+                  "id": "hamburg",
+                  "name": "visit_hamburg",
+                  "address": {
+                    "location_id": "hamburg",
+                    "lon": 9.999,
+                    "lat": 53.552
+                  }
+                },
+                { 
+                 "id": "munich",
+                  "name": "visit_munich",
+                  "address": {
+                    "location_id": "munich",
+                    "lon": 11.57,
+                    "lat": 48.145
+                  }
+                }
+              ]}'
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/vrp?key=api_key")
+                    .post(body)
+                    .addHeader("content-type", "application/json")
+                    .build();
 
-        ![Nested Doc](./img/nested-doc.gif)
+            Response response = client.newCall(request).execute();
+      responses:
+        '200':
+          description: A response containing the solution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: 'The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.'
+              schema:
+                type: integer
+        '400':
+          description: Error occurred when reading the request. Request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Error occurred on server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorMessage'
+  /vrp/optimize:
+    post:
+      summary: Batch Route Optimization Endpoint
+      description: |
 
-        To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
-        that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
-        Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
-        You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
-
-        ### Tutorials
-
-        We provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use the Route Optimization API and
-        how to model your vehicle routing problems:
-
-        - [Getting Start with the Optimization API - Traveling Salesman Problem](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/)
-        - [How to solve a traveling salesman problem with a week-planning horizon?](https://www.graphhopper.com/blog/2016/05/30/how-to-solve-a-traveling-salesman-problem-with-a-week-planning-horizon/)
-        - [How to schedule technicians with skills and multiple dependencies between tasks?](https://www.graphhopper.com/blog/2016/06/03/how-to-route-technicians-with-skills-and-multiple-dependencies-between-tasks/)
-        - [What is the difference between the min. of completion time and min. transport time?](https://www.graphhopper.com/blog/2016/06/20/what-is-the-difference-between-the-minimization-of-completion-time-and-minimizing-transport-time/)
-        - [How to model multiple delivery routes with a single vehicle?](https://www.graphhopper.com/blog/2016/07/21/how-to-model-multiple-delivery-routes-with-a-single-vehicle/)
-
-        ### Http Requests
-
-        The basic procedure to query the Route Optimization API is to:
+        Prefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for
+        long running problems only. The work flow is asynchronous:
 
         - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
         - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
           towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
-      operationId: solveVRP
+      operationId: asyncVRP
       requestBody:
         description: Request object that contains the problem to be solved
         required: true
@@ -1376,7 +1676,6 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
             Request request = new Request.Builder()
@@ -1431,9 +1730,10 @@ paths:
                 $ref: '#/components/schemas/InternalErrorMessage'
   '/vrp/solution/{jobId}':
     get:
-      summary: Retrieve solution
+      summary: GET Batch Solution Endpoint
       description: |
-        This endpoint returns the solution of posted vehicle routing or traveling salesman problems. You can fetch it with the job_id, you have been sent.
+        This endpoint returns the solution of a vehicle routing problems submitted to the [Batch Route Optimization endpoint](#operation/asyncVRP).
+        You can fetch it with the job_id, you have been sent.
       operationId: getSolution
       parameters:
         - in: path
@@ -1450,7 +1750,6 @@ paths:
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
-
             Request request = new Request.Builder()
                     .url("https://graphhopper.com/api/1/vrp/solution/job_id?key=api_key")
                     .get()
@@ -1607,7 +1906,7 @@ components:
         vehicle:
           allOf:
             - $ref: '#/components/schemas/VehicleProfileId'
-            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
         fail_fast:
           description: Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).
           type: boolean
@@ -1643,7 +1942,7 @@ components:
         vehicle:
           allOf:
             - $ref: '#/components/schemas/VehicleProfileId'
-            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](./supported-vehicle-profiles.md) for the details.'
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
         fail_fast:
           description: Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).
           type: boolean
@@ -1746,6 +2045,33 @@ components:
           copyrights:
             - GraphHopper
             - OpenStreetMap contributors
+    RouteRequest:
+      type: object
+      properties:
+        points:
+          description: |
+            The points for the route in an array of `[longitude,latitude]`. For instance, if you want to calculate a route from point A to B to C
+            then you specify `points: [ [A_longitude, A_latitude], [B_longitude, B_latitude], [C_longitude, C_latitude]]
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+        point_hints:
+          description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
+          type: array
+          items:
+            type: string
+        snap_preventions:
+          description: 'Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`'
+          type: array
+          items:
+            type: string
+        vehicle:
+          allOf:
+            - $ref: '#/components/schemas/VehicleProfileId'
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
     RouteResponse:
       type: object
       properties:
