@@ -12,8 +12,9 @@ info:
      * [Route Optimization API](#tag/Route-Optimization-API),
      * [Isochrone API](#tag/Isochrone-API),
      * [Map Matching API](#tag/Map-Matching-API),
-     * [Matrix API](#tag/Matrix-API) and
-     * [Geocoding API](#tag/Geocoding-API).
+     * [Matrix API](#tag/Matrix-API),
+     * [Geocoding API](#tag/Geocoding-API) and
+     * [Cluster API](#tag/Cluster-API).
 
     # Explore our APIs
 
@@ -298,6 +299,8 @@ tags:
     description: Everything about isochrones
   - name: Map Matching API
     description: Everything about map matching
+  - name: Cluster API
+    description: Everything about solving the capacitated clustering problem
 security:
   - api_key: []
 paths:
@@ -1365,7 +1368,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-
   /geocode:
     get:
       summary: Geocoding Endpoint
@@ -1525,7 +1527,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-
   /vrp:
     post:
       summary: POST Route Optimization Endpoint
@@ -1601,7 +1602,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalErrorMessage'
-
   /vrp/optimize:
     post:
       summary: Batch Route Optimization Endpoint
@@ -1762,6 +1762,81 @@ paths:
                       example: finished
         '500':
           description: Error occurred on server side.
+  /cluster:
+    post:
+      summary: POST Cluster Endpoint
+      description: |
+
+        To get started with the Cluster API see the [introduction](#tag/Cluster-API).
+
+        The Cluster endpoint is used with a POST request towards
+        `https://graphhopper.com/api/1/cluster?key=<your_key>`. The solution will be provided in the JSON response.
+        Please note that for problems that take longer than 10 seconds a bad request error is returned.
+        In this case please use the asynchronous [Batch Cluster Endpoint](#operation/asyncCluster) instead.
+
+      operationId: solveClusteringProblem
+      requestBody:
+        description: Request object that contains the problem to be solved
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRequest'
+      tags:
+        - Cluster API
+      x-code-samples:
+        - lang: Curl
+          source: "curl -X POST -H \"Content-Type: application/json\" \
+                         \  \"https://graphhopper.com/api/1/vrp?key=api_key\" \
+                         \  -d '{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}'"
+        - lang: Java
+          source: |-
+            OkHttpClient client = new OkHttpClient();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}");
+            Request request = new Request.Builder()
+                    .url("https://graphhopper.com/api/1/vrp?key=api_key")
+                    .post(body)
+                    .addHeader("content-type", "application/json")
+                    .build();
+
+            Response response = client.newCall(request).execute();
+      responses:
+        '200':
+          description: A response containing the solution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
+              schema:
+                type: integer
+        '400':
+          description: Error occurred when reading the request. Request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Error occurred on server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorMessage'
 components:
   securitySchemes:
     api_key:
@@ -1769,6 +1844,119 @@ components:
       name: key
       in: query
   schemas:
+    ClusterResponse:
+      type: object
+      properties:
+        copyrights:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+            - waiting_in_queue
+            - processing
+            - finished
+          description: Indicates the current status of the job
+          example: finished
+        waiting_time_in_queue:
+          type: number
+          format: double
+        processing_time:
+          type: number
+          format: double
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cluster'
+    Cluster:
+      type: object
+      properties:
+        quantity:
+          type: number
+          format: int32
+          description: Cluster size
+        ids:
+          type: array
+          items:
+            type: string
+          description: Array of customer ids assigned to this specific cluster
+    ClusterRequest:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/ClusterConfiguration'
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterCustomer'
+    ClusterConfiguration:
+      type: object
+      properties:
+        response_type:
+          type: string
+          description: 'Specifies the response format. You can either choose `geojson` or `json`.'
+          default: json
+        routing:
+          $ref: '#/components/schemas/ClusterConfigurationRouting'
+        clustering:
+          $ref: '#/components/schemas/ClusterConfigurationClustering'
+    ClusterCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: id of customer
+        address:
+          $ref: '#/components/schemas/ClusterCustomerAddress'
+        quantity:
+          type: number
+          format: int32
+          description: demand of customer
+    ClusterCustomerAddress:
+      type: object
+      properties:
+        lon:
+          type: number
+          format: double
+          description: Longitude
+        lat:
+          type: number
+          format: double
+          description: Latitude
+        street_hint:
+          type: string
+          description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
+          example: Queens Victoria Street 70
+    ClusterConfigurationRouting:
+      type: object
+      properties:
+        profile:
+          type: string
+          description: 'The routing profile for which the travel times and distances should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap)'
+        cost_per_second:
+          type: number
+          format: double
+          description: Cost per second (travel time)
+        cost_per_meter:
+          type: number
+          format: double
+          description: Cost per meter (travel distance)
+    ClusterConfigurationClustering:
+      type: object
+      properties:
+        num_clusters:
+          type: number
+          format: int32
+          description: Specifies the number of clusters
+        max_quantity:
+          type: number
+          format: int32
+          description: Specifies max. quantity in a cluster
+        min_quantity:
+          type: number
+          format: int32
+          description: Specifies min. quantity in a cluster
     GeocodingResponse:
       properties:
         hits:
