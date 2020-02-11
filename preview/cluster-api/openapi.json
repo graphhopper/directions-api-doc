@@ -47,7 +47,7 @@
     },
     {
       "name": "Cluster API",
-      "description": "Everything about solving the capacitated clustering problem"
+      "description": "The Cluster API solves the capacitated clustering problem. To put it in other words, it assigns a set of customers to a given number of distinct groups or clusters by minimizing the total distance from each individual customer to its designated group median. Furthermore, it can consider minimum and maximum capacity restrictions for each group."
     }
   ],
   "security": [
@@ -1803,7 +1803,7 @@
     "/cluster": {
       "post": {
         "summary": "POST Cluster Endpoint",
-        "description": "\nTo get started with the Cluster API see the [introduction](#tag/Cluster-API).\n\nThe Cluster endpoint is used with a POST request towards\n`https://graphhopper.com/api/1/cluster?key=<your_key>`. The solution will be provided in the JSON response.\nPlease note that for problems that take longer than 10 seconds a bad request error is returned.\nIn this case please use the asynchronous [Batch Cluster Endpoint](#operation/asyncCluster) instead.\n",
+        "description": "\nThe Cluster endpoint is used with a POST request towards\n`https://graphhopper.com/api/1/cluster?key=<your_key>`. The solution will be provided in the JSON response.\nPlease note that for problems that take longer than 10 seconds a bad request error is returned.\nIn this case please use the asynchronous [Batch Cluster Endpoint](#operation/asyncClusteringProblem) instead.\n",
         "operationId": "solveClusteringProblem",
         "requestBody": {
           "description": "Request object that contains the problem to be solved",
@@ -1818,16 +1818,6 @@
         },
         "tags": [
           "Cluster API"
-        ],
-        "x-code-samples": [
-          {
-            "lang": "Curl",
-            "source": "curl -X POST -H \"Content-Type: application/json\"   \"https://graphhopper.com/api/1/vrp?key=api_key\"   -d '{\n  \"vehicles\": [\n    {\n      \"vehicle_id\": \"my_vehicle\",\n      \"start_address\": {\n        \"location_id\": \"berlin\",\n        \"lon\": 13.406,\n        \"lat\": 52.537\n      }\n    }\n  ],\n  \"services\": [\n    {\n      \"id\": \"hamburg\",\n      \"name\": \"visit_hamburg\",\n      \"address\": {\n        \"location_id\": \"hamburg\",\n        \"lon\": 9.999,\n        \"lat\": 53.552\n      }\n    },\n    { \n     \"id\": \"munich\",\n      \"name\": \"visit_munich\",\n      \"address\": {\n        \"location_id\": \"munich\",\n        \"lon\": 11.57,\n        \"lat\": 48.145\n      }\n    }\n  ]}'"
-          },
-          {
-            "lang": "Java",
-            "source": "OkHttpClient client = new OkHttpClient();\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\n  \\\"vehicles\\\": [\\n    {\\n      \\\"vehicle_id\\\": \\\"my_vehicle\\\",\\n      \\\"start_address\\\": {\\n        \\\"location_id\\\": \\\"berlin\\\",\\n        \\\"lon\\\": 13.406,\\n        \\\"lat\\\": 52.537\\n      }\\n    }\\n  ],\\n  \\\"services\\\": [\\n    {\\n      \\\"id\\\": \\\"hamburg\\\",\\n      \\\"name\\\": \\\"visit_hamburg\\\",\\n      \\\"address\\\": {\\n        \\\"location_id\\\": \\\"hamburg\\\",\\n        \\\"lon\\\": 9.999,\\n        \\\"lat\\\": 53.552\\n      }\\n    },\\n    { \\n     \\\"id\\\": \\\"munich\\\",\\n      \\\"name\\\": \\\"visit_munich\\\",\\n      \\\"address\\\": {\\n        \\\"location_id\\\": \\\"munich\\\",\\n        \\\"lon\\\": 11.57,\\n        \\\"lat\\\": 48.145\\n      }\\n    }\\n  ]}\");\nRequest request = new Request.Builder()\n        .url(\"https://graphhopper.com/api/1/vrp?key=api_key\")\n        .post(body)\n        .addHeader(\"content-type\", \"application/json\")\n        .build();\n\nResponse response = client.newCall(request).execute();"
-          }
         ],
         "responses": {
           "200": {
@@ -1888,6 +1878,189 @@
           }
         }
       }
+    },
+    "/cluster/calculate": {
+      "post": {
+        "summary": "Batch Cluster Endpoint",
+        "description": "\nPrefer the [synchronous endpoint](#operation/solveClusteringProblem) and use this Batch Cluster endpoint for\nlong running problems only. The work flow is asynchronous:\n\n- send a POST request towards `https://graphhopper.com/api/1/cluster/calculate?key=<your_key>` and fetch the job_id.\n- poll the solution every 500ms until it gives `status=finished`. Do this with a GET request\n  towards `https://graphhopper.com/api/1/cluster/solution/<job_id>?key=<your_key>`.\n",
+        "operationId": "asyncClusteringProblem",
+        "requestBody": {
+          "description": "Request object that contains the problem to be solved",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClusterRequest"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cluster API"
+        ],
+        "responses": {
+          "200": {
+            "description": "A jobId you can use to retrieve your solution from the server - see solution endpoint.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobId"
+                }
+              }
+            },
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Your current daily credit limit.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Your remaining credits until the reset.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "The number of seconds that you have to wait before a reset of the credit count is done.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Credits": {
+                "description": "The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "links": {
+              "GetSolutionByJobId": {
+                "operationId": "getSolution",
+                "parameters": {
+                  "jobId": "$response.body#/job_id"
+                },
+                "description": "The `job_id` value returned in the response can be used as the `jobId` parameter in `GET /vrp/{jobId}`.\n"
+              }
+            }
+          },
+          "400": {
+            "description": "Error occurred when reading client request. Request is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error occurred on server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cluster/solution/{jobId}": {
+      "get": {
+        "summary": "GET Batch Solution Endpoint",
+        "description": "This endpoint returns the solution of the clustering problems submitted to the [Batch Cluster endpoint](#operation/asyncClusteringProblem).\nYou can fetch it with the job_id, you have been sent.\n",
+        "operationId": "getClusterSolution",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobId",
+            "description": "Request solution with jobId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Cluster API"
+        ],
+        "responses": {
+          "200": {
+            "description": "A response containing the solution",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Your current daily credit limit.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Your remaining credits until the reset.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "The number of seconds that you have to wait before a reset of the credit count is done.",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Credits": {
+                "description": "The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error occurred on client side such as invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Requested solution could not be found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Invalid job_id 73314c89-ee4b-459c-aca4-0ad6d6e558da"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "status",
+                      "default": "finished",
+                      "example": "finished"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error occurred on server side."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1906,7 +2079,11 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "example": [
+              "GraphHopper",
+              "OpenStreetMap contributors"
+            ]
           },
           "status": {
             "type": "string",
@@ -1924,7 +2101,8 @@
           },
           "processing_time": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "example": 4900
           },
           "clusters": {
             "type": "array",
@@ -1940,14 +2118,18 @@
           "quantity": {
             "type": "number",
             "format": "int32",
-            "description": "Cluster size"
+            "description": "Cluster size",
+            "example": 40
           },
           "ids": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Array of customer ids assigned to this specific cluster"
+            "description": "Array of customer ids assigned to this specific cluster",
+            "example": [
+              "GraphHopper GmbH"
+            ]
           }
         }
       },
@@ -1971,7 +2153,8 @@
           "response_type": {
             "type": "string",
             "description": "Specifies the response format. You can either choose `geojson` or `json`.",
-            "default": "json"
+            "default": "json",
+            "example": "json"
           },
           "routing": {
             "$ref": "#/components/schemas/ClusterConfigurationRouting"
@@ -1986,7 +2169,8 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "id of customer"
+            "description": "id of customer",
+            "example": "GraphHopper GmbH"
           },
           "address": {
             "$ref": "#/components/schemas/ClusterCustomerAddress"
@@ -1994,7 +2178,8 @@
           "quantity": {
             "type": "number",
             "format": "int32",
-            "description": "demand of customer"
+            "description": "demand of customer",
+            "example": 10
           }
         }
       },
@@ -2004,17 +2189,19 @@
           "lon": {
             "type": "number",
             "format": "double",
-            "description": "Longitude"
+            "description": "Longitude",
+            "example": 11.53941
           },
           "lat": {
             "type": "number",
             "format": "double",
-            "description": "Latitude"
+            "description": "Latitude",
+            "example": 48.118434
           },
           "street_hint": {
             "type": "string",
             "description": "Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
-            "example": "Queens Victoria Street 70"
+            "example": "Lindenschmitstraße 52"
           }
         }
       },
@@ -2023,17 +2210,20 @@
         "properties": {
           "profile": {
             "type": "string",
-            "description": "The routing profile for which the travel times and distances should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap)"
+            "description": "The routing profile for which the travel times and distances should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap)",
+            "example": "car"
           },
           "cost_per_second": {
             "type": "number",
             "format": "double",
-            "description": "Cost per second (travel time)"
+            "description": "Cost per second (travel time)",
+            "example": 1
           },
           "cost_per_meter": {
             "type": "number",
             "format": "double",
-            "description": "Cost per meter (travel distance)"
+            "description": "Cost per meter (travel distance)",
+            "example": 0
           }
         }
       },
@@ -2043,17 +2233,20 @@
           "num_clusters": {
             "type": "number",
             "format": "int32",
-            "description": "Specifies the number of clusters"
+            "description": "Specifies the number of clusters",
+            "example": 10
           },
           "max_quantity": {
             "type": "number",
             "format": "int32",
-            "description": "Specifies max. quantity in a cluster"
+            "description": "Specifies max. quantity in a cluster",
+            "example": 50
           },
           "min_quantity": {
             "type": "number",
             "format": "int32",
-            "description": "Specifies min. quantity in a cluster"
+            "description": "Specifies min. quantity in a cluster",
+            "example": 30
           }
         }
       },
