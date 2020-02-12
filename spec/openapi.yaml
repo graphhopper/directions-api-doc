@@ -12,8 +12,9 @@ info:
      * [Route Optimization API](#tag/Route-Optimization-API),
      * [Isochrone API](#tag/Isochrone-API),
      * [Map Matching API](#tag/Map-Matching-API),
-     * [Matrix API](#tag/Matrix-API) and
-     * [Geocoding API](#tag/Geocoding-API).
+     * [Matrix API](#tag/Matrix-API),
+     * [Geocoding API](#tag/Geocoding-API) and
+     * [Cluster API](#tag/Cluster-API).
 
     # Explore our APIs
 
@@ -298,6 +299,8 @@ tags:
     description: Everything about isochrones
   - name: Map Matching API
     description: Everything about map matching
+  - name: Cluster API
+    description: The Cluster API solves the capacitated clustering problem. To put it in other words, it assigns a set of customers to a given number of distinct groups or clusters by minimizing the total distance from each individual customer to its designated group median. Furthermore, it can consider minimum and maximum capacity restrictions for each group.
 security:
   - api_key: []
 paths:
@@ -1365,7 +1368,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-
   /geocode:
     get:
       summary: Geocoding Endpoint
@@ -1525,7 +1527,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GHError'
-
   /vrp:
     post:
       summary: POST Route Optimization Endpoint
@@ -1601,7 +1602,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalErrorMessage'
-
   /vrp/optimize:
     post:
       summary: Batch Route Optimization Endpoint
@@ -1762,6 +1762,192 @@ paths:
                       example: finished
         '500':
           description: Error occurred on server side.
+  /cluster:
+    post:
+      summary: POST Cluster Endpoint
+      description: |
+
+        The Cluster endpoint is used with a POST request towards
+        `https://graphhopper.com/api/1/cluster?key=<your_key>`. The solution will be provided in the JSON response.
+        Please note that for problems that take longer than 10 seconds a bad request error is returned.
+        In this case please use the asynchronous [Batch Cluster Endpoint](#operation/asyncClusteringProblem) instead.
+
+      operationId: solveClusteringProblem
+      requestBody:
+        description: Request object that contains the problem to be solved
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRequest'
+      tags:
+        - Cluster API
+      responses:
+        '200':
+          description: A response containing the solution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
+              schema:
+                type: integer
+        '400':
+          description: Error occurred when reading the request. Request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Error occurred on server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorMessage'
+  /cluster/calculate:
+    post:
+      summary: Batch Cluster Endpoint
+      description: |
+
+        Prefer the [synchronous endpoint](#operation/solveClusteringProblem) and use this Batch Cluster endpoint for
+        long running problems only. The work flow is asynchronous:
+
+        - send a POST request towards `https://graphhopper.com/api/1/cluster/calculate?key=<your_key>` and fetch the job_id.
+        - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request
+          towards `https://graphhopper.com/api/1/cluster/solution/<job_id>?key=<your_key>`.
+
+      operationId: asyncClusteringProblem
+      requestBody:
+        description: Request object that contains the problem to be solved
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClusterRequest'
+      tags:
+        - Cluster API
+      responses:
+        '200':
+          description: A jobId you can use to retrieve your solution from the server - see solution endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobId'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
+              schema:
+                type: integer
+          links:
+            GetSolutionByJobId:
+              operationId: getSolution
+              parameters:
+                jobId: '$response.body#/job_id'
+              description: |
+                The `job_id` value returned in the response can be used as the `jobId` parameter in `GET /vrp/{jobId}`.
+        '400':
+          description: Error occurred when reading client request. Request is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Error occurred on server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalErrorMessage'
+  '/cluster/solution/{jobId}':
+    get:
+      summary: GET Batch Solution Endpoint
+      description: |
+        This endpoint returns the solution of the clustering problems submitted to the [Batch Cluster endpoint](#operation/asyncClusteringProblem).
+        You can fetch it with the job_id, you have been sent.
+      operationId: getClusterSolution
+      parameters:
+        - in: path
+          name: jobId
+          description: Request solution with jobId
+          required: true
+          schema:
+            type: string
+      tags:
+        - Cluster API
+
+      responses:
+        '200':
+          description: A response containing the solution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterResponse'
+          headers:
+            X-RateLimit-Limit:
+              description: Your current daily credit limit.
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              description: Your remaining credits until the reset.
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              description: The number of seconds that you have to wait before a reset of the credit count is done.
+              schema:
+                type: integer
+            X-RateLimit-Credits:
+              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
+              schema:
+                type: integer
+        '400':
+          description: Error occurred on client side such as invalid input.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Requested solution could not be found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Invalid job_id 73314c89-ee4b-459c-aca4-0ad6d6e558da
+                  status:
+                    type: string
+                    description: status
+                    default: finished
+                    example: finished
+        '500':
+          description: Error occurred on server side.
 components:
   securitySchemes:
     api_key:
@@ -1769,6 +1955,134 @@ components:
       name: key
       in: query
   schemas:
+    ClusterResponse:
+      type: object
+      properties:
+        copyrights:
+          type: array
+          items:
+            type: string
+          example: [GraphHopper,OpenStreetMap contributors]
+        status:
+          type: string
+          enum:
+            - waiting_in_queue
+            - processing
+            - finished
+          description: Indicates the current status of the job
+          example: finished
+        waiting_time_in_queue:
+          type: number
+          format: double
+        processing_time:
+          type: number
+          format: double
+          example: 4900
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cluster'
+    Cluster:
+      type: object
+      properties:
+        quantity:
+          type: number
+          format: int32
+          description: Cluster size
+          example: 40
+        ids:
+          type: array
+          items:
+            type: string
+          description: Array of customer ids assigned to this specific cluster
+          example: [GraphHopper GmbH]
+    ClusterRequest:
+      type: object
+      properties:
+        configuration:
+          $ref: '#/components/schemas/ClusterConfiguration'
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterCustomer'
+    ClusterConfiguration:
+      type: object
+      properties:
+        response_type:
+          type: string
+          description: 'Specifies the response format. You can either choose `geojson` or `json`.'
+          default: json
+          example: json
+        routing:
+          $ref: '#/components/schemas/ClusterConfigurationRouting'
+        clustering:
+          $ref: '#/components/schemas/ClusterConfigurationClustering'
+    ClusterCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: id of customer
+          example: GraphHopper GmbH
+        address:
+          $ref: '#/components/schemas/ClusterCustomerAddress'
+        quantity:
+          type: number
+          format: int32
+          description: demand of customer
+          example: 10
+    ClusterCustomerAddress:
+      type: object
+      properties:
+        lon:
+          type: number
+          format: double
+          description: Longitude
+          example: 11.539410
+        lat:
+          type: number
+          format: double
+          description: Latitude
+          example: 48.118434
+        street_hint:
+          type: string
+          description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
+          example: Lindenschmitstraße 52
+    ClusterConfigurationRouting:
+      type: object
+      properties:
+        profile:
+          type: string
+          description: 'The routing profile for which the travel times and distances should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap)'
+          example: car
+        cost_per_second:
+          type: number
+          format: double
+          description: Cost per second (travel time)
+          example: 1.0
+        cost_per_meter:
+          type: number
+          format: double
+          description: Cost per meter (travel distance)
+          example: 0
+    ClusterConfigurationClustering:
+      type: object
+      properties:
+        num_clusters:
+          type: number
+          format: int32
+          description: Specifies the number of clusters
+          example: 10
+        max_quantity:
+          type: number
+          format: int32
+          description: Specifies max. quantity in a cluster
+          example: 50
+        min_quantity:
+          type: number
+          format: int32
+          description: Specifies min. quantity in a cluster
+          example: 30
     GeocodingResponse:
       properties:
         hits:
