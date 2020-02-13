@@ -47,7 +47,7 @@
     },
     {
       "name": "Cluster API",
-      "description": "\n### Introduction\n\n![Cluster Example](./img/cluster-solution.png)\n\nThe Cluster API solves the capacitated clustering problem. To put it in other words, it assigns a set of customers \nto a given number of distinct groups or clusters by minimizing the total distance from each individual customer to \nits designated group median. Furthermore, it can consider minimum and maximum capacity restrictions for each group.\n"
+      "description": "\n### Introduction\n\n![Cluster Example](./img/cluster-solution.png)\n\nThe Cluster API solves the capacitated clustering problem. To put it in other words, it assigns a set of customers \nto a given number of distinct groups or clusters by minimizing the total distance from each individual customer to \nits designated group median. Furthermore, it can consider minimum and maximum capacity restrictions for each group.\n\nIt is usually used for territory planning, i.e. territory optimization for field teams with large territories.\n"
     }
   ],
   "security": [
