@@ -300,13 +300,15 @@ tags:
 
       ### Introduction
 
-      ![Cluster Example](./img/cluster-solution.png)
+      ![Cluster Example](./img/cluster-solution.jpg)
 
-      The Cluster API solves the capacitated clustering problem. To put it in other words, it assigns a set of customers 
-      to a given number of distinct groups or clusters by minimizing the total distance from each individual customer to 
-      its designated group median. Furthermore, it can consider minimum and maximum capacity restrictions for each group.
+      It solves the “capacity clustering problem” by assigning a set of customers to a given number of distinct groups (called clusters).
+      The API “clusters” by minimizing the total distance from each individual customer to its designated group median.
+      It can also consider minimum and maximum capacity restrictions for each group.
 
-      It is usually used for territory planning, i.e. territory optimization for field teams with large territories.
+      Clustering can be used in many practical applications.
+      For example, it can help to plan territories, i.e. territory optimization for field teams with large territories for field workers,
+      or to solve large vehicle routing problems (VRP).
 security:
   - api_key: []
 paths:
