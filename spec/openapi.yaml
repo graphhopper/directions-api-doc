@@ -2496,7 +2496,33 @@ components:
             a bike trip), so we will add some randomness.
             With `alternative_route`, we give you not one but several routes that are close to optimal, but
             not too similar to each other. You can control both of these features with additional parameters, see below. Requires `ch.disable=true`.
-            
+        round_trip.distance:
+          type: integer
+          format: int32
+          default: 10000
+          description: |
+            If `algorithm=round_trip`, this parameter configures approximative length of the resulting round trip. Requires `ch.disable=true`.
+        round_trip.seed:
+          type: integer
+          format: int64
+          description: |
+            If `algorithm=round_trip`, this sets the random seed. Change this to get a different tour for each value.
+        alternative_route.max_paths:
+          type: integer
+          format: int32
+          default: 2
+          description: |
+            If `algorithm=alternative_route`, this parameter sets the number of maximum paths which should be calculated. Increasing can lead to worse alternatives.
+        alternative_route.max_weight_factor:
+          type: number
+          default: 1.4
+          description: |
+            If `algorithm=alternative_route`, this parameter sets the factor by which the alternatives routes can be longer than the optimal route. Increasing can lead to worse alternatives.
+        alternative_route.max_share_factor:
+          type: number
+          default: 0.6
+          description: |
+            If `algorithm=alternative_route`, this parameter specifies how similar an alternative route can be to the optimal route. Increasing can lead to worse alternatives.
     RouteResponse:
       type: object
       properties:
