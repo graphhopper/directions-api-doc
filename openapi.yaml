@@ -705,10 +705,8 @@ paths:
         has an URL length limitation. Additionally the request of this POST endpoint can be compressed and can slightly
         speed up the request.
 
-        To do a request you send JSON data and the only URL parameter will be the key. Both request scenarios GET and
-        POST are identical except that all singular parameter names are named as their plural for a POST request.
-        The effected parameters are: `points`, `point_hints` and `snap_preventions`. For the remaining parameters please refer to
-        the [GET request guide](#operation/getRoute).
+        To do a request you send JSON data. Both request scenarios GET and POST are identical except that all singular parameter names are named as their plural for a POST request.
+        The effected parameters are: `points`, `point_hints` and `snap_preventions`.
 
         **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
 
