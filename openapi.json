@@ -2608,7 +2608,17 @@
                 "type": "number",
                 "format": "double"
               }
-            }
+            },
+            "example": [
+              [
+                11,
+                10
+              ],
+              [
+                22,
+                20
+              ]
+            ]
           },
           "point_hints": {
             "description": "Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.",
