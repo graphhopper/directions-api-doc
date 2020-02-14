@@ -2611,12 +2611,12 @@
             },
             "example": [
               [
-                11,
-                10
+                48.118477,
+                11.539421
               ],
               [
-                22,
-                20
+                48.12228,
+                11.559023
               ]
             ]
           },
@@ -2625,14 +2625,23 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "example": [
+              "Lindenschmitstraße",
+              "Thalkirchener Str."
+            ]
           },
           "snap_preventions": {
             "description": "Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`",
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "example": [
+              "motorway",
+              "ferry",
+              "tunnel"
+            ]
           },
           "vehicle": {
             "allOf": [
@@ -2642,7 +2651,8 @@
               {
                 "description": "The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details."
               }
-            ]
+            ],
+            "example": "bike"
           }
         }
       },

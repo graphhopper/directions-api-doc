@@ -2388,24 +2388,32 @@ components:
               type: number
               format: double
           example:
-            - - 11
-              - 10
-            - - 22
-              - 20
+            - - 48.118477
+              - 11.539421
+            - - 48.12228
+              - 11.559023
         point_hints:
           description: Optional parameter. Specifies a hint for each point in the `points` array to prefer a certain street for the closest location lookup. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.
           type: array
           items:
             type: string
+          example:
+            - Lindenschmitstraße
+            - Thalkirchener Str.
         snap_preventions:
           description: 'Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`'
           type: array
           items:
             type: string
+          example:
+            - motorway
+            - ferry
+            - tunnel
         vehicle:
           allOf:
             - $ref: '#/components/schemas/VehicleProfileId'
             - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
+          example: bike
     RouteResponse:
       type: object
       properties:
