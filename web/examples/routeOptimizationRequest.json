@@ -132,7 +132,8 @@
   ],
   "configuration": {
     "routing": {
-      "calc_points": true
+      "calc_points": true,
+      "snap_preventions": ["motorway", "trunk", "tunnel", "bridge", "ferry"]
     }
   }
 }

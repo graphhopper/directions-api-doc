@@ -3605,6 +3605,19 @@ components:
           type: boolean
           description: Indicates whether a solution includes snapped waypoints. In contrary to the address coordinate a snapped waypoint is the access point to the (road) network.
           default: false
+        snap_preventions:
+          type: array
+          items:
+            type: string
+            enum:
+              - motorway
+              - trunk
+              - bridge
+              - ford
+              - tunnel
+              - ferry
+          description: Prevents snapping locations to road links of specified road types, e.g. to motorway.
+          example: [motorway, trunk, bridge, tunnel, ferry]
     Objective:
       type: object
       properties:
