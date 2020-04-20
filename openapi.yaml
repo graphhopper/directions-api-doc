@@ -423,17 +423,6 @@ paths:
           schema:
             type: boolean
             default: true
-        - name: type
-          in: query
-          schema:
-            type: string
-            enum:
-              - json
-              - gpx
-            default: json
-          description: |
-            Specifies the media type for the response.
-            For `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.
         - name: ch.disable
           in: query
           description: |
@@ -2463,15 +2452,6 @@ components:
             but requires special client code to unpack. (We provide it in our JavaScript client library!)
             Set this parameter to `false` to switch the encoding to simple coordinate pairs like `[lon,lat]`, or `[lon,lat,elevation]`.
             See the description of the response format for more information.
-        type:
-          type: string
-          enum:
-            - json
-            - gpx
-          default: json
-          description: |
-            Specifies the media type for the response.
-            For `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.
         ch.disable:
           type: boolean
           default: false

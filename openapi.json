@@ -183,19 +183,6 @@
             }
           },
           {
-            "name": "type",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "json",
-                "gpx"
-              ],
-              "default": "json"
-            },
-            "description": "Specifies the media type for the response.\nFor `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.\n"
-          },
-          {
             "name": "ch.disable",
             "in": "query",
             "description": "Use this parameter in combination with one or more parameters from below.\n",
@@ -2695,15 +2682,6 @@
             "type": "boolean",
             "default": true,
             "description": "Allows changing the encoding of location data in the response. The default is polyline encoding, which is compact\nbut requires special client code to unpack. (We provide it in our JavaScript client library!)\nSet this parameter to `false` to switch the encoding to simple coordinate pairs like `[lon,lat]`, or `[lon,lat,elevation]`.\nSee the description of the response format for more information.\n"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "json",
-              "gpx"
-            ],
-            "default": "json",
-            "description": "Specifies the media type for the response.\nFor `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.\n"
           },
           "ch.disable": {
             "type": "boolean",
