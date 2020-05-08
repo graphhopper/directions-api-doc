@@ -3988,7 +3988,7 @@
           },
           "group": {
             "type": "string",
-            "description": "Group this service belongs to.",
+            "description": "Group this service belongs to. See the group relation and [this post](https://discuss.graphhopper.com/t/4040) on how to utilize this.",
             "example": "group-A"
           }
         },
@@ -4131,7 +4131,7 @@
           },
           "group": {
             "type": "string",
-            "description": "Group this stop belongs to",
+            "description": "Group this stop belongs to. See the group relation and [this post](https://discuss.graphhopper.com/t/4040) on how to utilize this.",
             "example": "ASAP"
           }
         }
