@@ -1341,11 +1341,16 @@ paths:
       parameters:
         - name: gps_accuracy
           in: query
-          description: 'Specify the precision of a point in meters'
+          description: 'Specify the precision of a point, in meter'
           required: false
+          schema:
+            type: integer
         - name: vehicle
+          in: query
           description: 'Specify the vehicle profile like car'
-          required: true
+          required: false
+          schema:
+            type: string
 
       tags:
         - Map Matching API
