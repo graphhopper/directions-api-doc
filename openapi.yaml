@@ -1327,6 +1327,19 @@ paths:
         The cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).
 
         One request should not exceed the Map Matching API location limit depending on the package, see the pricing in our dashboard.
+      parameters:
+        - name: gps_accuracy
+          in: query
+          description: 'Specify the precision of a point, in meter'
+          required: false
+          schema:
+            type: integer
+        - name: vehicle
+          in: query
+          description: Specify the vehicle profile like car
+          required: false
+          schema:
+            type: string
       tags:
         - Map Matching API
       responses:

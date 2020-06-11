@@ -1310,6 +1310,26 @@
         "summary": "Map-match a GPX file",
         "operationId": "postGPX",
         "description": "### Example\nYou get an example response for a GPX via:\n\n```\ncurl -XPOST -H \"Content-Type: application/gpx+xml\" \"https://graphhopper.com/api/1/match?vehicle=car&key=[YOUR_KEY]\" --data @/path/to/some.gpx\n```\n\nA minimal working GPX file looks like\n```gpx\n<gpx>\n <trk>\n  <trkseg>\n   <trkpt lat=\"51.343657\" lon=\"12.360708\"></trkpt>\n   <trkpt lat=\"51.343796\" lon=\"12.361337\"></trkpt>\n   <trkpt lat=\"51.342784\" lon=\"12.361882\"></trkpt>\n  </trkseg>\n </trk>\n</gpx>\n```\n\n### Introduction\n![Map Matching screenshot](./img/map-matching-example.gif)\n\nThe Map Matching API is part of the GraphHopper Directions API and with this API you can snap measured GPS points typically as GPX files to a digital\nroad network to e.g. clean data or attach certain data like elevation or turn instructions to it. Read more at Wikipedia.\n\nIn the example screenshot above and demo you see the Map Matching API in action where the black line is the GPS track and the green one is matched result.\n\nMost of the times, you can simply POST a GPX file, but some of the request parameters of the [Routing API](#tag/Routing-API) apply here, too.\n\n### API Clients and Examples\nSee the [clients](#section/API-Clients) section in the main documentation, and [live examples](https://graphhopper.com/api/1/examples/#map-matching).\n\n### Limits and Counts\nThe cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).\n\nOne request should not exceed the Map Matching API location limit depending on the package, see the pricing in our dashboard.\n",
+        "parameters": [
+          {
+            "name": "gps_accuracy",
+            "in": "query",
+            "description": "Specify the precision of a point, in meter",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "vehicle",
+            "in": "query",
+            "description": "Specify the vehicle profile like car",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "tags": [
           "Map Matching API"
         ],
