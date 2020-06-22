@@ -467,9 +467,9 @@ paths:
         - name: block_area
           in: query
           description: |
-            Block road access via a point with the format `latitude,longitude`
-            or an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.
-            Separate several values with `;`. Requires `ch.disable=true`.
+            Block road access by specifying a point close to the road segment to be blocked, with the format `lat,lon`.
+            You can also block all road segments crossing a geometric shape. Specify a circle using the format `lat,lon,radius`, or a polygon using the format `lat1,lon1,lat2,lon2,...,latN,lonN`.
+            You can specify several shapes, separating them with `;`. Requires `ch.disable=true`.
           schema:
             type: string
         - name: avoid
