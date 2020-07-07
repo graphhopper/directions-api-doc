@@ -359,7 +359,7 @@ paths:
         - in: query
           name: turn_costs
           description: |
-            Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+            Specifies if turn restrictions should be considered. Enabling this option increases the route computation time. Only supported for motor vehicles and OpenStreetMap.
           schema:
             type: boolean
             default: false
@@ -1084,7 +1084,7 @@ paths:
             default: true
         - name: turn_costs
           in: query
-          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
           required: false
           schema:
             type: boolean
@@ -2261,7 +2261,7 @@ components:
           type: boolean
           default: true
         turn_costs:
-          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
           type: boolean
           default: false
       example:
@@ -2301,7 +2301,7 @@ components:
           type: boolean
           default: true
         turn_costs:
-          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
           type: boolean
           default: false
       example:
