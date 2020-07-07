@@ -116,7 +116,7 @@ info:
 
     Please note:
 
-     * **turn restrictions are considered only with `ch.disable=true` and only for the Routing API**
+     * all motor vehicles (`car`, `small_truck`, `truck` and `scooter`) support turn restrictions via `turn_costs=true`
      * the free package supports only the vehicle profiles `car`, `bike` or `foot`
      * up to 2 different vehicle profiles can be used in a single optimization request. The number of vehicles is unaffected and depends on your subscription.
      * we offer custom vehicle profiles with different properties, different speed profiles or different access options. To find out more about custom profiles, please [contact us](https://www.graphhopper.com/contact-form/).
@@ -222,9 +222,9 @@ tags:
       ### Fast
       To get started using this API, just provide two or more points and retrieve the fastest route through the road
       network that connects them. This type of request is heavily optimized for query performance, so it does not
-      take turn restrictions into account, and it does not allow for some advanced features.
+      allow for some advanced features.
       ### Flexible
-      Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
+      Unlock further flexible features via `ch.disable=true`.
       Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
   - name: Matrix API
     description: |
@@ -239,10 +239,11 @@ tags:
 
       In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
       route being calculated. The Matrix API results in NxM routes, or more precise NxM distances or times being calculated
-      but a lot faster compared to NxM single requests.
+      but [is a lot faster](https://www.graphhopper.com/blog/2019/06/04/incredibly-fast-distance-matrix-calculations-with-graphhopper/)
+      compared to NxM single requests.
 
       The most simple example is a tourist trying to decide
-      which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
+      which pizza is close to her instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
       often in the need of big NxN matrices to solve vehicle routing problems. For example the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
       uses the Matrix API under the hood to achieve this.
 
@@ -355,6 +356,13 @@ paths:
             The vehicle profile for which the route should be calculated.
           schema:
             $ref: '#/components/schemas/VehicleProfileId'
+        - in: query
+          name: turn_costs
+          description: |
+            Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          schema:
+            type: boolean
+            default: false
         - name: locale
           in: query
           description: |
@@ -1074,6 +1082,13 @@ paths:
           schema:
             type: boolean
             default: true
+        - name: turn_costs
+          in: query
+          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          required: false
+          schema:
+            type: boolean
+            default: false
       tags:
         - Matrix API
       responses:
@@ -2227,6 +2242,11 @@ components:
           type: array
           items:
             type: string
+        snap_preventions:
+          description: see `snap_preventions` of symmetrical matrix
+          type: array
+          items:
+            type: string
         out_arrays:
           description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
           type: array
@@ -2240,6 +2260,10 @@ components:
           description: Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).
           type: boolean
           default: true
+        turn_costs:
+          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          type: boolean
+          default: false
       example:
         $ref: examples/asymmetricalMatrixRequest.json
     SymmetricalMatrixRequest:
@@ -2276,6 +2300,10 @@ components:
           description: Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).
           type: boolean
           default: true
+        turn_costs:
+          description: Specifies if turn restrictions should be considered. Only supported for motor vehicles and OpenStreetMap.
+          type: boolean
+          default: false
       example:
         $ref: examples/symmetricalMatrixRequest.json
     MatrixResponse:
