@@ -23,7 +23,7 @@ info:
 
     ![Nested Doc](./img/nested-doc.gif)
 
-    To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) 
+    To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
     which available in the [dashboard](https://graphhopper.com/dashboard/). See how the Routing and Geocoding API is integrated in 
     our route planner website [GraphHopper Maps](https://graphhopper.com/maps) ([sources](https://github.com/graphhopper/graphhopper/tree/0.12/web/src/main/resources/assets)). 
     And [see below](#section/Explore-our-APIs/Insomnia) for a collection of requests for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The request file contains all example requests from this documentation.
@@ -302,9 +302,9 @@ tags:
     description: Everything about map matching
   - name: Cluster API
     description: |
-    
+
       ### Introduction
-      
+
       ![Cluster Example](./img/cluster-solution.jpg)
 
       It solves the “capacity clustering problem” by assigning a set of customers to a given number of distinct groups (called clusters).
@@ -362,6 +362,18 @@ paths:
            The vehicle profile for which the route should be calculated.
           schema:
            $ref: "#/components/schemas/VehicleProfileId"
+        - in: query
+          name: curbside
+          description: |
+            Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
         - in: query
           name: turn_costs
           description: |
@@ -1070,6 +1082,45 @@ paths:
             items:
               type: string
           explode: true
+        - name: curbside
+          in: query
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
+        - name: from_curbside
+          in: query
+          description: Curbside setting for the from_point parameter. See curbside.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
+        - name: to_curbside
+          in: query
+          description: Curbside setting for the to_point parameter. See curbside.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
         - name: out_array
           in: query
           description: 'Specifies which arrays should be included in the response. Specify one or more of the following options ''weights'', ''times'', ''distances''. To specify more than one array use e.g. out_array=times&out_array=distances. The units of the entries of distances are meters, of times are seconds and of weights is arbitrary and it can differ for different vehicles or versions of this API.'
@@ -1141,17 +1192,16 @@ paths:
         The effected parameters are: `points`, `from_points`, `to_points`, and `out_arrays`. For the remaining parameters
         please refer to the [guide of the GET endpoint](#operation/getMatrix).
 
-        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
+        **Please note that in contrast to GET endpoint the points have to be specified as `longitude, latitude` pairs (in that order, similar to [GeoJson](http://geojson.org/geojson-spec.html#examples))**.
 
-        For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
+        For example the query `point=10,11&point=20,22&vehicle=car` will be converted to the following JSON:
         ```json
-        { "points": [[11,10], [22,20]] }
+        { "points": [[11,10], [22,20]], "vehicle": "car" }
         ```
-        Note that also the order changes to `[longitude,latitude]` similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
 
-        Example:
+        A complete curl Example:
         ```bash
-        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]" -d '{"elevation":false,"out_arrays":["weights"],"from_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"to_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"vehicle":"car"}'
+        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]" -d '{"elevation":false,"out_arrays":["weights", "times"],"from_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"to_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"vehicle":"car"}'
         ```
       requestBody:
         content:
@@ -1640,7 +1690,7 @@ paths:
 
         Prefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for
         long running problems only. The work flow is asynchronous:
-        
+
         - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
         - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
           towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
@@ -2192,17 +2242,27 @@ components:
               type: number
               format: double
         from_point_hints:
-          description: See `point_hints`
+          description: See `point_hints`of symmetrical matrix
           type: array
           items:
             type: string
         to_point_hints:
-          description: See `point_hints`
+          description: See `point_hints`of symmetrical matrix
           type: array
           items:
             type: string
         snap_preventions:
-          description: see `snap_preventions` of symmetrical matrix
+          description: See `snap_preventions` of symmetrical matrix
+          type: array
+          items:
+            type: string
+        from_curbsides:
+          description: See `curbsides`of symmetrical matrix
+          type: array
+          items:
+            type: string
+        to_curbsides:
+          description: See `curbsides`of symmetrical matrix
           type: array
           items:
             type: string
@@ -2243,6 +2303,11 @@ components:
             type: string
         snap_preventions:
           description: Optional parameter to avoid snapping to a certain road class or road environment. Current supported values `motorway`, `trunk`, `ferry`, `tunnel`, `bridge` and `ford`
+          type: array
+          items:
+            type: string
+        curbsides:
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
           type: array
           items:
             type: string
@@ -2412,6 +2477,16 @@ components:
           items:
             type: string
           example: [ motorway, ferry, tunnel ]
+        curbsides:
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          type: array
+          items:
+            type: string
+            enum:
+              - any
+              - right
+              - left
+          example: [ any, right ]
         vehicle:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
@@ -3221,6 +3296,15 @@ components:
           type: string
           description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
           example: Queens Victoria Street 70
+        curbside:
+          type: string
+          enum:
+            - right
+            - left
+            - any
+          default: any
+          description: Optional parameter. Specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. Only supported for motor vehicles and OpenStreetMap.
+          example: If you would like to arrive at this address without having to cross the street use `curbside=right/left` for countries with right/left-hand driving. Using `curbside=any` is the same as not specifying this parameter at all.
       required:
         - location_id
         - lon
@@ -3620,6 +3704,17 @@ components:
             - openstreetmap
             - tomtom
           default: openstreetmap
+        curbside_strictness:
+          type: string
+          default: soft
+          description: In some cases curbside constraints cannot be fulfilled. For example in one-way streets you cannot arrive at a building that is on the left side of
+                       the street such that the building is to the right of you (unless you drove the one-way street the wrong/illegal way). You can set the `curbside_strictness`
+                       to `soft` to ignore the curbside constraint in such cases or set it to `strict` to get an error response instead. You can also set it to `ignore` to ignore
+                       all curbside constraints (this is useful to compare the results with and without constraints without modifying every single address).
+          enum:
+            - ignore
+            - soft
+            - strict
         fail_fast:
           type: boolean
           description: indicates whether matrix calculation should fail fast when points cannot be connected
