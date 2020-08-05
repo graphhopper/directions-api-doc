@@ -168,7 +168,7 @@ tags:
   - name: Route Optimization API
     description: |
 
-      ### Getting Started
+      ## Getting Started
 
       The Route Optimization API can be used to solve [traveling salesman](https://en.wikipedia.org/wiki/Travelling_salesman_problem) or [vehicle routing problems](https://en.wikipedia.org/wiki/Vehicle_routing_problem).
 
@@ -181,7 +181,7 @@ tags:
       Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
       You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
 
-      ### Tutorials
+      ## Tutorials
 
       We provide [a number of tutorials](https://www.graphhopper.com/tutorial/) illustrating how to use the Route Optimization API and
       how to model your vehicle routing problems:
