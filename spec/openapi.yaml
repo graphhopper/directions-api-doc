@@ -23,7 +23,7 @@ info:
 
     ![Nested Doc](./img/nested-doc.gif)
 
-    To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/) 
+    To play and see the Route Optimization API in action try our [route editor](https://graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
     which available in the [dashboard](https://graphhopper.com/dashboard/). See how the Routing and Geocoding API is integrated in 
     our route planner website [GraphHopper Maps](https://graphhopper.com/maps) ([sources](https://github.com/graphhopper/graphhopper/tree/0.12/web/src/main/resources/assets)). 
     And [see below](#section/Explore-our-APIs/Insomnia) for a collection of requests for [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/). The request file contains all example requests from this documentation.
@@ -116,7 +116,7 @@ info:
 
     Please note:
     
-     * **turn restrictions are considered only with `ch.disable=true` and only for the Routing API**
+     * all motor vehicles (`car`, `small_truck`, `truck` and `scooter`) support turn restrictions via `turn_costs=true`
      * the free package supports only the vehicle profiles `car`, `bike` or `foot`
      * up to 2 different vehicle profiles can be used in a single optimization request. The number of vehicles is unaffected and depends on your subscription.
      * we offer custom vehicle profiles with different properties, different speed profiles or different access options. To find out more about custom profiles, please [contact us](https://www.graphhopper.com/contact-form/).
@@ -210,9 +210,9 @@ tags:
       ### Fast
       To get started using this API, just provide two or more points and retrieve the fastest route through the road
       network that connects them. This type of request is heavily optimized for query performance, so it does not
-      take turn restrictions into account, and it does not allow for some advanced features.
+      allow for some advanced features.
       ### Flexible
-      Enable turn restrictions and unlock further flexible features via `ch.disable=true`.
+      Unlock further flexible features via `ch.disable=true`.
       Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
 
   - name: Matrix API
@@ -228,10 +228,11 @@ tags:
 
       In the [Routing API](#tag/Routing-API) we support multiple points, so called 'via points', which results in one
       route being calculated. The Matrix API results in NxM routes, or more precise NxM distances or times being calculated
-      but a lot faster compared to NxM single requests.
+      but [is a lot faster](https://www.graphhopper.com/blog/2019/06/04/incredibly-fast-distance-matrix-calculations-with-graphhopper/)
+      compared to NxM single requests.
 
       The most simple example is a tourist trying to decide
-      which pizza is close to him instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
+      which pizza is close to her instead of using beeline distance she can calculate a 1x4 matrix. Or a delivery service
       often in the need of big NxN matrices to solve vehicle routing problems. For example the [GraphHopper Route Optimization API](#tag/Route-Optimization-API)
       uses the Matrix API under the hood to achieve this.
 
@@ -286,9 +287,9 @@ tags:
     description: Everything about map matching
   - name: Cluster API
     description: |
-    
+
       ### Introduction
-      
+
       ![Cluster Example](./img/cluster-solution.jpg)
 
       It solves the “capacity clustering problem” by assigning a set of customers to a given number of distinct groups (called clusters).
@@ -346,6 +347,25 @@ paths:
            The vehicle profile for which the route should be calculated.
           schema:
            $ref: "#/components/schemas/VehicleProfileId"
+        - in: query
+          name: curbside
+          description: |
+            Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+        - in: query
+          name: turn_costs
+          description: |
+            Specifies if turn restrictions should be considered. Enabling this option increases the route computation time. Only supported for motor vehicles and OpenStreetMap.
+          schema:
+            type: boolean
+            default: false
         - name: locale
           in: query
           description: |
@@ -380,11 +400,11 @@ paths:
           name: optimize
           description: |
             Normally, the calculated route will visit the points in the order you specified them.
-            If you have more than two points, you can set this parameter to `true` and the points may be re-ordered to minimize the total travel time.
-            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the request is more expensive.
+            If you have more than two points, you can set this parameter to `"true"` and the points may be re-ordered to minimize the total travel time.
+            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the request costs more credits.
           schema:
-            type: boolean
-            default: false
+            type: string
+            default: "false"
         # Switches to omit parts of the response
         - in: query
           name: instructions
@@ -418,17 +438,6 @@ paths:
           schema:
             type: boolean
             default: true
-        - name: type
-          in: query
-          schema:
-            type: string
-            enum:
-              - json
-              - gpx
-            default: json
-          description: |
-            Specifies the media type for the response.
-            For `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.
         # Flexible routing: ch.disable unlocks everything below it
         - name: ch.disable
           in: query
@@ -474,9 +483,9 @@ paths:
         - name: block_area
           in: query
           description: |
-            Block road access via a point with the format `latitude,longitude`
-            or an area defined by a circle `lat,lon,radius` or a rectangle `lat1,lon1,lat2,lon2`.
-            Separate several values with `;`. Requires `ch.disable=true`.
+            Block road access by specifying a point close to the road segment to be blocked, with the format `lat,lon`.
+            You can also block all road segments crossing a geometric shape. Specify a circle using the format `lat,lon,radius`, or a polygon using the format `lat1,lon1,lat2,lon2,...,latN,lonN`.
+            You can specify several shapes, separating them with `;`. Requires `ch.disable=true`.
           schema:
             type: string
         - name: avoid
@@ -1058,6 +1067,45 @@ paths:
             items:
               type: string
           explode: true
+        - name: curbside
+          in: query
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
+        - name: from_curbside
+          in: query
+          description: Curbside setting for the from_point parameter. See curbside.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
+        - name: to_curbside
+          in: query
+          description: Curbside setting for the to_point parameter. See curbside.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - any
+                - right
+                - left
+          explode: true
         - name: out_array
           in: query
           description: 'Specifies which arrays should be included in the response. Specify one or more of the following options ''weights'', ''times'', ''distances''. To specify more than one array use e.g. out_array=times&out_array=distances. The units of the entries of distances are meters, of times are seconds and of weights is arbitrary and it can differ for different vehicles or versions of this API.'
@@ -1079,6 +1127,13 @@ paths:
           schema:
             type: boolean
             default: true
+        - name: turn_costs
+          in: query
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
+          required: false
+          schema:
+            type: boolean
+            default: false
       tags:
         - Matrix API
       responses:
@@ -1122,17 +1177,16 @@ paths:
         The effected parameters are: `points`, `from_points`, `to_points`, and `out_arrays`. For the remaining parameters
         please refer to the [guide of the GET endpoint](#operation/getMatrix).
 
-        **Please note that in opposite to the GET endpoint, points are specified in the order of `longitude, latitude`**.
+        **Please note that in contrast to GET endpoint the points have to be specified as `longitude, latitude` pairs (in that order, similar to [GeoJson](http://geojson.org/geojson-spec.html#examples))**.
 
-        For example `point=10,11&point=20,22` will be converted to the following JSON `points` array:
+        For example the query `point=10,11&point=20,22&vehicle=car` will be converted to the following JSON:
         ```json
-        { "points": [[11,10], [22,20]] }
+        { "points": [[11,10], [22,20]], "vehicle": "car" }
         ```
-        Note that also the order changes to `[longitude,latitude]` similar to [GeoJson](http://geojson.org/geojson-spec.html#examples).
 
-        Example:
+        A complete curl Example:
         ```bash
-        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]" -d '{"elevation":false,"out_arrays":["weights"],"from_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"to_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"vehicle":"car"}'
+        curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/matrix?key=[YOUR_KEY]" -d '{"elevation":false,"out_arrays":["weights", "times"],"from_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"to_points":[[-0.087891,51.534377],[-0.090637,51.467697],[-0.171833,51.521241],[-0.211487,51.473685]],"vehicle":"car"}'
         ```
       requestBody:
         content:
@@ -1333,6 +1387,21 @@ paths:
         The cost for one request depends on the number of GPS location and is documented [here](https://graphhopper.com/api/1/docs/FAQ/).
 
         One request should not exceed the Map Matching API location limit depending on the package, see the pricing in our dashboard.
+
+      parameters:
+        - name: gps_accuracy
+          in: query
+          description: 'Specify the precision of a point, in meter'
+          required: false
+          schema:
+            type: integer
+        - name: vehicle
+          in: query
+          description: 'Specify the vehicle profile like car'
+          required: false
+          schema:
+            type: string
+
       tags:
         - Map Matching API
       responses:
@@ -1606,7 +1675,7 @@ paths:
 
         Prefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for
         long running problems only. The work flow is asynchronous:
-        
+
         - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
         - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
           towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
@@ -2158,12 +2227,27 @@ components:
               type: number
               format: double
         from_point_hints:
-          description: See `point_hints`
+          description: See `point_hints`of symmetrical matrix
           type: array
           items:
             type: string
         to_point_hints:
-          description: See `point_hints`
+          description: See `point_hints`of symmetrical matrix
+          type: array
+          items:
+            type: string
+        snap_preventions:
+          description: See `snap_preventions` of symmetrical matrix
+          type: array
+          items:
+            type: string
+        from_curbsides:
+          description: See `curbsides`of symmetrical matrix
+          type: array
+          items:
+            type: string
+        to_curbsides:
+          description: See `curbsides`of symmetrical matrix
           type: array
           items:
             type: string
@@ -2180,6 +2264,10 @@ components:
           description: 'Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).'
           type: boolean
           default: true
+        turn_costs:
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
+          type: boolean
+          default: false
       example:
         $ref: 'examples/asymmetricalMatrixRequest.json'
     SymmetricalMatrixRequest:
@@ -2203,6 +2291,11 @@ components:
           type: array
           items:
             type: string
+        curbsides:
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          type: array
+          items:
+            type: string
         out_arrays:
           description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
           type: array
@@ -2216,6 +2309,10 @@ components:
           description: 'Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).'
           type: boolean
           default: true
+        turn_costs:
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
+          type: boolean
+          default: false
       example:
         $ref: 'examples/symmetricalMatrixRequest.json'
     MatrixResponse:
@@ -2365,6 +2462,16 @@ components:
           items:
             type: string
           example: [ motorway, ferry, tunnel ]
+        curbsides:
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          type: array
+          items:
+            type: string
+            enum:
+              - any
+              - right
+              - left
+          example: [ any, right ]
         vehicle:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
@@ -2392,12 +2499,12 @@ components:
             Optional parameter to retrieve path details. You can request additional details for the route: `street_name`,
             `time`, `distance`, `max_speed`, `toll`, `road_class`, `road_class_link`, `road_access`, `road_environment`, `lanes`, and `surface`. Read more about the usage of path details [here](https://discuss.graphhopper.com/t/2539).
         optimize:
-          type: boolean
-          default: false
+          type: string
+          default: "false"
           description: |
             Normally, the calculated route will visit the points in the order you specified them.
-            If you have more than two points, you can set this parameter to `true` and the points may be re-ordered to minimize the total travel time.
-            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the request is more expensive.
+            If you have more than two points, you can set this parameter to `"true"` and the points may be re-ordered to minimize the total travel time.
+            Keep in mind that the limits on the number of locations of the Route Optimization API applies, and the request costs more credits.
         instructions:
           type: boolean
           default: true
@@ -2421,15 +2528,6 @@ components:
             but requires special client code to unpack. (We provide it in our JavaScript client library!)
             Set this parameter to `false` to switch the encoding to simple coordinate pairs like `[lon,lat]`, or `[lon,lat,elevation]`.
             See the description of the response format for more information.
-        type:
-          type: string
-          enum:
-            - json
-            - gpx
-          default: json
-          description: |
-            Specifies the media type for the response.
-            For `json`, it will be `application/json`. For `gpx`, it will be `application/gpx+xml`.
         ch.disable:
           type: boolean
           default: false
@@ -2478,9 +2576,9 @@ components:
           description: |
             Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:
             With `round_trip`, the route will get you back to where you started. This is meant for fun (think of
-            a bike trip), so we will add some randomness.
+            a bike trip), so we will add some randomness. This requires `ch.disable=true`.
             With `alternative_route`, we give you not one but several routes that are close to optimal, but
-            not too similar to each other. You can control both of these features with additional parameters, see below. Requires `ch.disable=true`.
+            not too similar to each other. You can control both of these features with additional parameters, see below.
         round_trip.distance:
           type: integer
           format: int32
@@ -3183,6 +3281,15 @@ components:
           type: string
           description: 'Optional parameter. Specifies a hint for each address to better snap the coordinates (lon,lat) to road network. E.g. if there is an address or house with two or more neighboring streets you can control for which street the closest location is looked up.'
           example: Queens Victoria Street 70
+        curbside:
+          type: string
+          enum:
+            - right
+            - left
+            - any
+          default: any
+          description: Optional parameter. Specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. Only supported for motor vehicles and OpenStreetMap.
+          example: If you would like to arrive at this address without having to cross the street use `curbside=right/left` for countries with right/left-hand driving. Using `curbside=any` is the same as not specifying this parameter at all.
       required:
         - location_id
         - lon
@@ -3436,7 +3543,7 @@ components:
           example: 900
         group:
           type: string
-          description: Group this service belongs to.
+          description: Group this service belongs to. See the group relation and [this post](https://discuss.graphhopper.com/t/4040) on how to utilize this.
           example: group-A
       required:
         - id
@@ -3542,7 +3649,7 @@ components:
               latest: 54000
         group:
           type: string
-          description: Group this stop belongs to
+          description: Group this stop belongs to. See the group relation and [this post](https://discuss.graphhopper.com/t/4040) on how to utilize this.
           example: ASAP
     TimeWindow:
       type: object
@@ -3582,6 +3689,17 @@ components:
             - openstreetmap
             - tomtom
           default: openstreetmap
+        curbside_strictness:
+          type: string
+          default: soft
+          description: In some cases curbside constraints cannot be fulfilled. For example in one-way streets you cannot arrive at a building that is on the left side of
+                       the street such that the building is to the right of you (unless you drove the one-way street the wrong/illegal way). You can set the `curbside_strictness`
+                       to `soft` to ignore the curbside constraint in such cases or set it to `strict` to get an error response instead. You can also set it to `ignore` to ignore
+                       all curbside constraints (this is useful to compare the results with and without constraints without modifying every single address).
+          enum:
+            - ignore
+            - soft
+            - strict
         fail_fast:
           type: boolean
           description: indicates whether matrix calculation should fail fast when points cannot be connected
