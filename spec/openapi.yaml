@@ -177,23 +177,26 @@ tags:
 
       1. [Sign up for GraphHopper](https://support.graphhopper.com/a/solutions/articles/44001976025)
       2. [Create an API key](https://support.graphhopper.com/a/solutions/articles/44001976027)
-      3. Download [simple traveling salesman problem](https://gist.github.com/oblonski/fb2f2be534c3ebe7bebaa72151194182)
-      4. cURL ([What is cURL?](https://de.wikipedia.org/wiki/CURL)): `curl -X POST -H "Content-Type: application/json"   "https://graphhopper.com/api/1/vrp?key=YOUR_CREATED_API_KEY" --data "@tsp.json"`
+      3. Download [simple traveling salesman problem](https://gist.github.com/oblonski/fb2f2be534c3ebe7bebaa72151194182) and save it in a local folder
+      4. Open your command line, go to that local folder and use cURL ([What is cURL?](https://de.wikipedia.org/wiki/CURL)) as follows:
 
-      Alternatively:
+         ```
+         curl -X POST -H "Content-Type: application/json"   "https://graphhopper.com/api/1/vrp?key=YOUR_CREATED_API_KEY" --data "@tsp.json"
+         ```
+
+      Alternatively, you can use our Editor to explore that API:
 
       1. Login to your GraphHopper account
-      2. Go to *Editor*
+      2. Go to **Editor**
       3. Click the **Optimize** button to solve your first problem
       4. Analyze the solution on the **Map** or as raw **JSON Output**
 
-      This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) -
-      illustrates the very basic steps and building blocks to model your vehicle routing problem.
+      If you have successfully solved the first problem, we recommend this tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/).
+      It shows and describes the essential elements to model your vehicle routing problem.
 
-      To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
-      that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
-      Additionally, you can find a ready-to-use example in the "Request samples" panel on the right (or below for mobile).
-      You can easily unfold it by clicking the `+` or you copy and paste it all to our route editor or your REST client.
+      To explore the full specification, we recommend that you either use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/),
+      which you can find in our [dashboard](https://graphhopper.com/dashboard/),
+      or use a REST client such as Insomnia or Postman, as described [here](https://docs.graphhopper.com/#section/Explore-our-APIs/Insomnia).
 
       ## Tutorials
 
