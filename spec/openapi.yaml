@@ -170,13 +170,25 @@ tags:
   - name: Route Optimization API
     description: |
 
-      ## Getting Started
+      ## Quickstart
 
       The Route Optimization API can be used to solve [traveling salesman](https://en.wikipedia.org/wiki/Travelling_salesman_problem) or [vehicle routing problems](https://en.wikipedia.org/wiki/Vehicle_routing_problem).
+      Solve your first problem by following these steps. If you already have a GraphHopper account, start with step 2.
+
+      1. [Sign up for GraphHopper](https://support.graphhopper.com/a/solutions/articles/44001976025)
+      2. [Create an API key](https://support.graphhopper.com/a/solutions/articles/44001976027)
+      3. Download [simple traveling salesman problem](https://gist.github.com/oblonski/fb2f2be534c3ebe7bebaa72151194182)
+      4. cURL ([What is cURL?](https://de.wikipedia.org/wiki/CURL)): `curl -X POST -H "Content-Type: application/json"   "https://graphhopper.com/api/1/vrp?key=YOUR_CREATED_API_KEY" --data "@tsp.json"`
+
+      Alternatively:
+
+      1. Login to your GraphHopper account
+      2. Go to *Editor*
+      3. Click the **Optimize** button to solve your first problem
+      4. Analyze the solution on the **Map** or as raw **JSON Output**
 
       This tutorial - [Getting Started with the Optimization API](https://www.graphhopper.com/blog/2019/05/17/getting-started-with-the-optimization-api-traveling-salesman-problem/) -
-      illustrates the very basic steps and building blocks to model your vehicle routing problem. This only shows you an excerpt of
-      what is possible with our API, read more about it below.
+      illustrates the very basic steps and building blocks to model your vehicle routing problem.
 
       To explore the specification use our [route editor](https://www.graphhopper.com/blog/2015/07/21/graphhoppers-new-route-optimization-editor/)
       that you will find in our [dashboard](https://graphhopper.com/dashboard/) or use a REST clients such as Insomnia or Postman as described [here](#section/Explore-our-APIs).
