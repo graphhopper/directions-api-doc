@@ -3188,7 +3188,7 @@
                 "sign": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "A number which specifies the sign to show:\n\n|   |   |\n|---|---|\n|-98| an U-turn without the knowledge if it is a right or left U-turn |\n| -8| a left U-turn |\n| -7| keep left |\n| -6| *not yet used*: leave roundabout |\n| -3| turn sharp left |\n| -2| turn left |\n| -1| turn slight left |\n|  0| continue on street |\n|  1| turn slight right |\n|  2| turn right |\n|  3| turn sharp right |\n|  4| the finish instruction before the last point |\n|  5| the instruction before a via point |\n|  6| the instruction before entering a roundabout |\n|  7| keep right |\n|  8| a right U-turn |\n|  *| For future compatibility it is important that all clients are able to handle also unknown instruction sign numbers\n"
+                  "description": "A number which specifies the sign to show:\n\n| sign | description  |\n|---|---|\n|-98| an U-turn without the knowledge if it is a right or left U-turn |\n| -8| a left U-turn |\n| -7| keep left |\n| -6| **not yet used**: leave roundabout |\n| -3| turn sharp left |\n| -2| turn left |\n| -1| turn slight left |\n|  0| continue on street |\n|  1| turn slight right |\n|  2| turn right |\n|  3| turn sharp right |\n|  4| the finish instruction before the last point |\n|  5| the instruction before a via point |\n|  6| the instruction before entering a roundabout |\n|  7| keep right |\n|  8| a right U-turn |\n|  *| **For future compatibility** it is important that all clients are able to handle also unknown instruction sign numbers\n"
                 },
                 "exit_number": {
                   "type": "integer",
