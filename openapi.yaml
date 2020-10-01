@@ -225,7 +225,6 @@ tags:
       allow for some advanced features.
       ### Flexible
       Unlock further flexible features via `ch.disable=true`.
-      Please note that some options make the request more expensive, see the [FAQ](https://graphhopper.com/api/1/docs/FAQ/) for more details.
   - name: Matrix API
     description: |
 
