@@ -867,7 +867,7 @@
           {
             "name": "buckets",
             "in": "query",
-            "description": "For how many subintervals an additional polygon should be calculated.",
+            "description": "Number by which to divide the given `time_limit` to create `buckets` nested isochrones of time intervals `time_limit-n*time_limit/buckets`. Applies analogously to `distance_limit`.",
             "schema": {
               "default": 1,
               "type": "integer",
