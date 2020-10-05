@@ -1611,7 +1611,7 @@ paths:
 
         Please note that this URL is very well suited to solve minor problems.
         Larger vehicle routing problems, which take longer than 10 seconds to solve, cannot be solved.
-        To solve them, please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.
+        To solve them, please use the [batch mode URL](#operation/asyncVRP) instead.
       operationId: solveVRP
       requestBody:
         description: The request that contains the vehicle routing problem to be solved.

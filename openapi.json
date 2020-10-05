@@ -1607,7 +1607,7 @@
     "/vrp": {
       "post": {
         "summary": "POST route optimization problem",
-        "description": "\nTo get started with the Route Optimization API, please read the [introduction](#tag/Route-Optimization-API).\n\nTo solve a new vehicle routing problem, make a HTTP POST to this URL\n\n```\nhttps://graphhopper.com/api/1/vrp?key=<your_key>\n```\n\nIt returns the solution to this problem in the JSON response.\n\nPlease note that this URL is very well suited to solve minor problems.\nLarger vehicle routing problems, which take longer than 10 seconds to solve, cannot be solved.\nTo solve them, please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.\n",
+        "description": "\nTo get started with the Route Optimization API, please read the [introduction](#tag/Route-Optimization-API).\n\nTo solve a new vehicle routing problem, make a HTTP POST to this URL\n\n```\nhttps://graphhopper.com/api/1/vrp?key=<your_key>\n```\n\nIt returns the solution to this problem in the JSON response.\n\nPlease note that this URL is very well suited to solve minor problems.\nLarger vehicle routing problems, which take longer than 10 seconds to solve, cannot be solved.\nTo solve them, please use the [batch mode URL](#operation/asyncVRP) instead.\n",
         "operationId": "solveVRP",
         "requestBody": {
           "description": "The request that contains the vehicle routing problem to be solved.",
