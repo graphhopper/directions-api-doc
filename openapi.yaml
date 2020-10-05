@@ -1596,18 +1596,25 @@ paths:
                 $ref: '#/components/schemas/GHError'
   /vrp:
     post:
-      summary: POST Route Optimization Endpoint
+      summary: POST route optimization problem
       description: |
 
-        To get started with the Route Optimization API see the [introduction](#tag/Route-Optimization-API).
+        To get started with the Route Optimization API, please read the [introduction](#tag/Route-Optimization-API).
 
-        The Route Optimization endpoint is used with a POST request towards
-        `https://graphhopper.com/api/1/vrp?key=<your_key>`. Then you'll find the solution in the JSON response.
-        Please note that for problems that take longer than 10 seconds a bad request error is returned.
-        In this case please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.
+        To solve a new vehicle routing problem, make a HTTP POST to this URL
+
+        ```
+        https://graphhopper.com/api/1/vrp?key=<your_key>
+        ```
+
+        It returns the solution to this problem in the JSON response.
+
+        Please note that this URL is very well suited to solve minor problems.
+        Larger vehicle routing problems, which take longer than 10 seconds to solve, cannot be solved.
+        To solve them, please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.
       operationId: solveVRP
       requestBody:
-        description: Request object that contains the problem to be solved
+        description: The request that contains the vehicle routing problem to be solved.
         required: true
         content:
           application/json:
@@ -1699,18 +1706,32 @@ paths:
                 $ref: '#/components/schemas/InternalErrorMessage'
   /vrp/optimize:
     post:
-      summary: Batch Route Optimization Endpoint
+      summary: POST route optimization problem (batch mode)
       description: |
 
-        Prefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for
-        long running problems only. The work flow is asynchronous:
+        To solve a vehicle routing problem, perform the following steps:
 
-        - send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.
-        - poll the solution every 500ms until it gives `status=finished`. Do this with a GET request 
-          towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        
+        1.) Make a HTTP POST to this URL
+
+        ```
+        https://graphhopper.com/api/1/vrp/optimize?key=<your_key>
+        ```
+
+        It returns a job id (job_id).
+
+        2.) Take the job id and fetch the solution for the vehicle routing problem from this URL:
+
+        ```
+        https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>
+        ```
+
+        We recommend to query the solution every 500ms until it returns 'status=finished'.
+
+        **Note**: Since the workflow is a bit more cumbersome and since you lose some time in fetching the solution, you should always prefer
+        the [synchronous endpoint](#operation/solveVRP). You should use the batch mode only for long running problems.
       operationId: asyncVRP
       requestBody:
-        description: Request object that contains the problem to be solved
+        description: The request that contains the problem to be solved.
         required: true
         content:
           application/json:
@@ -1809,10 +1830,16 @@ paths:
                 $ref: '#/components/schemas/InternalErrorMessage'
   '/vrp/solution/{jobId}':
     get:
-      summary: GET Batch Solution Endpoint
+      summary: GET the solution (batch mode)
       description: |
-        This endpoint returns the solution of a vehicle routing problems submitted to the [Batch Route Optimization endpoint](#operation/asyncVRP).
-        You can fetch it with the job_id, you have been sent.
+
+        Take the job id and fetch the solution for the vehicle routing problem from this URL:
+
+        ```
+        https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>
+        ```
+
+        You get the job id by sending a vehicle routing problem to the [batch mode URL](#operation/asyncVRP).
       operationId: getSolution
       parameters:
         - in: path

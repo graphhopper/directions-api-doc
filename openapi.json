@@ -1606,11 +1606,11 @@
     },
     "/vrp": {
       "post": {
-        "summary": "POST Route Optimization Endpoint",
-        "description": "\nTo get started with the Route Optimization API see the [introduction](#tag/Route-Optimization-API).\n\nThe Route Optimization endpoint is used with a POST request towards\n`https://graphhopper.com/api/1/vrp?key=<your_key>`. Then you'll find the solution in the JSON response.\nPlease note that for problems that take longer than 10 seconds a bad request error is returned.\nIn this case please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.\n",
+        "summary": "POST route optimization problem",
+        "description": "\nTo get started with the Route Optimization API, please read the [introduction](#tag/Route-Optimization-API).\n\nTo solve a new vehicle routing problem, make a HTTP POST to this URL\n\n```\nhttps://graphhopper.com/api/1/vrp?key=<your_key>\n```\n\nIt returns the solution to this problem in the JSON response.\n\nPlease note that this URL is very well suited to solve minor problems.\nLarger vehicle routing problems, which take longer than 10 seconds to solve, cannot be solved.\nTo solve them, please use the asynchronous [Batch Route Optimization Endpoint](#operation/asyncVRP) instead.\n",
         "operationId": "solveVRP",
         "requestBody": {
-          "description": "Request object that contains the problem to be solved",
+          "description": "The request that contains the vehicle routing problem to be solved.",
           "required": true,
           "content": {
             "application/json": {
@@ -1695,11 +1695,11 @@
     },
     "/vrp/optimize": {
       "post": {
-        "summary": "Batch Route Optimization Endpoint",
-        "description": "\nPrefer the [synchronous endpoint](#operation/solveVRP) and use this Batch Route Optimization endpoint for\nlong running problems only. The work flow is asynchronous:\n\n- send a POST request towards `https://graphhopper.com/api/1/vrp/optimize?key=<your_key>` and fetch the job_id.\n- poll the solution every 500ms until it gives `status=finished`. Do this with a GET request \n  towards `https://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>`.        \n",
+        "summary": "POST route optimization problem (batch mode)",
+        "description": "\nTo solve a vehicle routing problem, perform the following steps:\n\n1.) Make a HTTP POST to this URL\n\n```\nhttps://graphhopper.com/api/1/vrp/optimize?key=<your_key>\n```\n\nIt returns a job id (job_id).\n\n2.) Take the job id and fetch the solution for the vehicle routing problem from this URL:\n\n```\nhttps://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>\n```\n\nWe recommend to query the solution every 500ms until it returns 'status=finished'.\n\n**Note**: Since the workflow is a bit more cumbersome and since you lose some time in fetching the solution, you should always prefer\nthe [synchronous endpoint](#operation/solveVRP). You should use the batch mode only for long running problems.\n",
         "operationId": "asyncVRP",
         "requestBody": {
-          "description": "Request object that contains the problem to be solved",
+          "description": "The request that contains the problem to be solved.",
           "required": true,
           "content": {
             "application/json": {
@@ -1793,8 +1793,8 @@
     },
     "/vrp/solution/{jobId}": {
       "get": {
-        "summary": "GET Batch Solution Endpoint",
-        "description": "This endpoint returns the solution of a vehicle routing problems submitted to the [Batch Route Optimization endpoint](#operation/asyncVRP).\nYou can fetch it with the job_id, you have been sent.\n",
+        "summary": "GET the solution (batch mode)",
+        "description": "\nTake the job id and fetch the solution for the vehicle routing problem from this URL:\n\n```\nhttps://graphhopper.com/api/1/vrp/solution/<job_id>?key=<your_key>\n```\n\nYou get the job id by sending a vehicle routing problem to the [batch mode URL](#operation/asyncVRP).\n",
         "operationId": "getSolution",
         "parameters": [
           {
