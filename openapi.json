@@ -219,7 +219,7 @@
           {
             "name": "weighting",
             "in": "query",
-            "description": "Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`, both require `ch.disable=true`.\n",
+            "description": "Determines the way the ''best'' route is calculated. Default is `fastest`. Another option is `short_fastest` which finds a reasonable balance between `shortest` and `fastest`. The `weighting=shortest` is deprecated and not recommended for motor vehicles. Non-default weightings require `ch.disable=true`.\n",
             "schema": {
               "type": "string",
               "default": "fastest"
