@@ -3137,7 +3137,7 @@ components:
               value: completion_time
         cost_matrices:
           type: array
-          description: Specifies your own tranport time and distance matrix.
+          description: Specifies your own tranport time and distance matrices.
           items:
             $ref: '#/components/schemas/CostMatrix'
           example:
