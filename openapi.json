@@ -3488,7 +3488,7 @@
           },
           "shipments": {
             "type": "array",
-            "description": "Specifies the available shipments. Each shipment contains a pickup and a delivery station, which must be processed one after the other.",
+            "description": "Specifies the available shipments. Each shipment contains a pickup and a delivery stop, which must be processed one after the other.",
             "items": {
               "$ref": "#/components/schemas/Shipment"
             }
