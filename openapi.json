@@ -3474,28 +3474,28 @@
           },
           "vehicle_types": {
             "type": "array",
-            "description": "Specifies the available vehicle types that are referred to by the specified vehicles.",
+            "description": "Specifies the available vehicle types. These types can be assigned to vehicles.",
             "items": {
               "$ref": "#/components/schemas/VehicleType"
             }
           },
           "services": {
             "type": "array",
-            "description": "Specifies the available services, i.e. pickup, delivery or any other points to be visited by vehicles. Each service only involves exactly one location.",
+            "description": "Specifies the orders of the type \"service\". These are, for example, pick-ups, deliveries or other stops that are to be approached by the specified vehicles. Each of these orders contains only one location.",
             "items": {
               "$ref": "#/components/schemas/Service"
             }
           },
           "shipments": {
             "type": "array",
-            "description": "Specifies the available shipments, i.e. pickup AND delivery points to be visited by vehicles subsequently. Each shipment involves exactly two locations, a pickup and a delivery location.",
+            "description": "Specifies the available shipments. Each shipment contains a pickup and a delivery station, which must be processed one after the other.",
             "items": {
               "$ref": "#/components/schemas/Shipment"
             }
           },
           "relations": {
             "type": "array",
-            "description": "Specifies an arbitrary number of additional relations between and among services and shipments.",
+            "description": "Defines additional relationships between orders.",
             "items": {
               "anyOf": [
                 {
@@ -3512,7 +3512,7 @@
           },
           "objectives": {
             "type": "array",
-            "description": "Specifies an array of objective functions. This tells the algorithm the objective of the optimization.",
+            "description": "Specifies an objective function. The vehicle routing problem is solved in such a way that this objective function is minimized.",
             "items": {
               "$ref": "#/components/schemas/Objective"
             },
@@ -3529,7 +3529,7 @@
           },
           "cost_matrices": {
             "type": "array",
-            "description": "Specifies an array of cost matrix objects. This is used if you want to provide custom distance and/or time matrix values e.g. for time-dependent or indoor routing like for warehouses.",
+            "description": "Specifies your own tranport time and distance matrix.",
             "items": {
               "$ref": "#/components/schemas/CostMatrix"
             },
@@ -3663,12 +3663,12 @@
         "properties": {
           "vehicle_id": {
             "type": "string",
-            "description": "Specifies the id of the vehicle. Ids need to be unique, thus if there two vehicles with the same id, an exception is thrown.",
+            "description": "Specifies the ID of the vehicle. Ids must be unique, i.e. if there are two vehicles with the same ID, an error is returned.",
             "example": "vehicle-1"
           },
           "type_id": {
             "type": "string",
-            "description": "The type_id refers to specified vehicle type (see vehicle types). If it is omitted a default type will be used.",
+            "description": "The type ID assigns a vehicle type to this vehicle. You can specify types in the array of vehicle types. If you omit the type ID, the default type is used. The default type is a `car` with a capacity of 0.",
             "default": "default-type",
             "example": "my-own-type"
           },
@@ -4329,7 +4329,7 @@
       },
       "Configuration": {
         "type": "object",
-        "description": "Here you can specify general configurations of the API.",
+        "description": "Specifies general configurations that are taken into account when solving the vehicle routing problem.",
         "properties": {
           "routing": {
             "$ref": "#/components/schemas/Routing"
