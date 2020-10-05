@@ -452,7 +452,7 @@ paths:
         - name: weighting
           in: query
           description: |
-            Determines the way the ''best'' route is calculated. Default is `fastest`. Another option is `short_fastest` which finds a reasonable balance between `shortest` and `fastest`. The `weighting=shortest` is deprecated and not recommended for motor vehicles. Non-default weightings require `ch.disable=true`.
+            Determines the way the "best" route is calculated. Besides `fastest` you can use `short_fastest` which finds a reasonable balance between the distance influence (`shortest`) and the time (`fastest`). You could also use `shortest` but is deprecated and not recommended for motor vehicles. All except `fastest` require `ch.disable=true`.
           schema:
             type: string
             default: fastest
