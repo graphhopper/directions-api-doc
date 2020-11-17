@@ -43,7 +43,7 @@
     },
     {
       "name": "Map Matching API",
-      "description": "Everything about map matching"
+      "description": "Everything about map matching aka \"snap to road\""
     },
     {
       "name": "Cluster API",
