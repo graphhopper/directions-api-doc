@@ -4611,7 +4611,7 @@ components:
         driving_time:
           type: integer
           format: int64
-          description: driving time of driver in seconds
+          description: cumulated driving time from start to this driver activity in seconds
         load_before:
           type: array
           description: Array with size/capacity dimensions before this activity
