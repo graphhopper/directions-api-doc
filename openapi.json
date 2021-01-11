@@ -4167,8 +4167,7 @@
           }
         },
         "required": [
-          "id",
-          "address"
+          "id"
         ]
       },
       "Shipment": {
