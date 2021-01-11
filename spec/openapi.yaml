@@ -3593,7 +3593,6 @@ components:
           example: group-A
       required:
         - id
-        - address
     Shipment:
       type: object
       properties:
