@@ -1557,7 +1557,7 @@ paths:
 
             This provider returns results from the NetToolKit provider which is specialized for US addresses and provides a wrapper around Nominatim for other addresses. You can try it [here](https://www.nettoolkit.com/geo/demo).
 
-            The following additional NetToolKit parameters are supported (read [here](https://www.nettoolkit.com/docs/geo) for more details):
+            The following additional NetToolKit parameters are supported (read [here](https://www.nettoolkit.com/docs/geo/geocoding) for more details):
             - `source`: User can choose which source provider to geocode the address, this value is "NetToolKit" by default
             - `country_code`: an iso-3166-2 country code (e.g : US) filter the results to the specify country code
 
