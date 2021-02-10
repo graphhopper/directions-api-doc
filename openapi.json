@@ -3735,6 +3735,12 @@
             "description": "Specifies the maximum number of jobs a vehicle can load.",
             "example": 12
           },
+          "min_jobs": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Specifies the minimum number of jobs a vehicle should load. This is a soft constraint, i.e. if it is not possible to fulfill “min_jobs”, we will still try to get as close as possible to this constraint.",
+            "example": 12
+          },
           "max_activities": {
             "type": "integer",
             "format": "int32",
