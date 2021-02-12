@@ -2855,12 +2855,12 @@ components:
                 type: integer
                 format: int32
                 description: |
-                  Only available for USE_ROUNDABOUT instructions. The count of exits at which the route leaves the roundabout.
+                  Only available for roundabout instructions (sign is 6). The count of exits at which the route leaves the roundabout.
               turn_angle:
                 type: number
                 format: double
                 description: |
-                  Only available for USE_ROUNDABOUT instructions. The radian of the route within the roundabout `0 < r < 2*PI` for clockwise and
+                  Only available for roundabout instructions (sign is 6). The radian of the route within the roundabout `0 < r < 2*PI` for clockwise and
                   `-2*PI < r < 0` for counterclockwise turns.
         details:
           type: object
