@@ -283,7 +283,7 @@
                 "alternative_route"
               ]
             },
-            "description": "Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:\nWith `round_trip`, the route will get you back to where you started. This is meant for fun (think of\na bike trip), so we will add some randomness. And this requires `ch.disable=true`.\nWith `alternative_route`, we give you not one but several routes that are close to optimal, but\nnot too similar to each other. You can control both of these features with additional parameters, see below. \n"
+            "description": "Rather than looking for the shortest or fastest path, this parameter lets you solve two different problems related to routing:\nWith `alternative_route`, we give you not one but several routes that are close to optimal, but\nnot too similar to each other. \nWith `round_trip`, the route will get you back to where you started. This is meant for fun (think of\na bike trip), so we will add some randomness. The `round_trip` option requires `ch.disable=true`.\nYou can control both of these features with additional parameters, see below. \n"
           },
           {
             "name": "round_trip.distance",

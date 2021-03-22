@@ -504,11 +504,12 @@ paths:
               - round_trip
               - alternative_route
           description: |
-            Rather than looking for the shortest or fastest path, this lets you solve two different problems related to routing:
-            With `round_trip`, the route will get you back to where you started. This is meant for fun (think of
-            a bike trip), so we will add some randomness. And this requires `ch.disable=true`.
+            Rather than looking for the shortest or fastest path, this parameter lets you solve two different problems related to routing:
             With `alternative_route`, we give you not one but several routes that are close to optimal, but
-            not too similar to each other. You can control both of these features with additional parameters, see below. 
+            not too similar to each other. 
+            With `round_trip`, the route will get you back to where you started. This is meant for fun (think of
+            a bike trip), so we will add some randomness. The `round_trip` option requires `ch.disable=true`.
+            You can control both of these features with additional parameters, see below. 
         - name: round_trip.distance
           in: query
           description: |
