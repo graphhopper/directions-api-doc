@@ -18,6 +18,7 @@
     "ferry",
     "tunnel"
   ],
+  "details": ["road_class", "surface"],
   "vehicle": "bike",
   "locale": "en",
   "instructions": true,
