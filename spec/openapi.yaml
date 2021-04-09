@@ -2658,7 +2658,7 @@ components:
             $ref: '#/components/schemas/RouteResponsePath'
         info:
           $ref: '#/components/schemas/ResponseInfo'
-      example: 
+      example:
         $ref: 'examples/routeResponse.json'
     EncodedLineString:
       type: string
