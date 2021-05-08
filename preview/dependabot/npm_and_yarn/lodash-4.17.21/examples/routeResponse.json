@@ -1,0 +1,231 @@
+{
+  "hints": {
+    "visited_nodes.sum": 58,
+    "visited_nodes.average": 58.0
+  },
+  "info": {
+    "copyrights": [
+      "GraphHopper",
+      "OpenStreetMap contributors"
+    ],
+    "took": 2
+  },
+  "paths": [
+    {
+      "distance": 1791.011,
+      "weight": 307.852443,
+      "time": 370962,
+      "transfers": 0,
+      "points_encoded": false,
+      "bbox": [
+        11.539424,
+        48.118343,
+        11.558901,
+        48.122364
+      ],
+      "points": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            11.539424,
+            48.118352
+          ],
+          [
+            11.540387,
+            48.118368
+          ],
+          [
+            11.54061,
+            48.118356
+          ],
+          [
+            11.541941,
+            48.118409
+          ],
+          [
+            11.543696,
+            48.118344
+          ],
+          [
+            11.547167,
+            48.118343
+          ],
+          [
+            11.548478,
+            48.118366
+          ],
+          [
+            11.548487,
+            48.119329
+          ],
+          [
+            11.548807,
+            48.119328
+          ],
+          [
+            11.549408,
+            48.119366
+          ],
+          [
+            11.550349,
+            48.119508
+          ],
+          [
+            11.550441,
+            48.119473
+          ],
+          [
+            11.551109,
+            48.119467
+          ],
+          [
+            11.551553,
+            48.119445
+          ],
+          [
+            11.551748,
+            48.119398
+          ],
+          [
+            11.552087,
+            48.119475
+          ],
+          [
+            11.552236,
+            48.119542
+          ],
+          [
+            11.552353,
+            48.119635
+          ],
+          [
+            11.553853,
+            48.121136
+          ],
+          [
+            11.555448,
+            48.12039
+          ],
+          [
+            11.555797,
+            48.120206
+          ],
+          [
+            11.55632,
+            48.120592
+          ],
+          [
+            11.556716,
+            48.120919
+          ],
+          [
+            11.557326,
+            48.121345
+          ],
+          [
+            11.558901,
+            48.122364
+          ]
+        ]
+      },
+      "instructions": [
+        {
+          "distance": 672.954,
+          "heading": 89.04,
+          "sign": 0,
+          "interval": [
+            0,
+            6
+          ],
+          "text": "Continue onto Lindenschmitstraße",
+          "time": 144703,
+          "street_name": "Lindenschmitstraße"
+        },
+        {
+          "distance": 107.145,
+          "sign": -2,
+          "interval": [
+            6,
+            7
+          ],
+          "text": "Turn left",
+          "time": 22675,
+          "street_name": ""
+        },
+        {
+          "distance": 140.169,
+          "sign": 2,
+          "interval": [
+            7,
+            10
+          ],
+          "text": "Turn right onto Oberländerstraße",
+          "time": 28032,
+          "street_name": "Oberländerstraße"
+        },
+        {
+          "distance": 360.232,
+          "sign": 1,
+          "interval": [
+            10,
+            18
+          ],
+          "text": "Turn slight right",
+          "time": 72677,
+          "street_name": ""
+        },
+        {
+          "distance": 177.621,
+          "sign": 2,
+          "interval": [
+            18,
+            20
+          ],
+          "text": "Turn right onto Thalkirchner Straße",
+          "time": 35524,
+          "street_name": "Thalkirchner Straße"
+        },
+        {
+          "distance": 332.89,
+          "sign": -2,
+          "interval": [
+            20,
+            24
+          ],
+          "text": "Turn left onto Thalkirchner Straße",
+          "time": 67351,
+          "street_name": "Thalkirchner Straße"
+        },
+        {
+          "distance": 0.0,
+          "sign": 4,
+          "last_heading": 45.67046584987792,
+          "interval": [
+            24,
+            24
+          ],
+          "text": "Arrive at destination",
+          "time": 0,
+          "street_name": ""
+        }
+      ],
+      "legs": [],
+      "details": {},
+      "ascend": 6.3294677734375,
+      "descend": 25.0579833984375,
+      "snapped_waypoints": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            11.539424,
+            48.118352
+          ],
+          [
+            11.558901,
+            48.122364
+          ]
+        ]
+      }
+    }
+  ]
+}
