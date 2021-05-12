@@ -1,0 +1,27 @@
+{
+  "points": [
+    [
+      11.539421,
+      48.118477
+    ],
+    [
+      11.559023,
+      48.12228
+    ]
+  ],
+  "point_hints": [
+    "Lindenschmitstraße",
+    "Thalkirchener Str."
+  ],
+  "snap_preventions": [
+    "motorway",
+    "ferry",
+    "tunnel"
+  ],
+  "details": ["road_class", "surface"],
+  "vehicle": "bike",
+  "locale": "en",
+  "instructions": true,
+  "calc_points": true,
+  "points_encoded": false
+}
