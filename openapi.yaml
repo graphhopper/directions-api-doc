@@ -69,12 +69,13 @@ info:
     - [FAQ](https://graphhopper.com/api/1/docs/FAQ/)
     - [Public forum](https://discuss.graphhopper.com/c/directions-api)
     - [Contact us](https://www.graphhopper.com/contact-form/)
+    - [GraphHopper Status Page](https://status.graphhopper.com/)
 
     To stay informed about the latest developments, you can
 
     - follow us on [twitter](https://twitter.com/graphhopper/),
     - read [our blog](https://graphhopper.com/blog/),
-    - watch [our documentation](https://github.com/graphhopper/directions-api-doc),
+    - watch [our documentation repository](https://github.com/graphhopper/directions-api-doc),
     - sign up for our newsletter or
     - [our forum](https://discuss.graphhopper.com/c/directions-api).
 
