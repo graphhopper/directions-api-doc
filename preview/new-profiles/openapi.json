@@ -2400,7 +2400,7 @@
               "type": "string"
             }
           },
-          "vehicle": {
+          "profile": {
             "allOf": [
               {
                 "$ref": "#/components/schemas/VehicleProfileId"
