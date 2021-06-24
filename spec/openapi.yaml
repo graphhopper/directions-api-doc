@@ -2247,7 +2247,7 @@ components:
           type: array
           items:
             type: string
-        vehicle:
+        profile:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
             - description: 'The vehicle profile for which the route should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
