@@ -100,21 +100,28 @@ info:
 
     The Routing, Matrix and Route Optimization APIs support the following vehicle profiles:
 
-    Name       | Description           | Restrictions              | Icon
-    -----------|:----------------------|:--------------------------|:---------------------------------------------------------
-    car        | Car mode              | car access                | ![car image](https://graphhopper.com/maps/img/car.png)
-    small_truck| Small truck like a Mercedes Sprinter, Ford Transit or Iveco Daily | height=2.7m, width=2+0.4m, length=5.5m, weight=2080+1400 kg | ![small truck image](https://graphhopper.com/maps/img/small_truck.png)
-    truck      | Truck like a MAN or Mercedes-Benz Actros | height=3.7m, width=2.6+0.5m, length=12m, weight=13000 + 13000 kg, hgv=yes, 3 Axes | ![truck image](https://graphhopper.com/maps/img/truck.png)
-    scooter    | Moped mode | Fast inner city, often used for food delivery, is able to ignore certain bollards, maximum speed of roughly 50km/h | ![scooter image](https://graphhopper.com/maps/img/scooter.png)
+    Name             | Description           | Restrictions                        | Icon
+    -----------------|:----------------------|:------------------------------------|:---------------------------------------------------------
+    car              | Car mode              | car access                          | ![car image](https://graphhopper.com/maps/img/car.png)
+    car_delivery     | Car mode              | car access including delivery roads | ![car image](https://graphhopper.com/maps/img/car.png)
+    car_no_ferries   | Car mode              | car access without ferries          | ![car image](https://graphhopper.com/maps/img/car.png)
+    car_no_motorways | Car mode              | car access without motorways        | ![car image](https://graphhopper.com/maps/img/car.png)
+    small_truck          | Small truck like a Mercedes Sprinter, Ford Transit or Iveco Daily | height=2.7m, width=2+0.4m, length=5.5m, weight=2080+1400 kg | ![small truck image](https://graphhopper.com/maps/img/small_truck.png)
+    small_truck_delivery | Small truck                                                       | like small_truck but including delivery roads | ![small truck image](https://graphhopper.com/maps/img/small_truck.png)
+    small_truck_no_motorways | Small truck                                                   | like small_truck but without motorways        | ![small truck image](https://graphhopper.com/maps/img/small_truck.png)
+    truck                | Truck like a MAN or Mercedes-Benz Actros                          | height=3.7m, width=2.6+0.5m, length=12m, weight=13000 + 13000 kg, hgv=yes, 3 Axes | ![truck image](https://graphhopper.com/maps/img/truck.png)
+    scooter              | Moped mode | Fast inner city, often used for food delivery, is able to ignore certain bollards, maximum speed of roughly 50km/h | ![scooter image](https://graphhopper.com/maps/img/scooter.png)
+    scooter_delivery     | Moped mode | Like scooter but including delivery roads      | ![scooter image](https://graphhopper.com/maps/img/scooter.png)
+    scooter_no_motorways | Moped mode | Like scooter but without motorways             | ![scooter image](https://graphhopper.com/maps/img/scooter.png)
     foot       | Pedestrian or walking without dangerous [SAC-scales](https://wiki.openstreetmap.org/wiki/Key:sac_scale) | foot access         | ![foot image](https://graphhopper.com/maps/img/foot.png)
     hike       | Pedestrian or walking with priority for more beautiful hiking tours and potentially a bit longer than `foot`. Walking duration is influenced by elevation differences.  | foot access         | ![hike image](https://graphhopper.com/maps/img/hike.png)
-    bike       | Trekking bike avoiding hills | bike access  | ![bike image](https://graphhopper.com/maps/img/bike.png)
-    mtb        | Mountainbike          | bike access         | ![Mountainbike image](https://graphhopper.com/maps/img/mtb.png)
-    racingbike| Bike preferring roads | bike access         | ![racingbike image](https://graphhopper.com/maps/img/racingbike.png)
+    bike       | Trekking bike avoiding hills | bike access         | ![Bike image](https://graphhopper.com/maps/img/bike.png)
+    mtb        | Mountainbike                 | bike access         | ![Mountainbike image](https://graphhopper.com/maps/img/mtb.png)
+    racingbike | Bike preferring roads        | bike access         | ![Racingbike image](https://graphhopper.com/maps/img/racingbike.png)
 
     Please note:
     
-     * all motor vehicles (`car`, `small_truck`, `truck` and `scooter`) support turn restrictions via `turn_costs=true`
+     * the motor vehicle profiles (`car`, `small_truck`, `truck` and `scooter`) support turn restrictions via `turn_costs=true`
      * the free package supports only the vehicle profiles `car`, `bike` or `foot`
      * up to 2 different vehicle profiles can be used in a single optimization request. The number of vehicles is unaffected and depends on your subscription.
      * we offer custom vehicle profiles with different properties, different speed profiles or different access options. To find out more about custom profiles, please [contact us](https://www.graphhopper.com/contact-form/).
@@ -215,7 +222,7 @@ tags:
       ![Routing screenshot](./img/routing-example.png)
 
       The Routing API is part of the GraphHopper Directions API. Routing is the process of finding the best path connecting
-      two or more points, where the meaning of ''best'' depends on the vehicle and use case.
+      two or more points, where the meaning of ''best'' depends on the vehicle profile and use case.
 
       ### Navigation
       If you plan to use the Routing API for navigation, have a look at our [open source demo navigation application](https://github.com/graphhopper/graphhopper-navigation-example) and adapt it to your needs.
@@ -354,7 +361,7 @@ paths:
               type: string
           explode: true
         - in: query
-          name: vehicle
+          name: profile
           description: |
            The vehicle profile for which the route should be calculated.
           schema:
@@ -374,7 +381,7 @@ paths:
         - in: query
           name: turn_costs
           description: |
-            Specifies if turn restrictions should be considered. Enabling this option increases the route computation time. Only supported for motor vehicles and OpenStreetMap.
+            Specifies if turn restrictions should be considered. Enabling this option increases the route computation time. At the moment only supported for motor vehicles and OpenStreetMap.
           schema:
             type: boolean
             default: false
@@ -393,7 +400,6 @@ paths:
             This changes the format of the `points` and `snapped_waypoints` fields of the response, in both their
             encodings. Unless you switch off the `points_encoded` parameter, you need special code on the
             client side that can handle three-dimensional coordinates.
-            A request can fail if the vehicle profile does not support elevation. See the features object for every vehicle profile.
           schema:
             type: boolean
             default: false
@@ -458,13 +464,6 @@ paths:
           schema:
             type: boolean
             default: false
-        - name: weighting
-          in: query
-          description: |
-            Determines the way the "best" route is calculated. Besides `fastest` you can use `short_fastest` which finds a reasonable balance between the distance influence (`shortest`) and the time (`fastest`). You could also use `shortest` but is deprecated and not recommended for motor vehicles. All except `fastest` require `ch.disable=true`.
-          schema:
-            type: string
-            default: fastest
         - name: heading
           in: query
           description: |
@@ -561,12 +560,12 @@ paths:
         - Routing API
       x-code-samples:
             - lang: Curl
-              source: "curl \"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key\""
+              source: "curl \"https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&profile=car&locale=de&calc_points=false&key=api_key\""
             - lang: Java
               source: |-
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url("https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&vehicle=car&locale=de&calc_points=false&key=api_key")
+                        .url("https://graphhopper.com/api/1/route?point=51.131,12.414&point=48.224,3.867&profile=car&locale=de&calc_points=false&key=api_key")
                         .get()
                         .build();
 
@@ -687,29 +686,7 @@ paths:
                description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
                schema:
                  type: integer
-        '501':
-           description: Only a special list of vehicles is supported.
-           content:
-             application/json:
-               schema:
-                 $ref: '#/components/schemas/GHError'
-           headers:
-             X-RateLimit-Limit:
-               description: Your current daily credit limit.
-               schema:
-                 type: integer
-             X-RateLimit-Remaining:
-               description: Your remaining credits until the reset.
-               schema:
-                 type: integer
-             X-RateLimit-Reset:
-               description: The number of seconds that you have to wait before a reset of the credit count is done.
-               schema:
-                 type: integer
-             X-RateLimit-Credits:
-               description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
-               schema:
-                 type: integer
+
     post:
       summary: POST Route Endpoint
       operationId: postRoute
@@ -861,29 +838,7 @@ paths:
               description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
               schema:
                 type: integer
-        '501':
-          description: Only a special list of vehicles is supported.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GHError'
-          headers:
-            X-RateLimit-Limit:
-              description: Your current daily credit limit.
-              schema:
-                type: integer
-            X-RateLimit-Remaining:
-              description: Your remaining credits until the reset.
-              schema:
-                type: integer
-            X-RateLimit-Reset:
-              description: The number of seconds that you have to wait before a reset of the credit count is done.
-              schema:
-                type: integer
-            X-RateLimit-Credits:
-              description: The credit costs for this request. Note it could be a decimal and even negative number, e.g. when an async request failed.
-              schema:
-                type: integer
+
   /route/info:
     get:
       tags:
@@ -951,7 +906,7 @@ paths:
           schema:
             type: integer
             format: int32
-        - name: vehicle
+        - name: profile
           in: query
           description: |
             The vehicle profile for which the route should be calculated.
@@ -972,13 +927,6 @@ paths:
           schema:
             default: false
             type: boolean
-        - name: weighting
-          in: query
-          description: Use `"shortest"` to get an isodistance line instead of an isochrone.
-          schema:
-            type: string
-            enum: [fastest, shortest]
-            default: fastest
       tags:
         - Isochrone API
       responses:
@@ -1006,12 +954,12 @@ paths:
 
       x-code-samples:
         - lang: Curl
-          source: "curl \"https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key\""
+          source: "curl \"https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&profile=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key\""
         - lang: Java
           source: |-
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&vehicle=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key")
+                    .url("https://graphhopper.com/api/1/matrix?point=49.932707,11.588051&point=50.241935,10.747375&point=50.118817,11.983337&type=json&profile=car&debug=true&out_array=weights&out_array=times&out_array=distances&key=api_key")
                     .get()
                     .build();
 
@@ -1128,7 +1076,7 @@ paths:
             items:
               type: string
           explode: true
-        - name: vehicle
+        - name: profile
           in: query
           description: 'The vehicle profile for which the matrix should be calculated.'
           schema:
@@ -1192,9 +1140,9 @@ paths:
 
         **Please note that in contrast to GET endpoint the points have to be specified as `longitude, latitude` pairs (in that order, similar to [GeoJson](http://geojson.org/geojson-spec.html#examples))**.
 
-        For example the query `point=10,11&point=20,22&vehicle=car` will be converted to the following JSON:
+        For example the query `point=10,11&point=20,22&profile=car` will be converted to the following JSON:
         ```json
-        { "points": [[11,10], [22,20]], "vehicle": "car" }
+        { "points": [[11,10], [22,20]], "profile": "car" }
         ```
 
         A complete curl Example:
@@ -1367,7 +1315,7 @@ paths:
         You get an example response for a GPX via:
 
         ```
-        curl -XPOST -H "Content-Type: application/gpx+xml" "https://graphhopper.com/api/1/match?vehicle=car&key=[YOUR_KEY]" --data @/path/to/some.gpx
+        curl -XPOST -H "Content-Type: application/gpx+xml" "https://graphhopper.com/api/1/match?profile=car&key=[YOUR_KEY]" --data @/path/to/some.gpx
         ```
         
         A minimal working GPX file looks like
@@ -1408,7 +1356,7 @@ paths:
           required: false
           schema:
             type: integer
-        - name: vehicle
+        - name: profile
           in: query
           description: 'Specify the vehicle profile like car'
           required: false
@@ -2302,13 +2250,13 @@ components:
         vehicle:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
-            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
+            - description: 'The vehicle profile for which the route should be calculated. Other profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
         fail_fast:
           description: 'Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).'
           type: boolean
           default: true
         turn_costs:
-          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicle profiles and OpenStreetMap.
           type: boolean
           default: false
       example:
@@ -2340,20 +2288,20 @@ components:
           items:
             type: string
         out_arrays:
-          description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicles or versions of this API.'
+          description: 'Specifies which matrices should be included in the response. Specify one or more of the following options `weights`, `times`, `distances`. The units of the entries of `distances` are meters, of `times` are seconds and of `weights` is arbitrary and it can differ for different vehicle profiles or versions of this API.'
           type: array
           items:
             type: string
-        vehicle:
+        profile:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
-            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicle profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
         fail_fast:
           description: 'Specifies whether or not the matrix calculation should return with an error as soon as possible in case some points cannot be found or some points are not connected. If set to `false` the time/weight/distance matrix will be calculated for all valid points and contain the `null` value for all entries that could not be calculated. The `hint` field of the response will also contain additional information about what went wrong (see its documentation).'
           type: boolean
           default: true
         turn_costs:
-          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicles and OpenStreetMap.
+          description: Specifies if turn restrictions should be considered. Enabling this option increases the matrix computation time. Only supported for motor vehicle profiles and OpenStreetMap.
           type: boolean
           default: false
       example:
@@ -2378,7 +2326,7 @@ components:
               type: number
               format: int64
         weights:
-          description: The weight matrix for the specified points in the same order as the time matrix. The weights for different vehicles can have a different unit but the weights array is perfectly suited as input for Vehicle Routing Problems as it is currently faster to calculate. If `fail_fast=false` the matrix will contain `null` for connections that could not be found.
+          description: The weight matrix for the specified points in the same order as the time matrix. The weights for different vehicle profiles can have a different unit but the weights array is perfectly suited as input for Vehicle Routing Problems as it is currently faster to calculate. If `fail_fast=false` the matrix will contain `null` for connections that could not be found.
           type: array
           items:
             type: array
@@ -2506,7 +2454,7 @@ components:
             type: string
           example: [ motorway, ferry, tunnel ]
         curbsides:
-          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicles and OpenStreetMap.
+          description: Optional parameter. It specifies on which side a point should be relative to the driver when she leaves/arrives at a start/target/via point. You need to specify this parameter for either none or all points. Only supported for motor vehicle profiles and OpenStreetMap.
           type: array
           items:
             type: string
@@ -2515,10 +2463,10 @@ components:
               - right
               - left
           example: [ any, right ]
-        vehicle:
+        profile:
           allOf:
             - $ref: "#/components/schemas/VehicleProfileId"
-            - description: 'The vehicle profile for which the route should be calculated. Other vehicles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
+            - description: 'The vehicle profile for which the route should be calculated. Other vehicle profiles are listed [here](#section/Map-Data-and-Routing-Profiles/OpenStreetMap) for the details.'
           example: bike
         locale:
           description: |
@@ -2532,7 +2480,6 @@ components:
             This changes the format of the `points` and `snapped_waypoints` fields of the response, in both their
             encodings. Unless you switch off the `points_encoded` parameter, you need special code on the
             client side that can handle three-dimensional coordinates.
-            A request can fail if the vehicle profile does not support elevation. See the features object for every vehicle profile.
           default: false
         details:
           type: array
@@ -2576,11 +2523,6 @@ components:
           default: false
           description: |
             Use this parameter in combination with one or more parameters from below.
-        weighting:
-          type: string
-          default: fastest
-          description: |
-            Determines the way the ''best'' route is calculated. Default is `fastest`. Other options are `shortest` (e.g. for `vehicle=foot` or `bike`) and `short_fastest` which finds a reasonable balance between `shortest` and `fastest`. Requires `ch.disable=true`.
         headings:
           type: array
           items:
