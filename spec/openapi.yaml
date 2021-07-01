@@ -1271,8 +1271,9 @@ paths:
 
         Please note that if an error occured while calculation the JSON will not have a status but contain directly the error message e.g.:
         ```json
-        {"message":"Cannot find from_points: 1","hints":[{...}]}
+        {"message":"Cannot find from_points: 1"}
         ```
+        And the optional `hints` array.
 
       requestBody:
         content:
@@ -2388,7 +2389,7 @@ components:
         info:
           $ref: '#/components/schemas/ResponseInfo'
         hints:
-          description: Optional. Additional response data
+          description: Optional. Additional response data.
           type: array
           items:
             type: object
@@ -2919,6 +2920,7 @@ components:
         message:
           type: string
         hints:
+          description: Optional error information.
           type: array
           items:
             type: object
@@ -2942,7 +2944,7 @@ components:
           example: Bad Request
         hints:
           type: array
-          description: More detailed information about the error.
+          description: Optional error information.
           items:
             $ref: '#/components/schemas/ErrorMessage'
         status:
