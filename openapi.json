@@ -1255,7 +1255,7 @@
       "post": {
         "summary": "Batch Matrix Endpoint",
         "operationId": "calculateMatrix",
-        "description": "Prefer the [synchronous endpoint](#operation/postMatrix) and use this Batch endpoint for long running problems only.\n\nThe Batch Matrix endpoint allows using matrices with more locations and works asynchronously - similar to the [Batch Route Optimization endpoint](#operation/asyncVRP):\n * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ \"job_id\": \"7ac65787-fb99-4e02-a832-2c3010c70097\" }`\n * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`\n\nHere are some full examples via curl:\n```bash\n$ curl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/matrix/calculate?key=[YOUR_KEY]\" -d '{\"points\":[[13.29895,52.48696],[13.370876,52.489575],[13.439026,52.511206]]}'\n{\"job_id\":\"7ac65787-fb99-4e02-a832-2c3010c70097\"}\n```\n\nPick the returned `job_id` and use it in the next GET requests:\n```bash\n$ curl -X GET \"https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]\"\n{\"status\":\"waiting\"}\n```\n\nWhen the calculation is finished (`status:finished`) the JSON response will contain the full matrix JSON under `solution`:\n```bash\n$ curl -X GET \"https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]\"\n{\"solution\":{\"weights\":[[0.0,470.453,945.414],[503.793,0.0,580.871],[970.49,569.511,0.0]],\"info\":{\"copyrights\":[\"GraphHopper\",\"OpenStreetMap contributors\"]}},\"status\":\"finished\"}\n```\n\nPlease note that if an error occured while calculation the JSON will not have a status but contain directly the error message e.g.:\n```json\n{\"message\":\"Cannot find from_points: 1\",\"hints\":[{...}]}\n```\n",
+        "description": "Prefer the [synchronous endpoint](#operation/postMatrix) and use this Batch endpoint for long running problems only.\n\nThe Batch Matrix endpoint allows using matrices with more locations and works asynchronously - similar to the [Batch Route Optimization endpoint](#operation/asyncVRP):\n * Create a HTTP POST request against `/matrix/calculate` and add the key in the URL: `/matrix/calculate?key=[YOUR_KEY]`. This will give you the `job_id` from the response json like `{ \"job_id\": \"7ac65787-fb99-4e02-a832-2c3010c70097\" }`\n * Poll via HTTP GET requests every 500ms against `/matrix/solution/[job_id]`\n\nHere are some full examples via curl:\n```bash\n$ curl -X POST -H \"Content-Type: application/json\" \"https://graphhopper.com/api/1/matrix/calculate?key=[YOUR_KEY]\" -d '{\"points\":[[13.29895,52.48696],[13.370876,52.489575],[13.439026,52.511206]]}'\n{\"job_id\":\"7ac65787-fb99-4e02-a832-2c3010c70097\"}\n```\n\nPick the returned `job_id` and use it in the next GET requests:\n```bash\n$ curl -X GET \"https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]\"\n{\"status\":\"waiting\"}\n```\n\nWhen the calculation is finished (`status:finished`) the JSON response will contain the full matrix JSON under `solution`:\n```bash\n$ curl -X GET \"https://graphhopper.com/api/1/matrix/solution/7ac65787-fb99-4e02-a832-2c3010c70097?key=[YOUR_KEY]\"\n{\"solution\":{\"weights\":[[0.0,470.453,945.414],[503.793,0.0,580.871],[970.49,569.511,0.0]],\"info\":{\"copyrights\":[\"GraphHopper\",\"OpenStreetMap contributors\"]}},\"status\":\"finished\"}\n```\n\nPlease note that if an error occured while calculation the JSON will not have a status but contain directly the error message e.g.:\n```json\n{\"message\":\"Cannot find from_points: 1\"}\n```\nAnd the optional `hints` array.\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2626,7 +2626,7 @@
             "$ref": "#/components/schemas/ResponseInfo"
           },
           "hints": {
-            "description": "Optional. Additional response data",
+            "description": "Optional. Additional response data.",
             "type": "array",
             "items": {
               "type": "object",
@@ -3244,6 +3244,7 @@
             "type": "string"
           },
           "hints": {
+            "description": "Optional error information.",
             "type": "array",
             "items": {
               "type": "object",
@@ -3277,7 +3278,7 @@
           },
           "hints": {
             "type": "array",
-            "description": "More detailed information about the error.",
+            "description": "Optional error information.",
             "items": {
               "$ref": "#/components/schemas/ErrorMessage"
             }
